@@ -21,9 +21,11 @@ int64_t pow2(int64_t x){
 
 template<typename Pixel>
 long double calc_cost(const Pixel &as, const Pixel &bs, const Pixel &at, const Pixel &bt){
-    return
+    long double cost =
     sqrtl(pow2(as.red-bs.red) + pow2(as.green-bs.green) + pow2(as.blue-bs.blue)) +
     sqrtl(pow2(at.red-bt.red) + pow2(at.green-bt.green) + pow2(at.blue-bt.blue));
+    cout<<"COST "<<cost<<endl;
+    return cost;
 }
 
 void init_texture(png::image<png::rgb_pixel> &input_img, png::image<png::rgb_pixel> &output_img, vector<vector<Pixel_State>> &colored){
@@ -85,12 +87,12 @@ vector<int> min_path(vector<vector<pair<C, int>>> &g, vector<bool> &vis, vector<
     vector<int> path;
     while(current != parent[current]){
         path.push_back(current);
-        //cout<<" INPATH "<<current<<endl;
+        cout<<" INPATH "<<current<<" dist "<<dist[current]<<endl;
         inPath[current] = true;
         current = parent[current];
     }
     path.push_back(S);
-    //reverse(path.begin(), path.end());
+    reverse(path.begin(), path.end());
     //cout<<endl;
     return path;
 }
@@ -179,7 +181,7 @@ void blending(int h, int w, png::image<png::rgb_pixel> &input_img, png::image<pn
             int y_nei = y + directions[i].first, x_nei = x + directions[i].second;
             if(valid(y_nei, x_nei)){
                 if(colored[y_nei][x_nei] == Pixel_State::intersection){
-                    int64_t cost = 1; // TO DO - change to real cost
+                    int64_t cost = calc_cost(output_img[y][x], input_img[y-h][x-w], output_img[y_nei][x_nei], input_img[y_nei-h][x_nei-w]);
                     dual_graph[a].emplace_back(cost, b);
                     dual_graph[b].emplace_back(cost, a);
                 } else {
@@ -199,14 +201,14 @@ void blending(int h, int w, png::image<png::rgb_pixel> &input_img, png::image<pn
                 dual_graph[b].emplace_back(inf, a);
             }
         }
-        for(int i = 0; i < 4; i++){
-            int a = dual_ids[p][i];
-            //cout<<dual_ids[p][i]<<" "<<adjacent_old_color[a]<<" "<<adjacent_new_color[a]<<"\n";
-        }   
+        // for(int i = 0; i < 4; i++){
+        //     int a = dual_ids[p][i];
+        //     cout<<dual_ids[p][i]<<" "<<adjacent_old_color[a]<<" "<<adjacent_new_color[a]<<"\n";
+        // }   
         //cout<<y<<" "<<x<<": \n\t";
-        for(int i = 0; i < 4; i++){
+        //for(int i = 0; i < 4; i++){
             //cout<<dual_ids[p][i]<<", ";
-        }
+        //}
         //cout<<"\n";
     }
     clean_graph(dual_graph);
@@ -220,7 +222,6 @@ void blending(int h, int w, png::image<png::rgb_pixel> &input_img, png::image<pn
             for(int j = 0, x = j + w; j < input_img.get_width() && x < output_img.get_width(); j++, x++){
                 colored[y][x] = Pixel_State::colored;
                 output_img[y][x] = input_img[i][j];
-                //output_img[y][x] = rand_pixel;
             }
         return;
     }
@@ -260,10 +261,10 @@ void blending(int h, int w, png::image<png::rgb_pixel> &input_img, png::image<pn
                 if(valid(y, x) && colored[y][x] == Pixel_State::intersection){
                     auto dfs_color = [&](int y, int x, auto &&self) -> void {
                         int p = ids[y][x];
-                        //colored[y][x] = Pixel_State::newcolor;
+                        colored[y][x] = Pixel_State::newcolor;
                         {
-                            colored[y][x] = Pixel_State::colored;
-                            output_img[y][x] = output_img[y][x] = rand_pixel;
+                            //colored[y][x] = Pixel_State::colored;
+                            //output_img[y][x] = output_img[y][x] = rand_pixel;
                         }
                         for(int d = 0; d < 4; d++){
                             int a = dual_ids[p][d];
@@ -326,11 +327,20 @@ void create_texture(const unsigned int output_height, const unsigned int output_
             output_img.write(output_f);
         }
     }
-    output_img.write(output_f);
+    for(int h = 3; h < output_height; h += input_img.get_height() - 8){
+        for(int w = 3; w < output_width; w += input_img.get_width() - 8){
+            usleep(40000);
+            patches += 1;
+            cout<<"Case "<<patches<<endl;
+            cout<<h<<" "<<w<<endl;
+            blending(h, w, input_img, output_img, colored);
+            output_img.write(output_f);
+        }
+    }
 }
 
 int main() { 
-    create_texture(500, 400, "input/areia_da_praia.png", "output/areia_da_praia.png");
+    create_texture(300, 300, "input/areia_da_praia.png", "output/areia_da_praia.png");
 
  
     return 0;  
