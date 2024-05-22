@@ -1,4 +1,5 @@
 #include <png++/png.hpp>
+#include <algorithm>
 #include <math.h>
 #include <array>
 #include <queue>
