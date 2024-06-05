@@ -5,8 +5,6 @@
 #include <array>
 #include <queue>
 #include <tuple>
-#include <unistd.h>  //just for debug
-#include <cstdlib> // just for debug
 #include <map>
 
 class ImageTexture{
@@ -19,19 +17,21 @@ public:
     void patchFitting(const png::image<png::rgb_pixel> &inputImg);
     void patchFitting(const std::string &file_name);
 private:
-    png::image<png::rgb_pixel> img;
-    const int imgWidht;
-    const int imgHeight;
     enum PixelStatusEnum{
         colored, intersection, newcolor, notcolored
     };
+    png::image<png::rgb_pixel> img;
+    const int imgWidht;
+    const int imgHeight;
     std::vector<std::vector<PixelStatusEnum>> pixelColorStatus;
+    static constexpr std::array<std::pair<int, int>, 4> directions = {{
+        {-1, 0}, { 0,-1}, { 1, 0}, { 0, 1}
+    }};
 
     template<typename Pixel>
     static long double calcCost(const Pixel &as, const Pixel &bs, const Pixel &at, const Pixel &bt);
-    template<typename T>
-    static void clean_graph(std::vector<std::vector<T>> &g);
-    static std::pair<int, int> coordsInputImg(int i, int j, int heightOffset, int widthOffset);
+    //template<typename T>
+    //static void clean_graph(std::vector<std::vector<T>> &g);
 
     std::pair<int, int> matching();
     bool isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
@@ -40,6 +40,17 @@ private:
     void blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
+    
+    bool insideImg(int i, int j);
+    class Intersection{
+        public:
+            // counter clockwise, starting with upper neighbor
+            std::vector<std::pair<int, int>> interPixels;
+            Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
+    };
+    std::vector<std::pair<int, int>> findSTInIntersection(Intersection &inter);
+    std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
+
 };
 
 /*
@@ -49,13 +60,13 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
     : img(_img), 
     imgWidht(_img.get_width()),
     imgHeight(_img.get_height()),
-    pixelColorStatus(_img.get_width(), std::vector<ImageTexture::PixelStatusEnum>(_img.get_height(), ImageTexture::PixelStatusEnum::notcolored)){   
+    pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)){   
 };
 ImageTexture::ImageTexture(int width, int height) 
     : img(width, height), 
     imgWidht(width),
     imgHeight(height), 
-    pixelColorStatus(width, std::vector<ImageTexture::PixelStatusEnum>(height, ImageTexture::PixelStatusEnum::notcolored)){    
+    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)){    
 };
 
 /*
@@ -65,22 +76,22 @@ void ImageTexture::render(const std::string &file_name){
     img.write(file_name);
 };
 void ImageTexture::patchFitting(const png::image<png::rgb_pixel> &inputImg){
-
+    for(int i = 0 ; i < 100; i++)
+        patchFittingIteration(inputImg);
 }
 void ImageTexture::patchFitting(const std::string &file_name){
     ImageTexture::patchFitting(png::image<png::rgb_pixel>(file_name));
 }
 void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &inputImg){
-    const auto [heightOffset, widthOffset] = ImageTexture::matching();
+    const auto [heightOffset, widthOffset] = matching();
     std::cout<<widthOffset<<" "<<heightOffset<<"\n";
-    if(ImageTexture::isFirstPatch(heightOffset, widthOffset, inputImg))
-        ImageTexture::copyFirstPatch(heightOffset, widthOffset, inputImg);
+    if(isFirstPatch(heightOffset, widthOffset, inputImg))
+        copyFirstPatch(heightOffset, widthOffset, inputImg);
     else
         this->blending(heightOffset, widthOffset, inputImg);
-    usleep(40000);
 }
 void ImageTexture::patchFittingIteration(const std::string &file_name){
-    ImageTexture::patchFittingIteration(png::image<png::rgb_pixel>(file_name));
+    patchFittingIteration(png::image<png::rgb_pixel>(file_name));
 };
 /*
 Private Functions
@@ -93,17 +104,14 @@ long double ImageTexture::calcCost(const Pixel &as, const Pixel &bs, const Pixel
     sqrtl(pow2(at.red-bt.red) + pow2(at.green-bt.green) + pow2(at.blue-bt.blue));
     return cost;
 };
-template<typename T>
-void ImageTexture::clean_graph(std::vector<std::vector<T>> &g){
-    using namespace std;
-    for(int i = 0; i < (int)g.size(); i++){
-        sort(g[i].begin(), g[i].end());
-        g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
-    }
-};
-std::pair<int, int> ImageTexture::coordsInputImg(int i, int j, int heightOffset, int widthOffset){
-    return {i - heightOffset, j - widthOffset};
-};
+// template<typename T>
+// void ImageTexture::clean_graph(std::vector<std::vector<T>> &g){
+//     using namespace std;
+//     for(int i = 0; i < (int)g.size(); i++){
+//         sort(g[i].begin(), g[i].end());
+//         g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
+//     }
+// };
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
     static int heightOffset = 0;
@@ -117,15 +125,15 @@ std::pair<int, int> ImageTexture::matching(){
         heightOffset = 0;
         widthOffset = 0;
     }
+    std::cout<<"MATCHING "<<heightOffset<<" "<<widthOffset<<std::endl;
     return {heightOffset, widthOffset};
 };
 bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    for(int i = 0; i < inputImg.get_height() && i + heightOffset < this->imgHeight; i++)
-        for(int j = 0; j < inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
-            int a = i + heightOffset;
-            int b = j + widthOffset;
-            if(this->pixelColorStatus[a][b] != ImageTexture::PixelStatusEnum::notcolored){
-                std::cout<<"colored "<<i<<" "<<j<<std::endl;
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++){
+            //std::cout<<"testing "<<a<<" "<<b<<std::endl;
+            if(this->pixelColorStatus[a][b] != PixelStatusEnum::notcolored){
+                std::cout<<"colored "<<a<<" "<<b<<std::endl;
                 return false;
             }
         }
@@ -133,39 +141,37 @@ bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::im
 };
 void ImageTexture::copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Copy First Patch"<<std::endl;
-    for(int i = 0; i < inputImg.get_height() && i + heightOffset < this->imgHeight; i++)
-        for(int j = 0; j < inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
-            int a = i + heightOffset;
-            int b = j + widthOffset;
-            this->pixelColorStatus[a][b] = ImageTexture::PixelStatusEnum::colored;
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++){
+            this->pixelColorStatus[a][b] = PixelStatusEnum::colored;
             this->img[a][b] = inputImg[i][j];
         }  
 };
 bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     {//upper edge
         int upperEdgeHeight = heightOffset;
-        for(int j = 0; j < inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
+        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
             if(this->pixelColorStatus[upperEdgeHeight][j] == this->PixelStatusEnum::notcolored)
                 return true;
         }
     }
     {//lower edge
-        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height(), this->imgHeight);
-        for(int j = 0; j < inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
+        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
             if(this->pixelColorStatus[lowerEdgeHeight][j] == this->PixelStatusEnum::notcolored)
                 return true;
     }
     }    
     {//left edge
         int leftEdgeWidth = widthOffset;
-        for(int i = 0; i < inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
+        for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
             if(this->pixelColorStatus[i][leftEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
     }
     {//right edge
-        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width(), this->imgWidht);
-        for(int i = 0; i < inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
+        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidht - 1);
+        for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
             if(this->pixelColorStatus[i][rightEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
@@ -174,9 +180,21 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
 };
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 1"<<std::endl;
+    std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
+    std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
+    for(auto &intersection : intersections){
+        std::cout<<"intersection size "<<intersection.interPixels.size()<<std::endl;
+        std::vector<std::pair<int, int>> specialVertices = findSTInIntersection(intersection);
+        std::cout<<"special "<<specialVertices.size()<<std::endl;
+    }
+    for(auto &intersection : intersections){
+        for(auto [i,j] : intersection.interPixels)
+            pixelColorStatus[i][j] = PixelStatusEnum::notcolored;
+    }
 };
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 1"<<std::endl;
+    //Intersection intersection = findIntersections(heightOffset, widthOffset, inputImg)[0];
 };
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     if(this->stPlanarGraph(heightOffset, widthOffset, inputImg))
@@ -184,12 +202,70 @@ void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<
     else
         this->blendingCase2(heightOffset, widthOffset, inputImg);
 };
-// Naive Blending
-// void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-//     for(int i = 0; i < inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
-//         for(int j = 0; j < inputImg.get_width() && j + widthOffset < this->imgWidht; j++){
-//             this->img[i + heightOffset][j + widthOffset] = inputImg[i][j];
-//             this->pixelColorStatus[i][j] = ImageTexture::PixelStatus::colored;
-//         }
-//     }
-// }
+
+bool ImageTexture::insideImg(int i, int j){
+    return 0 <= i && i < imgHeight && 0 <= j && j < imgWidht;
+}
+
+std::vector<std::pair<int, int>> ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter){
+    std::vector<std::pair<int, int>> special;
+    for(int pos = 0; pos < (int) inter.interPixels.size(); pos++){
+        const auto &[i, j] = inter.interPixels[pos];
+        for(int d = 0; d < (int) directions.size(); d++){
+            int neiIA = i + directions[d].first;
+            int neiJA = j + directions[d].second;   
+            if(!insideImg(neiIA, neiJA)) continue;
+            int neiIB = i + directions[(d+1) % directions.size()].first;
+            int neiJB = j + directions[(d+1) % directions.size()].second;   
+            bool outsideB = !insideImg(neiIB, neiJB);        
+            if(pixelColorStatus[neiIA][neiJA] == PixelStatusEnum::colored && (outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored)){
+                std::cout<<"Special "<<i<<" "<<j<<std::endl;
+                special.emplace_back(pos, d);
+            }
+        }
+        for(int d = 0; d < (int) directions.size(); d++){
+            int neiIA = i + directions[d].first;
+            int neiJA = j + directions[d].second;   
+            if(!insideImg(neiIA, neiJA)) continue;
+            int neiIB = i + directions[(d-1+directions.size()) % directions.size()].first;
+            int neiJB = j + directions[(d-1+directions.size()) % directions.size()].second;
+            bool outsideB = !insideImg(neiIB, neiJB);        
+            if(pixelColorStatus[neiIA][neiJA] == PixelStatusEnum::colored && (outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored)){
+                std::cout<<"Special "<<i<<" "<<j<<std::endl;
+                special.emplace_back(pos, d);
+            }
+        }
+    }
+    assert(special.size() == 0 || special.size() == 2);
+    return special;
+}
+std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+    static std::vector<std::vector<int>> lastVisit(imgHeight, std::vector<int>(imgWidht, 0));
+    static int Time = 0;
+    std::vector<Intersection> intersectionsList;
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
+             if(pixelColorStatus[a][b] == PixelStatusEnum::colored){
+               Time++;
+                std::vector<std::pair<int,int>> interPixels;
+                pixelColorStatus[a][b] = PixelStatusEnum::intersection;
+                interPixels.emplace_back(a,b);
+                lastVisit[a][b] = Time;
+                for(int front = 0; front < (int) interPixels.size(); front++){
+                    auto [iFront, jFront] = interPixels[front];
+                    for(auto [deltaI, deltaJ] : directions){
+                        int nborI = iFront + deltaI;
+                        int nborJ = jFront + deltaJ;
+                        if(!insideImg(nborI, nborJ)) continue;
+                        if(nborI >= heightOffset + (int) inputImg.get_height() || nborJ >= widthOffset + (int) inputImg.get_width()) continue;
+                        if(lastVisit[nborI][nborJ] == Time) continue;
+                        interPixels.emplace_back(nborI,nborJ);
+                        lastVisit[nborI][nborJ] = Time;
+                        pixelColorStatus[nborI][nborJ] = PixelStatusEnum::intersection;
+                    
+                    }
+                }
+                intersectionsList.push_back(Intersection(interPixels));
+            }        
+    return intersectionsList;
+}
