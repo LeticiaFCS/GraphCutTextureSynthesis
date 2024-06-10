@@ -5,2172 +5,1668 @@ Copy First Patch
 ITERATION 1 ------------------------------- 
 MATCHING 0 24
 0 24
-colored 0 24
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 24
 Special 31 24
-special 2
 ITERATION 2 ------------------------------- 
 MATCHING 0 48
 0 48
-colored 0 48
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 48
 Special 31 48
-special 2
 ITERATION 3 ------------------------------- 
 MATCHING 0 72
 0 72
-colored 0 72
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 72
 Special 31 72
-special 2
 ITERATION 4 ------------------------------- 
 MATCHING 0 96
 0 96
-colored 0 96
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 96
 Special 31 96
-special 2
 ITERATION 5 ------------------------------- 
 MATCHING 0 120
 0 120
-colored 0 120
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 120
 Special 31 120
-special 2
 ITERATION 6 ------------------------------- 
 MATCHING 0 144
 0 144
-colored 0 144
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 144
 Special 31 144
-special 2
 ITERATION 7 ------------------------------- 
 MATCHING 0 168
 0 168
-colored 0 168
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 168
 Special 31 168
-special 2
 ITERATION 8 ------------------------------- 
 MATCHING 0 192
 0 192
-colored 0 192
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 192
 Special 31 192
-special 2
 ITERATION 9 ------------------------------- 
 MATCHING 0 216
 0 216
-colored 0 216
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 216
 Special 31 216
-special 2
 ITERATION 10 ------------------------------- 
 MATCHING 0 240
 0 240
-colored 0 240
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 240
 Special 31 240
-special 2
 ITERATION 11 ------------------------------- 
 MATCHING 0 264
 0 264
-colored 0 264
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 264
 Special 31 264
-special 2
 ITERATION 12 ------------------------------- 
 MATCHING 0 288
 0 288
-colored 0 288
 BLENDING
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 0 288
 Special 31 288
-special 2
 ITERATION 13 ------------------------------- 
 MATCHING 24 0
 24 0
-colored 24 0
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 24 0
 Special 31 31
-special 2
 ITERATION 14 ------------------------------- 
 MATCHING 24 24
 24 24
-colored 24 24
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 24
 Special 31 55
-special 2
 ITERATION 15 ------------------------------- 
 MATCHING 24 48
 24 48
-colored 24 48
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 48
 Special 31 79
-special 2
 ITERATION 16 ------------------------------- 
 MATCHING 24 72
 24 72
-colored 24 72
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 72
 Special 31 103
-special 2
 ITERATION 17 ------------------------------- 
 MATCHING 24 96
 24 96
-colored 24 96
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 96
 Special 31 127
-special 2
 ITERATION 18 ------------------------------- 
 MATCHING 24 120
 24 120
-colored 24 120
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 120
 Special 31 151
-special 2
 ITERATION 19 ------------------------------- 
 MATCHING 24 144
 24 144
-colored 24 144
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 144
 Special 31 175
-special 2
 ITERATION 20 ------------------------------- 
 MATCHING 24 168
 24 168
-colored 24 168
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 168
 Special 31 199
-special 2
 ITERATION 21 ------------------------------- 
 MATCHING 24 192
 24 192
-colored 24 192
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 192
 Special 31 223
-special 2
 ITERATION 22 ------------------------------- 
 MATCHING 24 216
 24 216
-colored 24 216
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 216
 Special 31 247
-special 2
 ITERATION 23 ------------------------------- 
 MATCHING 24 240
 24 240
-colored 24 240
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 240
 Special 31 271
-special 2
 ITERATION 24 ------------------------------- 
 MATCHING 24 264
 24 264
-colored 24 264
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 55 264
 Special 31 295
-special 2
 ITERATION 25 ------------------------------- 
 MATCHING 24 288
 24 288
-colored 24 288
 BLENDING
 upper edge is covered 24
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 24 299
 Special 55 288
-special 2
 ITERATION 26 ------------------------------- 
 MATCHING 48 0
 48 0
-colored 48 0
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 48 0
 Special 55 31
-special 2
 ITERATION 27 ------------------------------- 
 MATCHING 48 24
 48 24
-colored 48 24
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 24
 Special 55 55
-special 2
 ITERATION 28 ------------------------------- 
 MATCHING 48 48
 48 48
-colored 48 48
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 48
 Special 55 79
-special 2
 ITERATION 29 ------------------------------- 
 MATCHING 48 72
 48 72
-colored 48 72
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 72
 Special 55 103
-special 2
 ITERATION 30 ------------------------------- 
 MATCHING 48 96
 48 96
-colored 48 96
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 96
 Special 55 127
-special 2
 ITERATION 31 ------------------------------- 
 MATCHING 48 120
 48 120
-colored 48 120
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 120
 Special 55 151
-special 2
 ITERATION 32 ------------------------------- 
 MATCHING 48 144
 48 144
-colored 48 144
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 144
 Special 55 175
-special 2
 ITERATION 33 ------------------------------- 
 MATCHING 48 168
 48 168
-colored 48 168
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 168
 Special 55 199
-special 2
 ITERATION 34 ------------------------------- 
 MATCHING 48 192
 48 192
-colored 48 192
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 192
 Special 55 223
-special 2
 ITERATION 35 ------------------------------- 
 MATCHING 48 216
 48 216
-colored 48 216
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 216
 Special 55 247
-special 2
 ITERATION 36 ------------------------------- 
 MATCHING 48 240
 48 240
-colored 48 240
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 240
 Special 55 271
-special 2
 ITERATION 37 ------------------------------- 
 MATCHING 48 264
 48 264
-colored 48 264
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 79 264
 Special 55 295
-special 2
 ITERATION 38 ------------------------------- 
 MATCHING 48 288
 48 288
-colored 48 288
 BLENDING
 upper edge is covered 48
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 48 299
 Special 79 288
-special 2
 ITERATION 39 ------------------------------- 
 MATCHING 72 0
 72 0
-colored 72 0
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 72 0
 Special 79 31
-special 2
 ITERATION 40 ------------------------------- 
 MATCHING 72 24
 72 24
-colored 72 24
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 24
 Special 79 55
-special 2
 ITERATION 41 ------------------------------- 
 MATCHING 72 48
 72 48
-colored 72 48
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 48
 Special 79 79
-special 2
 ITERATION 42 ------------------------------- 
 MATCHING 72 72
 72 72
-colored 72 72
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 72
 Special 79 103
-special 2
 ITERATION 43 ------------------------------- 
 MATCHING 72 96
 72 96
-colored 72 96
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 96
 Special 79 127
-special 2
 ITERATION 44 ------------------------------- 
 MATCHING 72 120
 72 120
-colored 72 120
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 120
 Special 79 151
-special 2
 ITERATION 45 ------------------------------- 
 MATCHING 72 144
 72 144
-colored 72 144
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 144
 Special 79 175
-special 2
 ITERATION 46 ------------------------------- 
 MATCHING 72 168
 72 168
-colored 72 168
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 168
 Special 79 199
-special 2
 ITERATION 47 ------------------------------- 
 MATCHING 72 192
 72 192
-colored 72 192
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 192
 Special 79 223
-special 2
 ITERATION 48 ------------------------------- 
 MATCHING 72 216
 72 216
-colored 72 216
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 216
 Special 79 247
-special 2
 ITERATION 49 ------------------------------- 
 MATCHING 72 240
 72 240
-colored 72 240
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 240
 Special 79 271
-special 2
 ITERATION 50 ------------------------------- 
 MATCHING 72 264
 72 264
-colored 72 264
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 103 264
 Special 79 295
-special 2
 ITERATION 51 ------------------------------- 
 MATCHING 72 288
 72 288
-colored 72 288
 BLENDING
 upper edge is covered 72
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 72 299
 Special 103 288
-special 2
 ITERATION 52 ------------------------------- 
 MATCHING 96 0
 96 0
-colored 96 0
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 96 0
 Special 103 31
-special 2
 ITERATION 53 ------------------------------- 
 MATCHING 96 24
 96 24
-colored 96 24
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 24
 Special 103 55
-special 2
 ITERATION 54 ------------------------------- 
 MATCHING 96 48
 96 48
-colored 96 48
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 48
 Special 103 79
-special 2
 ITERATION 55 ------------------------------- 
 MATCHING 96 72
 96 72
-colored 96 72
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 72
 Special 103 103
-special 2
 ITERATION 56 ------------------------------- 
 MATCHING 96 96
 96 96
-colored 96 96
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 96
 Special 103 127
-special 2
 ITERATION 57 ------------------------------- 
 MATCHING 96 120
 96 120
-colored 96 120
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 120
 Special 103 151
-special 2
 ITERATION 58 ------------------------------- 
 MATCHING 96 144
 96 144
-colored 96 144
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 144
 Special 103 175
-special 2
 ITERATION 59 ------------------------------- 
 MATCHING 96 168
 96 168
-colored 96 168
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 168
 Special 103 199
-special 2
 ITERATION 60 ------------------------------- 
 MATCHING 96 192
 96 192
-colored 96 192
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 192
 Special 103 223
-special 2
 ITERATION 61 ------------------------------- 
 MATCHING 96 216
 96 216
-colored 96 216
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 216
 Special 103 247
-special 2
 ITERATION 62 ------------------------------- 
 MATCHING 96 240
 96 240
-colored 96 240
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 240
 Special 103 271
-special 2
 ITERATION 63 ------------------------------- 
 MATCHING 96 264
 96 264
-colored 96 264
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 127 264
 Special 103 295
-special 2
 ITERATION 64 ------------------------------- 
 MATCHING 96 288
 96 288
-colored 96 288
 BLENDING
 upper edge is covered 96
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 96 299
 Special 127 288
-special 2
 ITERATION 65 ------------------------------- 
 MATCHING 120 0
 120 0
-colored 120 0
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 120 0
 Special 127 31
-special 2
 ITERATION 66 ------------------------------- 
 MATCHING 120 24
 120 24
-colored 120 24
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 24
 Special 127 55
-special 2
 ITERATION 67 ------------------------------- 
 MATCHING 120 48
 120 48
-colored 120 48
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 48
 Special 127 79
-special 2
 ITERATION 68 ------------------------------- 
 MATCHING 120 72
 120 72
-colored 120 72
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 72
 Special 127 103
-special 2
 ITERATION 69 ------------------------------- 
 MATCHING 120 96
 120 96
-colored 120 96
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 96
 Special 127 127
-special 2
 ITERATION 70 ------------------------------- 
 MATCHING 120 120
 120 120
-colored 120 120
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 120
 Special 127 151
-special 2
 ITERATION 71 ------------------------------- 
 MATCHING 120 144
 120 144
-colored 120 144
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 144
 Special 127 175
-special 2
 ITERATION 72 ------------------------------- 
 MATCHING 120 168
 120 168
-colored 120 168
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 168
 Special 127 199
-special 2
 ITERATION 73 ------------------------------- 
 MATCHING 120 192
 120 192
-colored 120 192
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 192
 Special 127 223
-special 2
 ITERATION 74 ------------------------------- 
 MATCHING 120 216
 120 216
-colored 120 216
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 216
 Special 127 247
-special 2
 ITERATION 75 ------------------------------- 
 MATCHING 120 240
 120 240
-colored 120 240
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 240
 Special 127 271
-special 2
 ITERATION 76 ------------------------------- 
 MATCHING 120 264
 120 264
-colored 120 264
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 151 264
 Special 127 295
-special 2
 ITERATION 77 ------------------------------- 
 MATCHING 120 288
 120 288
-colored 120 288
 BLENDING
 upper edge is covered 120
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 120 299
 Special 151 288
-special 2
 ITERATION 78 ------------------------------- 
 MATCHING 144 0
 144 0
-colored 144 0
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 144 0
 Special 151 31
-special 2
 ITERATION 79 ------------------------------- 
 MATCHING 144 24
 144 24
-colored 144 24
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 24
 Special 151 55
-special 2
 ITERATION 80 ------------------------------- 
 MATCHING 144 48
 144 48
-colored 144 48
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 48
 Special 151 79
-special 2
 ITERATION 81 ------------------------------- 
 MATCHING 144 72
 144 72
-colored 144 72
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 72
 Special 151 103
-special 2
 ITERATION 82 ------------------------------- 
 MATCHING 144 96
 144 96
-colored 144 96
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 96
 Special 151 127
-special 2
 ITERATION 83 ------------------------------- 
 MATCHING 144 120
 144 120
-colored 144 120
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 120
 Special 151 151
-special 2
 ITERATION 84 ------------------------------- 
 MATCHING 144 144
 144 144
-colored 144 144
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 144
 Special 151 175
-special 2
 ITERATION 85 ------------------------------- 
 MATCHING 144 168
 144 168
-colored 144 168
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 168
 Special 151 199
-special 2
 ITERATION 86 ------------------------------- 
 MATCHING 144 192
 144 192
-colored 144 192
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 192
 Special 151 223
-special 2
 ITERATION 87 ------------------------------- 
 MATCHING 144 216
 144 216
-colored 144 216
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 216
 Special 151 247
-special 2
 ITERATION 88 ------------------------------- 
 MATCHING 144 240
 144 240
-colored 144 240
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 240
 Special 151 271
-special 2
 ITERATION 89 ------------------------------- 
 MATCHING 144 264
 144 264
-colored 144 264
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 175 264
 Special 151 295
-special 2
 ITERATION 90 ------------------------------- 
 MATCHING 144 288
 144 288
-colored 144 288
 BLENDING
 upper edge is covered 144
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 144 299
 Special 175 288
-special 2
 ITERATION 91 ------------------------------- 
 MATCHING 168 0
 168 0
-colored 168 0
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 168 0
 Special 175 31
-special 2
 ITERATION 92 ------------------------------- 
 MATCHING 168 24
 168 24
-colored 168 24
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 24
 Special 175 55
-special 2
 ITERATION 93 ------------------------------- 
 MATCHING 168 48
 168 48
-colored 168 48
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 48
 Special 175 79
-special 2
 ITERATION 94 ------------------------------- 
 MATCHING 168 72
 168 72
-colored 168 72
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 72
 Special 175 103
-special 2
 ITERATION 95 ------------------------------- 
 MATCHING 168 96
 168 96
-colored 168 96
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 96
 Special 175 127
-special 2
 ITERATION 96 ------------------------------- 
 MATCHING 168 120
 168 120
-colored 168 120
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 120
 Special 175 151
-special 2
 ITERATION 97 ------------------------------- 
 MATCHING 168 144
 168 144
-colored 168 144
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 144
 Special 175 175
-special 2
 ITERATION 98 ------------------------------- 
 MATCHING 168 168
 168 168
-colored 168 168
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 168
 Special 175 199
-special 2
 ITERATION 99 ------------------------------- 
 MATCHING 168 192
 168 192
-colored 168 192
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 192
 Special 175 223
-special 2
 ITERATION 100 ------------------------------- 
 MATCHING 168 216
 168 216
-colored 168 216
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 216
 Special 175 247
-special 2
 ITERATION 101 ------------------------------- 
 MATCHING 168 240
 168 240
-colored 168 240
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 240
 Special 175 271
-special 2
 ITERATION 102 ------------------------------- 
 MATCHING 168 264
 168 264
-colored 168 264
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 199 264
 Special 175 295
-special 2
 ITERATION 103 ------------------------------- 
 MATCHING 168 288
 168 288
-colored 168 288
 BLENDING
 upper edge is covered 168
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 168 299
 Special 199 288
-special 2
 ITERATION 104 ------------------------------- 
 MATCHING 192 0
 192 0
-colored 192 0
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 192 0
 Special 199 31
-special 2
 ITERATION 105 ------------------------------- 
 MATCHING 192 24
 192 24
-colored 192 24
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 24
 Special 199 55
-special 2
 ITERATION 106 ------------------------------- 
 MATCHING 192 48
 192 48
-colored 192 48
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 48
 Special 199 79
-special 2
 ITERATION 107 ------------------------------- 
 MATCHING 192 72
 192 72
-colored 192 72
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 72
 Special 199 103
-special 2
 ITERATION 108 ------------------------------- 
 MATCHING 192 96
 192 96
-colored 192 96
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 96
 Special 199 127
-special 2
 ITERATION 109 ------------------------------- 
 MATCHING 192 120
 192 120
-colored 192 120
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 120
 Special 199 151
-special 2
 ITERATION 110 ------------------------------- 
 MATCHING 192 144
 192 144
-colored 192 144
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 144
 Special 199 175
-special 2
 ITERATION 111 ------------------------------- 
 MATCHING 192 168
 192 168
-colored 192 168
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 168
 Special 199 199
-special 2
 ITERATION 112 ------------------------------- 
 MATCHING 192 192
 192 192
-colored 192 192
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 192
 Special 199 223
-special 2
 ITERATION 113 ------------------------------- 
 MATCHING 192 216
 192 216
-colored 192 216
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 216
 Special 199 247
-special 2
 ITERATION 114 ------------------------------- 
 MATCHING 192 240
 192 240
-colored 192 240
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 240
 Special 199 271
-special 2
 ITERATION 115 ------------------------------- 
 MATCHING 192 264
 192 264
-colored 192 264
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 223 264
 Special 199 295
-special 2
 ITERATION 116 ------------------------------- 
 MATCHING 192 288
 192 288
-colored 192 288
 BLENDING
 upper edge is covered 192
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 192 299
 Special 223 288
-special 2
 ITERATION 117 ------------------------------- 
 MATCHING 216 0
 216 0
-colored 216 0
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 216 0
 Special 223 31
-special 2
 ITERATION 118 ------------------------------- 
 MATCHING 216 24
 216 24
-colored 216 24
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 24
 Special 223 55
-special 2
 ITERATION 119 ------------------------------- 
 MATCHING 216 48
 216 48
-colored 216 48
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 48
 Special 223 79
-special 2
 ITERATION 120 ------------------------------- 
 MATCHING 216 72
 216 72
-colored 216 72
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 72
 Special 223 103
-special 2
 ITERATION 121 ------------------------------- 
 MATCHING 216 96
 216 96
-colored 216 96
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 96
 Special 223 127
-special 2
 ITERATION 122 ------------------------------- 
 MATCHING 216 120
 216 120
-colored 216 120
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 120
 Special 223 151
-special 2
 ITERATION 123 ------------------------------- 
 MATCHING 216 144
 216 144
-colored 216 144
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 144
 Special 223 175
-special 2
 ITERATION 124 ------------------------------- 
 MATCHING 216 168
 216 168
-colored 216 168
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 168
 Special 223 199
-special 2
 ITERATION 125 ------------------------------- 
 MATCHING 216 192
 216 192
-colored 216 192
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 192
 Special 223 223
-special 2
 ITERATION 126 ------------------------------- 
 MATCHING 216 216
 216 216
-colored 216 216
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 216
 Special 223 247
-special 2
 ITERATION 127 ------------------------------- 
 MATCHING 216 240
 216 240
-colored 216 240
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 240
 Special 223 271
-special 2
 ITERATION 128 ------------------------------- 
 MATCHING 216 264
 216 264
-colored 216 264
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 247 264
 Special 223 295
-special 2
 ITERATION 129 ------------------------------- 
 MATCHING 216 288
 216 288
-colored 216 288
 BLENDING
 upper edge is covered 216
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 216 299
 Special 247 288
-special 2
 ITERATION 130 ------------------------------- 
 MATCHING 240 0
 240 0
-colored 240 0
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 240 0
 Special 247 31
-special 2
 ITERATION 131 ------------------------------- 
 MATCHING 240 24
 240 24
-colored 240 24
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 24
 Special 247 55
-special 2
 ITERATION 132 ------------------------------- 
 MATCHING 240 48
 240 48
-colored 240 48
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 48
 Special 247 79
-special 2
 ITERATION 133 ------------------------------- 
 MATCHING 240 72
 240 72
-colored 240 72
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 72
 Special 247 103
-special 2
 ITERATION 134 ------------------------------- 
 MATCHING 240 96
 240 96
-colored 240 96
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 96
 Special 247 127
-special 2
 ITERATION 135 ------------------------------- 
 MATCHING 240 120
 240 120
-colored 240 120
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 120
 Special 247 151
-special 2
 ITERATION 136 ------------------------------- 
 MATCHING 240 144
 240 144
-colored 240 144
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 144
 Special 247 175
-special 2
 ITERATION 137 ------------------------------- 
 MATCHING 240 168
 240 168
-colored 240 168
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 168
 Special 247 199
-special 2
 ITERATION 138 ------------------------------- 
 MATCHING 240 192
 240 192
-colored 240 192
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 192
 Special 247 223
-special 2
 ITERATION 139 ------------------------------- 
 MATCHING 240 216
 240 216
-colored 240 216
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 216
 Special 247 247
-special 2
 ITERATION 140 ------------------------------- 
 MATCHING 240 240
 240 240
-colored 240 240
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 240
 Special 247 271
-special 2
 ITERATION 141 ------------------------------- 
 MATCHING 240 264
 240 264
-colored 240 264
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 271 264
 Special 247 295
-special 2
 ITERATION 142 ------------------------------- 
 MATCHING 240 288
 240 288
-colored 240 288
 BLENDING
 upper edge is covered 240
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 240 299
 Special 271 288
-special 2
 ITERATION 143 ------------------------------- 
 MATCHING 264 0
 264 0
-colored 264 0
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 264 0
 Special 271 31
-special 2
 ITERATION 144 ------------------------------- 
 MATCHING 264 24
 264 24
-colored 264 24
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 24
 Special 271 55
-special 2
 ITERATION 145 ------------------------------- 
 MATCHING 264 48
 264 48
-colored 264 48
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 48
 Special 271 79
-special 2
 ITERATION 146 ------------------------------- 
 MATCHING 264 72
 264 72
-colored 264 72
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 72
 Special 271 103
-special 2
 ITERATION 147 ------------------------------- 
 MATCHING 264 96
 264 96
-colored 264 96
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 96
 Special 271 127
-special 2
 ITERATION 148 ------------------------------- 
 MATCHING 264 120
 264 120
-colored 264 120
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 120
 Special 271 151
-special 2
 ITERATION 149 ------------------------------- 
 MATCHING 264 144
 264 144
-colored 264 144
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 144
 Special 271 175
-special 2
 ITERATION 150 ------------------------------- 
 MATCHING 264 168
 264 168
-colored 264 168
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 168
 Special 271 199
-special 2
 ITERATION 151 ------------------------------- 
 MATCHING 264 192
 264 192
-colored 264 192
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 192
 Special 271 223
-special 2
 ITERATION 152 ------------------------------- 
 MATCHING 264 216
 264 216
-colored 264 216
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 216
 Special 271 247
-special 2
 ITERATION 153 ------------------------------- 
 MATCHING 264 240
 264 240
-colored 264 240
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 240
 Special 271 271
-special 2
 ITERATION 154 ------------------------------- 
 MATCHING 264 264
 264 264
-colored 264 264
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 448
 Special 295 264
 Special 271 295
-special 2
 ITERATION 155 ------------------------------- 
 MATCHING 264 288
 264 288
-colored 264 288
 BLENDING
 upper edge is covered 264
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 264 299
 Special 295 288
-special 2
 ITERATION 156 ------------------------------- 
 MATCHING 288 0
 288 0
-colored 288 0
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 256
 Special 288 0
 Special 295 31
-special 2
 ITERATION 157 ------------------------------- 
 MATCHING 288 24
 288 24
-colored 288 24
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 24
 Special 295 55
-special 2
 ITERATION 158 ------------------------------- 
 MATCHING 288 48
 288 48
-colored 288 48
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 48
 Special 295 79
-special 2
 ITERATION 159 ------------------------------- 
 MATCHING 288 72
 288 72
-colored 288 72
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 72
 Special 295 103
-special 2
 ITERATION 160 ------------------------------- 
 MATCHING 288 96
 288 96
-colored 288 96
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 96
 Special 295 127
-special 2
 ITERATION 161 ------------------------------- 
 MATCHING 288 120
 288 120
-colored 288 120
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 120
 Special 295 151
-special 2
 ITERATION 162 ------------------------------- 
 MATCHING 288 144
 288 144
-colored 288 144
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 144
 Special 295 175
-special 2
 ITERATION 163 ------------------------------- 
 MATCHING 288 168
 288 168
-colored 288 168
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 168
 Special 295 199
-special 2
 ITERATION 164 ------------------------------- 
 MATCHING 288 192
 288 192
-colored 288 192
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 192
 Special 295 223
-special 2
 ITERATION 165 ------------------------------- 
 MATCHING 288 216
 288 216
-colored 288 216
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 216
 Special 295 247
-special 2
 ITERATION 166 ------------------------------- 
 MATCHING 288 240
 288 240
-colored 288 240
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 240
 Special 295 271
-special 2
 ITERATION 167 ------------------------------- 
 MATCHING 288 264
 288 264
-colored 288 264
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 288
 Special 299 264
 Special 295 295
-special 2
 ITERATION 168 ------------------------------- 
 MATCHING 288 288
 288 288
-colored 288 288
 BLENDING
 upper edge is covered 288
 Case 1
-  find intersections 
 numer of intersections 1
 intersection size 128
 Special 299 288
 Special 288 299
-special 2
