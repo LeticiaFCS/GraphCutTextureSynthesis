@@ -252,25 +252,6 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
             int neiJA = j + directions[d].second;   
             if(!insideImg(neiIA, neiJA)) continue;
             if(pixelColorStatus[neiIA][neiJA] != PixelStatusEnum::colored) continue;
-            int neiIB = i + directions[(d+1) % directions.size()].first;
-            int neiJB = j + directions[(d+1) % directions.size()].second;   
-            bool outsideB = !insideImg(neiIB, neiJB);        
-            if(pixelColorStatus[neiIA][neiJA] == PixelStatusEnum::colored){
-                //std::cout<<"\ttesting "<<i<<" "<<j<<" "<<" "<<d<<" -- "<<printEnum(pixelColorStatus[neiIA][neiJA]);
-                // if(outsideB)std::cout<<" out";
-                // else std::cout<<" "<<printEnum(pixelColorStatus[neiIB][neiJB]);
-                // std::cout<<std::endl;   
-            }
-            if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
-                std::cout<<"Special "<<i<<" "<<j<<std::endl;
-                S = {pos,d};
-            }
-        }
-        for(int d = 0; d < (int) directions.size(); d++){
-            int neiIA = i + directions[d].first;
-            int neiJA = j + directions[d].second;   
-            if(!insideImg(neiIA, neiJA)) continue;
-            if(pixelColorStatus[neiIA][neiJA] != PixelStatusEnum::colored) continue;
             int neiIB = i + directions[(d-1+directions.size()) % directions.size()].first;
             int neiJB = j + directions[(d-1+directions.size()) % directions.size()].second;
             bool outsideB = !insideImg(neiIB, neiJB);             
@@ -282,7 +263,26 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
             }
             if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
                 std::cout<<"Special "<<i<<" "<<j<<std::endl;
-                T = {pos, d};
+                S = {pos, d};
+            }
+        }
+        for(int d = 0; d < (int) directions.size(); d++){
+            int neiIA = i + directions[d].first;
+            int neiJA = j + directions[d].second;   
+            if(!insideImg(neiIA, neiJA)) continue;
+            if(pixelColorStatus[neiIA][neiJA] != PixelStatusEnum::colored) continue;
+            int neiIB = i + directions[(d+1) % directions.size()].first;
+            int neiJB = j + directions[(d+1) % directions.size()].second;   
+            bool outsideB = !insideImg(neiIB, neiJB);        
+            if(pixelColorStatus[neiIA][neiJA] == PixelStatusEnum::colored){
+                //std::cout<<"\ttesting "<<i<<" "<<j<<" "<<" "<<d<<" -- "<<printEnum(pixelColorStatus[neiIA][neiJA]);
+                // if(outsideB)std::cout<<" out";
+                // else std::cout<<" "<<printEnum(pixelColorStatus[neiIB][neiJB]);
+                // std::cout<<std::endl;   
+            }
+            if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
+                std::cout<<"Special "<<i<<" "<<j<<std::endl;
+                T = {pos,d};
             }
         }
     }
