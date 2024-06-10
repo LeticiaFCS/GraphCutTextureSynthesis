@@ -6,6 +6,7 @@
 #include <queue>
 #include <tuple>
 #include <map>
+#include <cassert>
 
 #include<string>
 std::string printEnum(int x){
@@ -58,7 +59,7 @@ private:
             std::vector<std::pair<int, int>> interPixels;
             Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
     };
-    std::vector<std::pair<int, int>> findSTInIntersection(Intersection &inter);
+    std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersection(Intersection &inter);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
 
 };
@@ -206,8 +207,7 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
     std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
     for(auto &intersection : intersections){
         std::cout<<"intersection size "<<intersection.interPixels.size()<<std::endl;
-        std::vector<std::pair<int, int>> specialVertices = findSTInIntersection(intersection);
-        std::cout<<"special "<<specialVertices.size()<<std::endl;
+        auto [S, T] = findSTInIntersection(intersection);
     }
     for(auto &intersection : intersections){
         for(auto [i,j] : intersection.interPixels)
@@ -243,9 +243,8 @@ bool ImageTexture::insideImg(int i, int j){
     return 0 <= i && i < imgHeight && 0 <= j && j < imgWidht;
 }
 
-std::vector<std::pair<int, int>> ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter){
-    std::vector<std::pair<int, int>> special;
-    
+std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter){
+    std::pair<int, int> S = {-1,-1}, T = {-1,-1};
     for(int pos = 0; pos < (int) inter.interPixels.size(); pos++){
         const auto &[i, j] = inter.interPixels[pos];
         for(int d = 0; d < (int) directions.size(); d++){
@@ -264,7 +263,7 @@ std::vector<std::pair<int, int>> ImageTexture::findSTInIntersection(ImageTexture
             }
             if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
                 std::cout<<"Special "<<i<<" "<<j<<std::endl;
-                special.emplace_back(pos, d);
+                S = {pos,d};
             }
         }
         for(int d = 0; d < (int) directions.size(); d++){
@@ -283,12 +282,13 @@ std::vector<std::pair<int, int>> ImageTexture::findSTInIntersection(ImageTexture
             }
             if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
                 std::cout<<"Special "<<i<<" "<<j<<std::endl;
-                special.emplace_back(pos, d);
+                T = {pos, d};
             }
         }
     }
-    assert(special.size() == 2);
-    return special;
+    assert((S) != (std::pair<int, int>{-1,-1}));
+    assert((T) != (std::pair<int, int>{-1,-1}));
+    return {S, T};
 }
 std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     static std::vector<std::vector<int>> lastVisit(imgHeight, std::vector<int>(imgWidht, 0));
