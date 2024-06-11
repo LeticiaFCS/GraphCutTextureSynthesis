@@ -201,8 +201,11 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
         auto [S, T] = findSTInIntersection(inter);
         markMinABCut(S, T, inter);
     }
+    for(auto &intersection : intersections){
+        for(auto [i,j] : intersection.interPixels)
+            pixelColorStatus[i][j] = PixelStatusEnum::colored;
+    }
     copyPixelsNewColor(heightOffset, widthOffset, inputImg);
-    
 }
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 2"<<std::endl;
