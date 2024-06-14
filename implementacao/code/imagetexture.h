@@ -8,6 +8,8 @@
 #include <map>
 #include <cassert>
 
+#include <unistd.h>  //just for debug
+#include <cstdlib> // just for debug
 #include<string>
 std::string printEnum(int x){ // just to debug
     if(x == 0) return "colored";
@@ -55,6 +57,7 @@ private:
     }};
     static int nextDir(int i);
     static int prevDir(int i);
+    static int revDir(int i);
     static long double pow2(long double x);
     template<typename Pixel>
     static long double calcCost(const Pixel &as, const Pixel &bs, const Pixel &at, const Pixel &bt);
@@ -204,10 +207,10 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
         auto [S, T] = findSTInIntersection(inter);
         markMinABCut(S, T, inter, heightOffset, widthOffset, inputImg);
     }
-    for(auto &inter : intersections){
-        for(auto [i,j] : inter.interPixels)
-            pixelColorStatus[i][j] = PixelStatusEnum::colored;
-    }
+    // for(auto &inter : intersections){
+    //     for(auto [i,j] : inter.interPixels)
+    //         pixelColorStatus[i][j] = PixelStatusEnum::colored;
+    // }
     copyPixelsNewColor(heightOffset, widthOffset, inputImg);
 }
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -243,8 +246,18 @@ int ImageTexture::prevDir(int i){
         j += int(directions.size());
     return j;
 }
+int ImageTexture::revDir(int i){
+    return (i + directions.size() / 2) % directions.size();
+}
 // Auxiliar Nonstatic Functions
 void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
+            if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
+                outputImg[a][b] = png::rgb_pixel(155,0,100);
+            }
+    render("../output/areia_da_praia.png");
+    usleep(800000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
@@ -364,6 +377,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidht + 1));
     static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidht + 1));
     static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidht + 1, -1));
+    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidht + 1, {true}));
     /*find min cut (min s-t path)*/{
         using qtype = std::tuple<long double, int, int>;
         std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
@@ -385,16 +399,84 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ]){
                     long double curCost = edgesCosts[i][j][d];
                     if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
-                        parent[nextI][nextJ] = d;
+                        parent[nextI][nextJ] = revDir(d);
                         dist[nextI][nextJ] = std::min(pathCost + curCost, inftyCost); // avoid overflow
                         Q.emplace(dist[nextI][nextJ], nextI, nextJ);
                     }
                 }
             }
         }
-        assert(("T should always be visited", (vis[T.first][T.second])));
+        assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
+        { // mark ST path
+            //std::cout<<"ST path"<<std::endl;
+            int curI = T.first, curJ = T.second;
+            while(std::make_pair(curI, curJ) != S){
+                //std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<std::endl;
+                int d = parent[curI][curJ];
+                assert(0 <= d && d < int(directions.size()));
+                validEdge[curI][curJ][d] = false;
+                std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
+                d = revDir(d);
+                validEdge[curI][curJ][d] = false;
+            }
+        }
+    }
+    /*mark left and right of min cut*/{
+        for(auto [i, j] : inter.interPixels){ //mark left of min cut
+            if(pixelColorStatus[i][j] != PixelStatusEnum::intersection)
+                continue;
+            bool newBFS = false;
+            for(int d = 0; d < (int) directions.size(); d++){
+                int neiI = i + directions[d].first;
+                int neiJ = j + directions[d].second;
+                if((insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::intersection))
+                    continue;
+                int dualI = neiI + primalToDual[nextDir(d)].first;
+                int dualJ = neiJ + primalToDual[nextDir(d)].second;
+                assert(insideDual(dualI, dualJ));
+                if(validEdge[dualI][dualJ][d]){
+                    newBFS = true;
+                    break;
+                }
+            }
+            if(newBFS){
+                std::vector<std::pair<int, int>> q = {{i, j}};
+                pixelColorStatus[i][j] = PixelStatusEnum::colored;
+                for(int front = 0; front < int(q.size()); front++){
+                    int fI = q[front].first, fJ = q[front].second;
+                    for(int d = 0; d < (int) directions.size(); d++){
+                        int nxtI = fI + directions[d].first;
+                        int nxtJ = fJ + directions[d].second;
+                        if(!insidePrimal(nxtI, nxtJ) || pixelColorStatus[nxtI][nxtJ] != PixelStatusEnum::intersection)
+                            continue;
+                        int dualI = nxtI + primalToDual[nextDir(d)].first;
+                        int dualJ = nxtJ + primalToDual[nextDir(d)].second;
+                        assert(insideDual(dualI, dualJ));
+                        if(validEdge[dualI][dualJ][d]){
+                            pixelColorStatus[nxtI][nxtJ] = PixelStatusEnum::colored;
+                            q.emplace_back(nxtI, nxtJ);
+                        }
+                    }
+                }                   
+            }
+        }
+        for(auto [i, j] : inter.interPixels) //mark right of min cut
+            if(pixelColorStatus[i][j] == PixelStatusEnum::intersection)
+                pixelColorStatus[i][j] = PixelStatusEnum::newcolor;
     }
     /*unmark cells in dual of intersection*/{
+        { //unmark ST path
+            int curI = T.first, curJ = T.second;
+            while(std::make_pair(curI, curJ) != S){
+                //std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<std::endl;
+                int d = parent[curI][curJ];
+                assert(0 <= d && d < int(directions.size()));
+                validEdge[curI][curJ][d] = true;
+                std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
+                d = revDir(d);
+                validEdge[curI][curJ][d] = true;
+            }
+        }
         for(auto [i,j] : inter.interPixels)
             for(auto [di, dj] : primalToDual)
                 if(insidePrimal(i + di, j + dj)){

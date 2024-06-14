@@ -9,9 +9,9 @@ int main(int argc, char *argv[]){
         for(int i = 0; i < 13 * 13; i++){
             std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
             texture.patchFittingIteration("../input/areia_da_praia.png");
-            if(argc > 1)
-                usleep(200000);
             texture.render("../output/areia_da_praia.png");
+            if(argc > 1)
+                usleep(400000);
         }
     } catch(...){
         std::cout<<"exception"<<std::endl;
