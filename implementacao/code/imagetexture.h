@@ -6,6 +6,8 @@
 #include <queue>
 #include <tuple>
 #include <map>
+#include <random>
+#include <chrono>
 #include <cassert>
 
 #include <unistd.h>  //just for debug
@@ -36,7 +38,7 @@ private:
     const int imgWidht;
     const int imgHeight;
     std::vector<std::vector<PixelStatusEnum>> pixelColorStatus;
-    static constexpr long double inftyCost = std::numeric_limits<long double>::max() / 4;
+    static constexpr long double inftyCost = std::numeric_limits<long double>::max() / 8;
     static constexpr std::array<std::pair<int, int>, 4> directions = {{
         {-1, 0},    //    |3|
         { 0,-1},    //  |0|x|2|
@@ -83,7 +85,7 @@ private:
     std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersection(Intersection &inter);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
-
+    void markIntersectionRed(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg); //just to debug
 };
 
 /*
@@ -132,6 +134,11 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
+    static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().
+count());
+    static std::uniform_int_distribution<int> nextHeight(0, imgHeight-1);
+    static std::uniform_int_distribution<int> nextWidth(0, imgWidht-1);
+    return {nextHeight(rng), nextWidth(rng)};
     static int heightOffset = 0;
     static int widthOffset = -24;
     widthOffset += 24;
@@ -257,7 +264,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 outputImg[a][b] = png::rgb_pixel(155,0,100);
             }
     render("../output/areia_da_praia.png");
-    usleep(800000);
+    usleep(200000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
@@ -400,11 +407,14 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                     long double curCost = edgesCosts[i][j][d];
                     if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
                         parent[nextI][nextJ] = revDir(d);
-                        dist[nextI][nextJ] = std::min(pathCost + curCost, inftyCost); // avoid overflow
+                        dist[nextI][nextJ] = pathCost + curCost; // avoid overflow
                         Q.emplace(dist[nextI][nextJ], nextI, nextJ);
                     }
                 }
             }
+        }
+        if(!vis[T.first][T.second]){
+            markIntersectionRed(heightOffset, widthOffset, inputImg);
         }
         assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
         { // mark ST path
@@ -429,7 +439,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             for(int d = 0; d < (int) directions.size(); d++){
                 int neiI = i + directions[d].first;
                 int neiJ = j + directions[d].second;
-                if((insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::intersection))
+                if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] != PixelStatusEnum::newcolor)
                     continue;
                 int dualI = neiI + primalToDual[nextDir(d)].first;
                 int dualJ = neiJ + primalToDual[nextDir(d)].second;
@@ -485,4 +495,11 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                     vis[i + di][j + dj] = false;
                 }
     }
+}
+void ImageTexture::markIntersectionRed(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+    std::cout<<"MARK RED\n";
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
+            outputImg[a][b] = png::rgb_pixel(155,0,0);
+    render("../output/areia_da_praia.png");    
 }
