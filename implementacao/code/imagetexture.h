@@ -73,6 +73,7 @@ private:
     void blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
 
     void copyPixelsNewColor(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);    
+    bool inPrimalBorder(int i, int j);
     bool insidePrimal(int i, int j);    
     bool insideDual(int i, int j);
     bool insideImg(int i, int j, const png::image<png::rgb_pixel> &img);
@@ -82,7 +83,8 @@ private:
             std::vector<std::pair<int, int>> interPixels;
             Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
     };
-    std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersection(Intersection &inter);
+    //int heightOffset, int widthOffset for debug, will change later
+    std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersection(Intersection &inter, int heightOffset, int widthOffset);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void markIntersectionRed(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg); //just to debug
@@ -211,7 +213,7 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
     std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
     for(auto &inter : intersections){
         std::cout<<"intersection size "<<inter.interPixels.size()<<std::endl;
-        auto [S, T] = findSTInIntersection(inter);
+        auto [S, T] = findSTInIntersection(inter, heightOffset, widthOffset);
         markMinABCut(S, T, inter, heightOffset, widthOffset, inputImg);
     }
     // for(auto &inter : intersections){
@@ -264,13 +266,16 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 outputImg[a][b] = png::rgb_pixel(155,0,100);
             }
     render("../output/areia_da_praia.png");
-    usleep(200000);
+    //usleep(200000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidht; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
                 outputImg[a][b] = inputImg[i][j];
                 pixelColorStatus[a][b] = PixelStatusEnum::colored;
             }
+}
+bool ImageTexture::inPrimalBorder(int i, int j){
+    return i == 0 || i == (imgHeight - 1) || j == 0 || j == (imgWidht - 1);
 }
 bool ImageTexture::insidePrimal(int i, int j){
     return 0 <= i && i < imgHeight && 0 <= j && j < imgWidht;
@@ -282,23 +287,18 @@ bool ImageTexture::insideDual(int i, int j){
 bool ImageTexture::insideImg(int i, int j, const png::image<png::rgb_pixel> &img){
     return 0 <= i && i < int(img.get_height()) && 0 <= j && j < int(img.get_width());
 }
-std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter){
+std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter, int heightOffset, int widthOffset){
     std::pair<int, int> S = {-1,-1}, T = {-1,-1};
     for(int pos = 0; pos < (int) inter.interPixels.size(); pos++){
         const auto &[i, j] = inter.interPixels[pos];
+        if(!inPrimalBorder(i, j)) continue;
         for(int d = 0; d < (int) directions.size(); d++){
             int neiIA = i + directions[d].first;
             int neiJA = j + directions[d].second;   
             if(!insidePrimal(neiIA, neiJA)) continue;
-            if(pixelColorStatus[neiIA][neiJA] != PixelStatusEnum::colored) continue;
-            int prevD = prevDir(d);
-            int neiIB = i + directions[prevD].first;
-            int neiJB = j + directions[prevD].second;
-            bool outsideB = !insidePrimal(neiIB, neiJB);
-            if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
-                std::cout<<"Special "<<i<<" "<<j<<std::endl;
-                S = {i + primalToDual[d].first, j + primalToDual[d].second};
-            }
+            if(pixelColorStatus[neiIA][neiJA] != PixelStatusEnum::newcolor) continue;
+            std::cout<<"Special S "<<i<<" "<<j<<std::endl;
+            S = {i + primalToDual[d].first, j + primalToDual[d].second};
         }
         for(int d = 0; d < (int) directions.size(); d++){
             int neiIA = i + directions[d].first;
@@ -310,10 +310,16 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
             int neiJB = j + directions[nextD].second;   
             bool outsideB = !insidePrimal(neiIB, neiJB);        
             if(outsideB || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::notcolored || pixelColorStatus[neiIB][neiJB] == PixelStatusEnum::newcolor){
-                std::cout<<"Special "<<i<<" "<<j<<std::endl;
+                std::cout<<"Special T "<<i<<" "<<j<<std::endl;
                 T = {i + primalToDual[nextD].first, j + primalToDual[nextD].second};
             }
         }
+    }
+    if((S) == (std::pair<int, int>{-1,-1}) || (T) == (std::pair<int, int>{-1,-1})){
+        for(auto [x,y] : inter.interPixels){
+            outputImg[x][y] = png::rgb_pixel(0,155,0);
+        }
+        render("../output/areia_da_praia.png");
     }
     assert(("findSTInIntersection should always find S", (S) != (std::pair<int, int>{-1,-1})));
     assert(("findSTInIntersection should always find T", (T) != (std::pair<int, int>{-1,-1})));
@@ -413,8 +419,11 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 }
             }
         }
-        if(!vis[T.first][T.second]){
-            markIntersectionRed(heightOffset, widthOffset, inputImg);
+        if(!vis[T.first][T.second]){        
+            for(auto [x,y] : inter.interPixels){
+                outputImg[x][y] = png::rgb_pixel(155,0,0);
+            }
+            render("../output/areia_da_praia.png");
         }
         assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
         { // mark ST path
