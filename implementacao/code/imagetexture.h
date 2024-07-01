@@ -266,7 +266,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 outputImg[a][b] = png::rgb_pixel(155,0,100);
             }
     render("../output/areia_da_praia.png");
-    //usleep(200000);
+    usleep(800000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
@@ -291,32 +291,29 @@ bool ImageTexture::insideImg(int i, int j, const png::image<png::rgb_pixel> &img
 std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::pair<int, int> S = {-1,-1}, T = {-1,-1};
     for(const auto &[i, j] : inter.interPixels){
-        std::vector<int> dirToTest;
-        if(i == heightOffset){// upper border
-            dirToTest.push_back(0);
-        }
-        if(j == widthOffset){// left border
-            dirToTest.push_back(1);
-        }
-        if(i == std::min<int>(heightOffset + inputImg.get_height(), imgHeight) - 1){// down border
-            dirToTest.push_back(2);
-        }
-        if(j == std::min<int>(widthOffset + inputImg.get_width(), imgWidth) - 1){// right border
-            dirToTest.push_back(3);
-        }
-        for(int d : dirToTest){
+        for(int d = 0; d < (int) directions.size(); d++){
+            int neiI = i + directions[d].first;
+            int neiJ = j + directions[d].second;
             { //S
-                int neiI = i + directions[d].first;
-                int neiJ = j + directions[d].second;
-                if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::newcolor){
-                    S = {i + primalToDual[d].first, j + primalToDual[d].second};
+                int nextI = i + directions[prevDir(d)].first;
+                int nextJ = j + directions[prevDir(d)].second;
+                if(!insidePrimal(nextI, nextJ)){
+                    S = {i + primalToDual[prevDir(d)].first, j + primalToDual[prevDir(d)].second};
+                }else if(pixelColorStatus[nextI][nextJ] != PixelStatusEnum::newcolor && pixelColorStatus[nextI][nextJ] != PixelStatusEnum::intersection){
+                    S = {i + primalToDual[prevDir(d)].first, j + primalToDual[prevDir(d)].second};
                 }
+
             }
-            { //T
-                int neiI = i + directions[revDir(d)].first;
-                int neiJ = j + directions[revDir(d)].second;
-                if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::newcolor){
-                    T = {i + primalToDual[prevDir(d)].first, j + primalToDual[prevDir(d)].second};
+            if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::newcolor){
+                { //T
+                    int nextI = i + directions[nextDir(d)].first;
+                    int nextJ = j + directions[nextDir(d)].second;
+                    if(!insidePrimal(nextI, nextJ)){
+                        T = {i + primalToDual[d].first, j + primalToDual[d].second};
+                    }else if(pixelColorStatus[nextI][nextJ] != PixelStatusEnum::newcolor && pixelColorStatus[nextI][nextJ] != PixelStatusEnum::intersection){
+                        T = {i + primalToDual[d].first, j + primalToDual[d].second};
+                    }
+
                 }
             }
         }
@@ -329,6 +326,8 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
     }
     assert(("findSTInIntersection should always find S", (S) != (std::pair<int, int>{-1,-1})));
     assert(("findSTInIntersection should always find T", (T) != (std::pair<int, int>{-1,-1})));
+    std::cout<<" S is "<<S.first<<" "<<S.second<<std::endl;
+    std::cout<<" T is "<<T.first<<" "<<T.second<<std::endl;
     return {S, T};
 }
 std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -433,10 +432,10 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
         }
         assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
         { // mark ST path
-            //std::cout<<"ST path"<<std::endl;
+            std::cout<<"ST path"<<std::endl;
             int curI = T.first, curJ = T.second;
             while(std::make_pair(curI, curJ) != S){
-                //std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<std::endl;
+                std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
                 int d = parent[curI][curJ];
                 assert(0 <= d && d < int(directions.size()));
                 validEdge[curI][curJ][d] = false;
