@@ -38,11 +38,11 @@ private:
     const int imgWidth;
     const int imgHeight;
     std::vector<std::vector<PixelStatusEnum>> pixelColorStatus;
-    static constexpr long double inftyCost = std::numeric_limits<long double>::max() / 8;
+    static constexpr long double inftyCost = 2000000;
     static constexpr std::array<std::pair<int, int>, 4> directions = {{
-        {-1, 0},    //    |3|
-        { 0,-1},    //  |0|x|2|
-        { 1, 0},    //    |1|
+        {-1, 0},    //    |0|
+        { 0,-1},    //  |1|x|3|
+        { 1, 0},    //    |2|
         { 0, 1}     //
     }};
     static constexpr std::array<std::pair<int, int>, 4> primalToDual = {{
@@ -136,8 +136,8 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
-    static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().
-count());
+    //static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+    static std::mt19937_64 rng(12275994992249);
     static std::uniform_int_distribution<int> nextHeight(0, imgHeight-1);
     static std::uniform_int_distribution<int> nextWidth(0, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
@@ -263,7 +263,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
-                outputImg[a][b] = png::rgb_pixel(155,0,100);
+                outputImg[a][b] = png::rgb_pixel(0,0,155);
             }
     render("../output/areia_da_praia.png");
     usleep(800000);
@@ -294,6 +294,8 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         for(int d = 0; d < (int) directions.size(); d++){
             int neiI = i + directions[d].first;
             int neiJ = j + directions[d].second;
+            if(!insidePrimal(neiI, neiJ) || pixelColorStatus[neiI][neiJ] != PixelStatusEnum::newcolor)
+                continue;
             { //S
                 int nextI = i + directions[prevDir(d)].first;
                 int nextJ = j + directions[prevDir(d)].second;
@@ -304,8 +306,7 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
                 }
 
             }
-            if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] == PixelStatusEnum::newcolor){
-                { //T
+            { //T
                     int nextI = i + directions[nextDir(d)].first;
                     int nextJ = j + directions[nextDir(d)].second;
                     if(!insidePrimal(nextI, nextJ)){
@@ -313,8 +314,6 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
                     }else if(pixelColorStatus[nextI][nextJ] != PixelStatusEnum::newcolor && pixelColorStatus[nextI][nextJ] != PixelStatusEnum::intersection){
                         T = {i + primalToDual[d].first, j + primalToDual[d].second};
                     }
-
-                }
             }
         }
     }
@@ -395,7 +394,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
     static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
-    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true}));
+    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
     /*find min cut (min s-t path)*/{
         using qtype = std::tuple<long double, int, int>;
         std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
@@ -435,7 +434,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             std::cout<<"ST path"<<std::endl;
             int curI = T.first, curJ = T.second;
             while(std::make_pair(curI, curJ) != S){
-                std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+                std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
                 int d = parent[curI][curJ];
                 assert(0 <= d && d < int(directions.size()));
                 validEdge[curI][curJ][d] = false;
@@ -446,47 +445,49 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
         }
     }
     /*mark left and right of min cut*/{
-        for(auto [i, j] : inter.interPixels){ //mark left of min cut
-            if(pixelColorStatus[i][j] != PixelStatusEnum::intersection)
-                continue;
-            bool newBFS = false;
-            for(int d = 0; d < (int) directions.size(); d++){
-                int neiI = i + directions[d].first;
-                int neiJ = j + directions[d].second;
-                if(insidePrimal(neiI, neiJ) && pixelColorStatus[neiI][neiJ] != PixelStatusEnum::newcolor)
-                    continue;
-                int dualI = neiI + primalToDual[nextDir(d)].first;
-                int dualJ = neiJ + primalToDual[nextDir(d)].second;
-                assert(insideDual(dualI, dualJ));
-                if(validEdge[dualI][dualJ][d]){
-                    newBFS = true;
-                    break;
-                }
-            }
-            if(newBFS){
-                std::vector<std::pair<int, int>> q = {{i, j}};
-                pixelColorStatus[i][j] = PixelStatusEnum::colored;
+        std::cout<<"Mark left of min cut"<<std::endl;
+        int curI = T.first, curJ = T.second;
+        
+        while(std::make_pair(curI, curJ) != S){
+            std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+            int d = parent[curI][curJ];
+            assert(0 <= d && d < int(directions.size()));
+            std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
+            d = revDir(d);
+            int firstI, firstJ;
+            std::tie(firstI, firstJ) = std::make_pair(curI + dualToPrimal[d].first, curJ + dualToPrimal[d].second);
+            if(insidePrimal(firstI, firstJ) && pixelColorStatus[firstI][firstJ] == PixelStatusEnum::intersection){
+                std::cout<<"Start BFS from "<<firstI<<" "<<firstJ<<std::endl;
+                std::cout<<"  Because "<<curI<<" "<<curJ<<" dir "<<d<<" "<<revDir(d)<<std::endl;
+                std::vector<std::pair<int, int>> q = {{firstI, firstJ}};
+                pixelColorStatus[firstI][firstJ] = PixelStatusEnum::colored;
                 for(int front = 0; front < int(q.size()); front++){
                     int fI = q[front].first, fJ = q[front].second;
+                    std::cout<<"\tfront "<<fI<<" "<<fJ<<std::endl;
                     for(int d = 0; d < (int) directions.size(); d++){
                         int nxtI = fI + directions[d].first;
                         int nxtJ = fJ + directions[d].second;
                         if(!insidePrimal(nxtI, nxtJ) || pixelColorStatus[nxtI][nxtJ] != PixelStatusEnum::intersection)
                             continue;
-                        int dualI = nxtI + primalToDual[nextDir(d)].first;
-                        int dualJ = nxtJ + primalToDual[nextDir(d)].second;
+                        int dualI = fI + primalToDual[d].first;
+                        int dualJ = fJ + primalToDual[d].second;
                         assert(insideDual(dualI, dualJ));
-                        if(validEdge[dualI][dualJ][d]){
+                        std::cout<<"\t   Test "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
+                        if(validEdge[dualI][dualJ][prevDir(d)]){
+                            std::cout<<"\t   To "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
                             pixelColorStatus[nxtI][nxtJ] = PixelStatusEnum::colored;
                             q.emplace_back(nxtI, nxtJ);
                         }
                     }
-                }                   
-            }
+                }
+            }  
         }
+        
+    
         for(auto [i, j] : inter.interPixels) //mark right of min cut
-            if(pixelColorStatus[i][j] == PixelStatusEnum::intersection)
+            if(pixelColorStatus[i][j] == PixelStatusEnum::intersection){
                 pixelColorStatus[i][j] = PixelStatusEnum::newcolor;
+            }
     }
     /*unmark cells in dual of intersection*/{
         { //unmark ST path
