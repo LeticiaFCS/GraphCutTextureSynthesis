@@ -85,10 +85,12 @@ private:
             Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
     };
     //int heightOffset, int widthOffset for debug, will change later
-    std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersection(Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
+    std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersectionCase1(Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
-    void markIntersectionRed(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg); //just to debug
+    //Case 2 auxiliar functions
+    std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset);
+    std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset); 
 };
 
 /*
@@ -137,8 +139,10 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
-    static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-    //static std::mt19937_64 rng(12275994992249);
+    static const uint64_t rngSeed = 4081664392750;
+    //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
+    std::cout<<"Seed is "<<rngSeed<<std::endl;
+    static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(0, imgHeight-1);
     static std::uniform_int_distribution<int> nextWidth(0, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
@@ -214,7 +218,7 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
     std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
     for(auto &inter : intersections){
         std::cout<<"intersection size "<<inter.interPixels.size()<<std::endl;
-        auto [S, T] = findSTInIntersection(inter, heightOffset, widthOffset, inputImg);
+        auto [S, T] = findSTInIntersectionCase1(inter, heightOffset, widthOffset, inputImg);
         markMinABCut(S, T, inter, heightOffset, widthOffset, inputImg);
     }
     // for(auto &inter : intersections){
@@ -222,10 +226,32 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
     //         pixelColorStatus[i][j] = PixelStatusEnum::colored;
     // }
     copyPixelsNewColor(heightOffset, widthOffset, inputImg);
+
+    /*sanity test*/{
+        for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+            for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
+                assert(("All pixels should be colored", pixelColorStatus[a][b] == PixelStatusEnum::colored));
+    }
 }
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 2"<<std::endl;
-    //Intersection intersection = findIntersections(heightOffset, widthOffset, inputImg)[0];
+    Intersection intersection;
+    /*find intersection*/{
+        auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
+        std::cout<<" Number of intersections is "<<intersections.size()<<std::endl;
+        assert(intersections.size() == 1);
+        intersection = intersections[0];
+    }
+
+
+    /*undoing intersections*/{
+        for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+            for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
+                if(pixelColorStatus[a][b] == PixelStatusEnum::intersection)
+                    pixelColorStatus[a][b] = PixelStatusEnum::colored;
+                else 
+                    pixelColorStatus[a][b] = PixelStatusEnum::notcolored;
+    }
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"BLENDING"<<std::endl;
@@ -289,7 +315,7 @@ bool ImageTexture::insideDual(int i, int j){
 bool ImageTexture::insideImg(int i, int j, const png::image<png::rgb_pixel> &img){
     return 0 <= i && i < int(img.get_height()) && 0 <= j && j < int(img.get_width());
 }
-std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersection(ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersectionCase1(ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::pair<int, int> S = {-1,-1}, T = {-1,-1};
     for(const auto &[i, j] : inter.interPixels){
         for(int d = 0; d < (int) directions.size(); d++){
@@ -319,16 +345,27 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         }
     }
     if((S) == (std::pair<int, int>{-1,-1}) || (T) == (std::pair<int, int>{-1,-1})){
+        usleep(800000);
+        std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
         render("../output/output.png");
+        usleep(4000000);
+
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
+            if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor)
+                outputImg[a][b] = png::rgb_pixel(0,0,155);
+            
+        }
+        //render("../output/output.png");
     }
-    assert(("findSTInIntersection should always find S", (S) != (std::pair<int, int>{-1,-1})));
-    assert(("findSTInIntersection should always find T", (T) != (std::pair<int, int>{-1,-1})));
-    assert(("findSTInIntersection should find different S and T", (S) != (T)));
+    assert(("findSTInIntersectionCase1 should always find S", (S) != (std::pair<int, int>{-1,-1})));
     std::cout<<" S is "<<S.first<<" "<<S.second<<std::endl;
+    assert(("findSTInIntersectionCase1 should always find T", (T) != (std::pair<int, int>{-1,-1})));
     std::cout<<" T is "<<T.first<<" "<<T.second<<std::endl;
+    assert(("findSTInIntersectionCase1 should find different S and T", (S) != (T)));
     return {S, T};
 }
 std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -336,7 +373,7 @@ std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heig
     static int Time = 0;
     std::vector<Intersection> intersectionsList;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
-        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(pixelColorStatus[a][b] == PixelStatusEnum::colored){
                 Time++;
                 std::vector<std::pair<int,int>> interPixels;
@@ -360,9 +397,9 @@ std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heig
                 }
                 intersectionsList.push_back(Intersection(interPixels));
             } else if(pixelColorStatus[a][b] == PixelStatusEnum::notcolored){
-                //std::cout<<"SET NEW COLOR "<<a<<" "<<b<<std::endl;
                 pixelColorStatus[a][b] = PixelStatusEnum::newcolor;
-            }        
+            }      
+        }  
     return intersectionsList;
 }
 void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -463,6 +500,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             d = revDir(d);
             int firstI, firstJ;
             std::tie(firstI, firstJ) = std::make_pair(curI + dualToPrimal[d].first, curJ + dualToPrimal[d].second);
+            //BFS Marking left
             if(insidePrimal(firstI, firstJ) && pixelColorStatus[firstI][firstJ] == PixelStatusEnum::intersection){
                 std::cout<<"Start BFS from "<<firstI<<" "<<firstJ<<std::endl;
                 std::cout<<"  Because "<<curI<<" "<<curJ<<" dir "<<d<<" "<<revDir(d)<<std::endl;
@@ -517,10 +555,13 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 }
     }
 }
-void ImageTexture::markIntersectionRed(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    std::cout<<"MARK RED\n";
-    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
-        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
-            outputImg[a][b] = png::rgb_pixel(155,0,0);
-    render("../output/output.png");    
+
+std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset){
+    //TODO
+    return {};
+}
+
+std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int widthOffset){
+    //TODO
+    return {};
 }
