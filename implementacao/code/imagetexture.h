@@ -12,7 +12,8 @@
 
 #include <unistd.h>  //just for debug
 #include <cstdlib> // just for debug
-#include<string>
+#include <iomanip> // just for debug
+#include <string>
 std::string printEnum(int x){ // just to debug
     if(x == 0) return "colored";
     if(x == 1) return "intersection";
@@ -136,8 +137,8 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
-    //static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-    static std::mt19937_64 rng(12275994992249);
+    static std::mt19937_64 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+    //static std::mt19937_64 rng(12275994992249);
     static std::uniform_int_distribution<int> nextHeight(0, imgHeight-1);
     static std::uniform_int_distribution<int> nextWidth(0, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
@@ -265,8 +266,8 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
                 outputImg[a][b] = png::rgb_pixel(0,0,155);
             }
-    render("../output/areia_da_praia.png");
-    usleep(800000);
+    render("../output/output.png");
+    //usleep(800000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
@@ -321,10 +322,11 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
-        render("../output/areia_da_praia.png");
+        render("../output/output.png");
     }
     assert(("findSTInIntersection should always find S", (S) != (std::pair<int, int>{-1,-1})));
     assert(("findSTInIntersection should always find T", (T) != (std::pair<int, int>{-1,-1})));
+    assert(("findSTInIntersection should find different S and T", (S) != (T)));
     std::cout<<" S is "<<S.first<<" "<<S.second<<std::endl;
     std::cout<<" T is "<<T.first<<" "<<T.second<<std::endl;
     return {S, T};
@@ -372,7 +374,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             for(auto [di, dj] : primalToDual)
                 if(insideDual(i + di, j + dj)){
                     inSubgraph[i + di][j + dj] = true;
-                    inDual.emplace_back(i + di, j  + dj);
+                    inDual.emplace_back(i + di, j + dj);
                 }    
         sort(inDual.begin(), inDual.end());
         inDual.resize(unique(inDual.begin(), inDual.end()) - inDual.begin());
@@ -401,13 +403,18 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
         parent[S.first][S.second] = -2;
         dist[S.first][S.second] = 0;
         Q.emplace(0, S.first, S.second);
+        std::cout<<"START DIJKSTRA"<<std::endl;
         while(!Q.empty()){
             long double pathCost;
             int i, j;
             std::tie(pathCost, i, j) = Q.top();
             Q.pop();
+            std::cout<<"Test "<<i<<" "<<j<<std::endl;
+            assert(i < vis.size());
+            assert(j < vis[i].size());
             if(vis[i][j])
                 continue;
+            std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
             vis[i][j] = true;
             if(T == std::pair<int, int>{i,j})
                 break;
@@ -427,7 +434,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             for(auto [x,y] : inter.interPixels){
                 outputImg[x][y] = png::rgb_pixel(155,0,0);
             }
-            render("../output/areia_da_praia.png");
+            render("../output/output.png");
         }
         assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
         { // mark ST path
@@ -496,7 +503,6 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 //std::cout<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<std::endl;
                 int d = parent[curI][curJ];
                 assert(0 <= d && d < int(directions.size()));
-                validEdge[curI][curJ][d] = true;
                 std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
                 d = revDir(d);
                 validEdge[curI][curJ][d] = true;
@@ -504,7 +510,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
         }
         for(auto [i,j] : inter.interPixels)
             for(auto [di, dj] : primalToDual)
-                if(insidePrimal(i + di, j + dj)){
+                if(insideDual(i + di, j + dj)){
                     inSubgraph[i + di][j + dj] = false;
                     parent[i + di][j + dj] = -1;
                     vis[i + di][j + dj] = false;
@@ -516,5 +522,5 @@ void ImageTexture::markIntersectionRed(int heightOffset, int widthOffset, const 
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
             outputImg[a][b] = png::rgb_pixel(155,0,0);
-    render("../output/areia_da_praia.png");    
+    render("../output/output.png");    
 }
