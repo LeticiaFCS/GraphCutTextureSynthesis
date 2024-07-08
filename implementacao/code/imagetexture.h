@@ -88,6 +88,9 @@ private:
     std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersectionCase1(Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
+    //MarkMinABCut auxiliar functions
+    std::vector<std::pair<int, int>> markIntersectionCellsInDual(const ImageTexture::Intersection &inter, std::vector<std::vector<bool>> &inSubgraph);
+    void markIntersectionEdgeCostsInDual(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg, const std::vector<std::pair<int, int>> &inDual, const std::vector<std::vector<bool>> &inSubgraph, std::vector<std::vector<std::array<long double, 4>>> &edgesCosts);
     //Case 2 auxiliar functions
     std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset);
     std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset); 
@@ -139,8 +142,8 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(){
-    static const uint64_t rngSeed = 4081664392750;
-    //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
+    //static const uint64_t rngSeed = 4081664392750;
+    static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(0, imgHeight-1);
@@ -293,7 +296,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 outputImg[a][b] = png::rgb_pixel(0,0,155);
             }
     render("../output/output.png");
-    //usleep(800000);
+    usleep(800000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++)
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
@@ -406,28 +409,8 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));
     /*mark cells in dual of intersection and mark edges costs*/{
-        std::vector<std::pair<int, int>> inDual;
-        for(auto [i,j] : inter.interPixels)
-            for(auto [di, dj] : primalToDual)
-                if(insideDual(i + di, j + dj)){
-                    inSubgraph[i + di][j + dj] = true;
-                    inDual.emplace_back(i + di, j + dj);
-                }    
-        sort(inDual.begin(), inDual.end());
-        inDual.resize(unique(inDual.begin(), inDual.end()) - inDual.begin());
-        for(auto [i,j] : inDual)
-            for(int d = 0; d < (int) directions.size(); d++){
-                int nextI = i + directions[d].first;
-                int nextJ = j + directions[d].second;
-                if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ]){
-                    int iA = i + dualToPrimal[d].first, jA = j + dualToPrimal[d].second;
-                    int iB = i + dualToPrimal[prevDir(d)].first, jB = j + dualToPrimal[prevDir(d)].second;
-                    if(insidePrimal(iA, jA) && pixelColorStatus[iA][jA] == PixelStatusEnum::intersection && insidePrimal(iB, jB) && pixelColorStatus[iB][jB] == PixelStatusEnum::intersection)
-                        edgesCosts[i][j][d] = calcCost(outputImg[iA][jA], outputImg[iB][jB], inputImg[iA - heightOffset][jA - widthOffset], inputImg[iB - heightOffset][jB - widthOffset]);
-                    else
-                        edgesCosts[i][j][d] = inftyCost;
-                }
-            }
+        std::vector<std::pair<int, int>> inDual = markIntersectionCellsInDual(inter, inSubgraph);
+        markIntersectionEdgeCostsInDual(heightOffset, widthOffset, inputImg, inDual, inSubgraph, edgesCosts);
     }
     
     static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
@@ -555,6 +538,34 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 }
     }
 }
+std::vector<std::pair<int, int>> ImageTexture::markIntersectionCellsInDual(const Intersection &inter, std::vector<std::vector<bool>> &inSubgraph){
+    std::vector<std::pair<int, int>> inDual;
+    for(auto [i,j] : inter.interPixels)
+        for(auto [di, dj] : primalToDual)
+            if(insideDual(i + di, j + dj)){
+                inSubgraph[i + di][j + dj] = true;
+                inDual.emplace_back(i + di, j + dj);
+            }    
+    sort(inDual.begin(), inDual.end());
+    inDual.resize(unique(inDual.begin(), inDual.end()) - inDual.begin());
+    return inDual;
+}
+void ImageTexture::markIntersectionEdgeCostsInDual(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg, const std::vector<std::pair<int, int>> &inDual, const std::vector<std::vector<bool>> &inSubgraph, std::vector<std::vector<std::array<long double, 4>>> &edgesCosts){
+    for(auto [i,j] : inDual)
+        for(int d = 0; d < (int) directions.size(); d++){
+            int nextI = i + directions[d].first;
+            int nextJ = j + directions[d].second;
+            if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ]){
+                int iA = i + dualToPrimal[d].first, jA = j + dualToPrimal[d].second;
+                int iB = i + dualToPrimal[prevDir(d)].first, jB = j + dualToPrimal[prevDir(d)].second;
+                if(insidePrimal(iA, jA) && pixelColorStatus[iA][jA] == PixelStatusEnum::intersection && insidePrimal(iB, jB) && pixelColorStatus[iB][jB] == PixelStatusEnum::intersection)
+                    edgesCosts[i][j][d] = calcCost(outputImg[iA][jA], outputImg[iB][jB], inputImg[iA - heightOffset][jA - widthOffset], inputImg[iB - heightOffset][jB - widthOffset]);
+                else
+                    edgesCosts[i][j][d] = inftyCost;
+            }
+        }
+}
+    
 
 std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset){
     //TODO
