@@ -39,7 +39,7 @@ private:
     const int imgWidth;
     const int imgHeight;
     std::vector<std::vector<PixelStatusEnum>> pixelColorStatus;
-    static constexpr long double inftyCost = 1000000;
+    static constexpr long double inftyCost = 10000000;
     static constexpr std::array<std::pair<int, int>, 4> directions = {{
         {-1, 0},    //    |0|
         { 0,-1},    //  |1|x|3|
@@ -94,8 +94,8 @@ private:
     std::vector<std::pair<int,int>> findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent);
     void markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::vector<std::vector<int>> &parent, const std::vector<std::vector<std::array<bool, 4>>> &validEdge);
     //Case 2 auxiliar functions
-    std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset);
-    std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset); 
+    std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
+    std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg); 
 };
 
 /*
@@ -184,16 +184,6 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
         }
         std::cout<<"upper edge is covered "<<upperEdgeHeight<<std::endl;
     }
-    {//lower edge
-        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
-        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidth; j++){
-            if(j + widthOffset < 0)
-                continue;
-            if(this->pixelColorStatus[lowerEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
-                return true;
-        }
-        std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
-    }    
     {//left edge
         int leftEdgeWidth = std::max(0, widthOffset);
         for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
@@ -203,6 +193,16 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
                 return true;
         }
         std::cout<<"left edge is covered "<<leftEdgeWidth<<std::endl;
+    }
+    {//lower edge
+        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidth; j++){
+            if(j + widthOffset < 0)
+                continue;
+            if(this->pixelColorStatus[lowerEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
+                return true;
+        }
+        std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
     }
     {//right edge
         int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
@@ -615,14 +615,93 @@ void ImageTexture::markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::
     }
 }
 
-std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset){
+std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     //TODO
     std::vector<std::pair<int, int>> pixelsInBorder;
 
-    return {};
+    {//upper edge
+        int d = 0;
+        int upperEdgeHeight = std::max(0, heightOffset);
+        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidth; j++){
+            if(j + widthOffset < 0)
+                continue;
+            int a = upperEdgeHeight, b = j + widthOffset;   
+            {
+                int da = a + primalToDual[d].first;
+                int db = b + primalToDual[d].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+            {
+                int da = a + primalToDual[prevDir(d)].first;
+                int db = b + primalToDual[prevDir(d)].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+        }
+    }    
+    {//left edge
+        int d = 1;
+        int leftEdgeWidth = std::max(0, widthOffset);
+        for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
+            if(i + heightOffset < 0)
+                continue;
+            int a = i + heightOffset, b = leftEdgeWidth;   
+            {
+                int da = a + primalToDual[d].first;
+                int db = b + primalToDual[d].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+            {
+                int da = a + primalToDual[prevDir(d)].first;
+                int db = b + primalToDual[prevDir(d)].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+        }
+    }
+    {//lower edge
+        int d = 2;
+        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidth; j++){
+            if(j + widthOffset < 0)
+                continue;
+            int a = lowerEdgeHeight, b = j + widthOffset;   
+            {
+                int da = a + primalToDual[d].first;
+                int db = b + primalToDual[d].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+            {
+                int da = a + primalToDual[prevDir(d)].first;
+                int db = b + primalToDual[prevDir(d)].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+        }
+        std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
+    }
+    {//right 
+        int d = 3;
+        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
+        for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
+            if(i + heightOffset < 0)
+                continue;
+            int a = i + heightOffset, b = rightEdgeWidth;   
+            {
+                int da = a + primalToDual[d].first;
+                int db = b + primalToDual[d].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+            {
+                int da = a + primalToDual[prevDir(d)].first;
+                int db = b + primalToDual[prevDir(d)].second;
+                pixelsInBorder.emplace_back(da, db);
+            }
+        }
+    }
+    sort(pixelsInBorder.begin(), pixelsInBorder.end());
+    pixelsInBorder.resize(distance(pixelsInBorder.begin(), unique(pixelsInBorder.begin(), pixelsInBorder.end())));
+    return pixelsInBorder;
 }
 
-std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int widthOffset){
-    //TODO
+std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+    
     return {};
 }

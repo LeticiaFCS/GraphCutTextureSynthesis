@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
             ImageTexture texture(300, 300);
             for(int i = 0; i < 1200/*13*13*/; i++){
                 std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
-                texture.patchFittingIteration("../input/glitter.png");
+                texture.patchFittingIteration("../input/fur.png");
                 texture.render("../output/output.png");
                 if(argc > 1)
                     usleep(400000);
