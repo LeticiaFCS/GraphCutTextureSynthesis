@@ -91,6 +91,7 @@ private:
     //MarkMinABCut auxiliar functions
     std::vector<std::pair<int, int>> markIntersectionCellsInDual(const ImageTexture::Intersection &inter, std::vector<std::vector<bool>> &inSubgraph);
     void markIntersectionEdgeCostsInDual(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg, const std::vector<std::pair<int, int>> &inDual, const std::vector<std::vector<bool>> &inSubgraph, std::vector<std::vector<std::array<long double, 4>>> &edgesCosts);
+std::vector<std::pair<int,int>> findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent);
     //Case 2 auxiliar functions
     std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset);
     std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset); 
@@ -417,45 +418,9 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
     static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
-    /*find min cut (min s-t path)*/{
-        using qtype = std::tuple<long double, int, int>;
-        std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
-        parent[S.first][S.second] = -2;
-        dist[S.first][S.second] = 0;
-        Q.emplace(0, S.first, S.second);
-        std::cout<<"START DIJKSTRA"<<std::endl;
-        while(!Q.empty()){
-            long double pathCost;
-            int i, j;
-            std::tie(pathCost, i, j) = Q.top();
-            Q.pop();
-            std::cout<<"Test "<<i<<" "<<j<<std::endl;
-            assert(i < vis.size());
-            assert(j < vis[i].size());
-            if(vis[i][j])
-                continue;
-            std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
-            vis[i][j] = true;
-            if(T == std::pair<int, int>{i,j})
-                break;
-            for(int d = 0; d < int(directions.size()); d++){
-                int nextI = i + directions[d].first, nextJ = j + directions[d].second;
-                if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ]){
-                    long double curCost = edgesCosts[i][j][d];
-                    if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
-                        parent[nextI][nextJ] = revDir(d);
-                        dist[nextI][nextJ] = pathCost + curCost; // avoid overflow
-                        Q.emplace(dist[nextI][nextJ], nextI, nextJ);
-                    }
-                }
-            }
-        }
-        if(!vis[T.first][T.second]){        
-            for(auto [x,y] : inter.interPixels){
-                outputImg[x][y] = png::rgb_pixel(155,0,0);
-            }
-            render("../output/output.png");
-        }
+    /*find min cut (min s-t path)*/
+        auto stPath = findSTPath({S}, {T}, inSubgraph, edgesCosts, dist, vis, parent);
+        
         assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
         { // mark ST path
             std::cout<<"ST path"<<std::endl;
@@ -470,7 +435,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 validEdge[curI][curJ][d] = false;
             }
         }
-    }
+    
     /*mark left and right of min cut*/{
         std::cout<<"Mark left of min cut"<<std::endl;
         int curI = T.first, curJ = T.second;
@@ -565,7 +530,71 @@ void ImageTexture::markIntersectionEdgeCostsInDual(int heightOffset, int widthOf
             }
         }
 }
+
+/*
+static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
+    static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
     
+*/
+
+std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent){
+    static std::vector<std::vector<bool>> isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
+    for(auto [h, w] : T){
+        isT[h][w] = true;
+    }
+    using qtype = std::tuple<long double, int, int>;
+    std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
+    for(auto [h, w] : S){
+        parent[h][w] = -2;
+        dist[h][w] = 0;
+        Q.emplace(0, h, w);
+    }
+    std::cout<<"START DIJKSTRA"<<std::endl;
+    std::vector<std::pair<int, int>> path;
+    while(!Q.empty()){
+        long double pathCost;
+        int i, j;
+        std::tie(pathCost, i, j) = Q.top();
+        Q.pop();
+        std::cout<<"Test "<<i<<" "<<j<<std::endl;
+        assert(i < vis.size());
+        assert(j < vis[i].size());
+        if(vis[i][j])
+            continue;
+        std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
+        vis[i][j] = true;
+        if(isT[i][j]){
+            path = {{i,j}};
+            break;
+        }
+        for(int d = 0; d < int(directions.size()); d++){
+            int nextI = i + directions[d].first, nextJ = j + directions[d].second;
+            if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ]){
+                long double curCost = edgesCosts[i][j][d];
+                if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
+                    parent[nextI][nextJ] = revDir(d);
+                    dist[nextI][nextJ] = pathCost + curCost; // avoid overflow
+                    Q.emplace(dist[nextI][nextJ], nextI, nextJ);
+                }
+            }
+        }
+    }
+    assert(!path.empty());
+    int curI, curJ;
+    std::tie(curI, curJ) = path[0];
+    while(parent[curI][curJ] != -2){
+        std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+        int d = parent[curI][curJ];
+        assert(0 <= d && d < int(directions.size()));
+        std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
+        path.emplace_back(curI, curJ);
+    }
+    for(auto [h, w] : T){
+        isT[h][w] = false;
+    }
+    return path;
+}   
 
 std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset){
     //TODO
