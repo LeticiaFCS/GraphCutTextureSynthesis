@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
         std::cerr<<"NEW IMAGE "<<it<<std::endl;
         try{
             ImageTexture texture(300, 300);
-            for(int i = 0; i < 1000/*13*13*/; i++){
+            for(int i = 0; i < 1200/*13*13*/; i++){
                 std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 texture.patchFittingIteration("../input/glitter.png");
                 texture.render("../output/output.png");
