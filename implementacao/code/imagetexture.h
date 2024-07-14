@@ -144,8 +144,8 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    //static const uint64_t rngSeed = 4081664392750;
-    static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
+    static const uint64_t rngSeed = 36609795014301;
+    //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(-inputImg.get_height() + 1, imgHeight-1);
@@ -164,7 +164,7 @@ bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::im
     return true;    
 }
 void ImageTexture::copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    std::cout<<"Copy First Patch"<<std::endl;
+    //std::cout<<"Copy First Patch"<<std::endl;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -182,7 +182,7 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[upperEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        std::cout<<"upper edge is covered "<<upperEdgeHeight<<std::endl;
+        //std::cout<<"upper edge is covered "<<upperEdgeHeight<<std::endl;
     }
     {//left edge
         int leftEdgeWidth = std::max(0, widthOffset);
@@ -192,7 +192,7 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[i + heightOffset][leftEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        std::cout<<"left edge is covered "<<leftEdgeWidth<<std::endl;
+        //std::cout<<"left edge is covered "<<leftEdgeWidth<<std::endl;
     }
     {//lower edge
         int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
@@ -202,7 +202,7 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[lowerEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
+        //std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
     }
     {//right edge
         int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
@@ -212,16 +212,16 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[i + heightOffset][rightEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        std::cout<<"right edge is covered "<<rightEdgeWidth<<std::endl;
+        //std::cout<<"right edge is covered "<<rightEdgeWidth<<std::endl;
     }
     return false;
 }
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 1"<<std::endl;
     std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
-    std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
+    //std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
     for(auto &inter : intersections){
-        std::cout<<"intersection size "<<inter.interPixels.size()<<std::endl;
+        //std::cout<<"intersection size "<<inter.interPixels.size()<<std::endl;
         auto [S, T] = findSTInIntersectionCase1(inter, heightOffset, widthOffset, inputImg);
         markMinABCut(S, T, inter, heightOffset, widthOffset, inputImg);
     }
@@ -242,16 +242,80 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
 }
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 2"<<std::endl;
+    static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
+    static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
+    static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
+    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
+
     Intersection intersection;
-    /*find intersection*/{
-        auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
-        std::cout<<" Number of intersections is "<<intersections.size()<<std::endl;
-        assert(intersections.size() == 1);
-        intersection = intersections[0];
+    /*find intersection*/
+    auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
+    assert(intersections.size() == 1);
+    intersection = intersections[0];
+    
+    /*mark cells in dual of intersection and mark edges costs*/
+    std::vector<std::pair<int, int>> inDual = markIntersectionCellsInDual(intersection, inSubgraph);
+    markIntersectionEdgeCostsInDual(heightOffset, widthOffset, inputImg, inDual, inSubgraph, edgesCosts);
+
+    /*find ST path*/
+    auto S = findSCase2(heightOffset, widthOffset, inputImg);
+    auto T = dualBorder(heightOffset, widthOffset, inputImg);
+    auto tsPath = findSTPath(S, T, inSubgraph, edgesCosts, dist, vis, parent);
+
+    /*mark ST path*/{
+        //std::cout<<"ST path"<<std::endl;
+        int lastD = -1;
+        for(auto [curI, curJ] : tsPath){
+            if(lastD >= 0){
+                validEdge[curI][curJ][lastD] = false;
+            }
+            int d = parent[curI][curJ];
+            if(d >= 0){
+                //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+                validEdge[curI][curJ][d] = false;
+                lastD = revDir(d);
+            }
+        }
+    }    
+
+    /*unmark cells in dual of intersection*/{
+        for(auto [i,j] : intersection.interPixels)
+            for(auto [di, dj] : primalToDual)
+                if(insideDual(i + di, j + dj)){
+                    inSubgraph[i + di][j + dj] = false;
+                    parent[i + di][j + dj] = -1;
+                    vis[i + di][j + dj] = false;
+                }
+    }
+    //TO DO
+
+    /*unmark cells in dual of intersection*/{
+    { //unmark ST path
+        int lastD = -1;
+        for(auto [curI, curJ] : tsPath){
+            if(lastD >= 0){
+                validEdge[curI][curJ][lastD] = true;
+            }
+            int d = parent[curI][curJ];
+            if(d >= 0){
+                validEdge[curI][curJ][d] = true;
+                lastD = revDir(d);
+            }
+        }
+    }
+    for(auto [i,j] : intersection.interPixels)
+        for(auto [di, dj] : primalToDual)
+            if(insideDual(i + di, j + dj)){
+                inSubgraph[i + di][j + dj] = false;
+                parent[i + di][j + dj] = -1;
+                vis[i + di][j + dj] = false;
+            }
     }
 
 
-    /*undoing intersections*/{
+    /*undoing intersections*/{ //REMOVE LATER
         for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
             for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
                 if(a < 0 || b < 0)
@@ -297,16 +361,19 @@ int ImageTexture::revDir(int i){
 }
 // Auxiliar Nonstatic Functions
 void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+    int cnt = 0;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
                 continue;
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
+                cnt++;
                 outputImg[a][b] = png::rgb_pixel(0,0,155);
             }
         }
+    std::cout<<"NEW COLOR "<<cnt<<std::endl;
     render("../output/output.png");
-    usleep(800000);
+    usleep(400000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -361,8 +428,8 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         }
     }
     if((S) == (std::pair<int, int>{-1,-1}) || (T) == (std::pair<int, int>{-1,-1})){
-        usleep(800000);
-        std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
+        usleep(400000);
+        //std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
@@ -441,7 +508,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
     
     /*mark ST path*/{
-        std::cout<<"ST path"<<std::endl;
+        //std::cout<<"ST path"<<std::endl;
         int lastD = -1;
         for(auto [curI, curJ] : tsPath){
             if(lastD >= 0){
@@ -449,7 +516,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
             }
             int d = parent[curI][curJ];
             if(d >= 0){
-                std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+                //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
                 validEdge[curI][curJ][d] = false;
                 lastD = revDir(d);
             }
@@ -457,7 +524,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     }    
     
     /*mark left and right of min cut*/
-    std::cout<<"Mark left of min cut"<<std::endl;        
+    //std::cout<<"Mark left of min cut"<<std::endl;        
     markLeftOfMinCut(tsPath, parent, validEdge);
     /*mark right of min cut*/{    
         for(auto [i, j] : inter.interPixels)
@@ -519,29 +586,31 @@ void ImageTexture::markIntersectionEdgeCostsInDual(int heightOffset, int widthOf
 
 std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent){
     static std::vector<std::vector<bool>> isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
+    static std::vector<std::vector<bool>> isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
     for(auto [h, w] : T){
         isT[h][w] = true;
     }
     using qtype = std::tuple<long double, int, int>;
     std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
     for(auto [h, w] : S){
+        isS[h][w] = true;
         parent[h][w] = -2;
         dist[h][w] = 0;
         Q.emplace(0, h, w);
     }
-    std::cout<<"START DIJKSTRA"<<std::endl;
+    //std::cout<<"START DIJKSTRA"<<std::endl;
     std::vector<std::pair<int, int>> path;
     while(!Q.empty()){
         long double pathCost;
         int i, j;
         std::tie(pathCost, i, j) = Q.top();
         Q.pop();
-        std::cout<<"Test "<<i<<" "<<j<<std::endl;
+        //std::cout<<"Test "<<i<<" "<<j<<std::endl;
         assert(i < vis.size());
         assert(j < vis[i].size());
         if(vis[i][j])
             continue;
-        std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
+        //std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
         vis[i][j] = true;
         if(isT[i][j]){
             path = {{i,j}};
@@ -551,6 +620,8 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
             int nextI = i + directions[d].first, nextJ = j + directions[d].second;
             if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ]){
                 long double curCost = edgesCosts[i][j][d];
+                if(isS[i][j] && isT[nextI][nextJ]) //avoid direct empty cut
+                    continue;
                 if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
                     parent[nextI][nextJ] = revDir(d);
                     dist[nextI][nextJ] = pathCost + curCost; // avoid overflow
@@ -559,11 +630,28 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
             }
         }
     }
-    assert(!path.empty());
+    // only path is direct path between S and T
+    if(!path.empty()){
+        //std::cout<<"PATH IS EMPTY"<<std::endl;
+        bool ok = false;
+        for(auto [i, j] : S){
+            for(int d = 0; d < int(directions.size()); d++){
+                int nextI = i + directions[d].first, nextJ = j + directions[d].second;
+                if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ] && isT[nextI][nextJ]){
+                    parent[nextI][nextJ] = revDir(d);
+                    path = {{nextI, nextJ}};
+                    break;
+                }
+            }
+            if(!path.empty())
+                break;
+        }
+    }
+    assert(("path is empty!", !path.empty()));
     int curI, curJ;
     std::tie(curI, curJ) = path[0];
     while(parent[curI][curJ] != -2){
-        std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+        //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
         int d = parent[curI][curJ];
         assert(0 <= d && d < int(directions.size()));
         std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
@@ -571,6 +659,9 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
     }
     for(auto [h, w] : T){
         isT[h][w] = false;
+    }
+    for(auto [h, w] : S){
+        isS[h][w] = false;
     }
     return path;
 }   
@@ -581,20 +672,20 @@ void ImageTexture::markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::
         if(d < 0)
             break;
         assert(0 <= d && d < int(directions.size()));
-        std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<i<<" "<<j<<" -- dir "<<parent[i][j]<<std::endl;
+        //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<i<<" "<<j<<" -- dir "<<parent[i][j]<<std::endl;
         auto [curI, curJ] = std::make_pair(i + directions[d].first, j + directions[d].second);
         d = revDir(d);
         int firstI, firstJ;
         std::tie(firstI, firstJ) = std::make_pair(curI + dualToPrimal[d].first, curJ + dualToPrimal[d].second);
         //BFS Marking left
         if(insidePrimal(firstI, firstJ) && pixelColorStatus[firstI][firstJ] == PixelStatusEnum::intersection){
-            std::cout<<"Start BFS from "<<firstI<<" "<<firstJ<<std::endl;
-            std::cout<<"  Because "<<curI<<" "<<curJ<<" dir "<<d<<" "<<revDir(d)<<std::endl;
+            //std::cout<<"Start BFS from "<<firstI<<" "<<firstJ<<std::endl;
+            //std::cout<<"  Because "<<curI<<" "<<curJ<<" dir "<<d<<" "<<revDir(d)<<std::endl;
             std::vector<std::pair<int, int>> q = {{firstI, firstJ}};
             pixelColorStatus[firstI][firstJ] = PixelStatusEnum::colored;
             for(int front = 0; front < int(q.size()); front++){
                 int fI = q[front].first, fJ = q[front].second;
-                std::cout<<"\tfront "<<fI<<" "<<fJ<<std::endl;
+                //std::cout<<"\tfront "<<fI<<" "<<fJ<<std::endl;
                 for(int d = 0; d < (int) directions.size(); d++){
                     int nxtI = fI + directions[d].first;
                     int nxtJ = fJ + directions[d].second;
@@ -603,9 +694,9 @@ void ImageTexture::markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::
                     int dualI = fI + primalToDual[d].first;
                     int dualJ = fJ + primalToDual[d].second;
                     assert(insideDual(dualI, dualJ));
-                    std::cout<<"\t   Test "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
+                    //std::cout<<"\t   Test "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
                     if(validEdge[dualI][dualJ][prevDir(d)]){
-                        std::cout<<"\t   To "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
+                        //std::cout<<"\t   To "<<nxtI<<" "<<nxtJ<<" valid dual "<<dualI<<" "<<dualJ<<" "<<prevDir(d)<<std::endl;
                         pixelColorStatus[nxtI][nxtJ] = PixelStatusEnum::colored;
                         q.emplace_back(nxtI, nxtJ);
                     }
@@ -616,9 +707,7 @@ void ImageTexture::markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::
 }
 
 std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    //TODO
     std::vector<std::pair<int, int>> pixelsInBorder;
-
     {//upper edge
         int d = 0;
         int upperEdgeHeight = std::max(0, heightOffset);
@@ -675,7 +764,7 @@ std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int 
                 pixelsInBorder.emplace_back(da, db);
             }
         }
-        std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
+        //std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
     }
     {//right 
         int d = 3;
@@ -702,6 +791,57 @@ std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int 
 }
 
 std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    
-    return {};
+    std::vector<std::pair<int, int>> pixelsInS;
+    for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
+        for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
+            if(a < 0 || b < 0)
+                continue;
+            if(pixelColorStatus[a][b] != PixelStatusEnum::intersection)
+                continue;
+            for(int d = 0; d < int(directions.size()); d++){
+                int neiA = a + directions[d].first;
+                int neiB = b + directions[d].second;
+                if(insidePrimal(neiA, neiB) && pixelColorStatus[neiA][neiB] == PixelStatusEnum::newcolor){
+                {
+                    int da = a + primalToDual[d].first;
+                    int db = b + primalToDual[d].second;
+                    pixelsInS.emplace_back(da, db);
+                }
+                {
+                    int da = a + primalToDual[prevDir(d)].first;
+                    int db = b + primalToDual[prevDir(d)].second;
+                    pixelsInS.emplace_back(da, db);
+                }
+                }
+            }
+        }
+    if(pixelsInS.empty()){
+        int leftEdgeWidth = std::max(0, widthOffset);
+        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
+        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        int upperEdgeHeight = std::max(0, heightOffset);
+        int h = (lowerEdgeHeight + upperEdgeHeight) / 2;
+        int w = (rightEdgeWidth + leftEdgeWidth) / 2;
+        pixelColorStatus[h][w] = PixelStatusEnum::newcolor;
+        for(int d = 0; d < int(directions.size()); d++){
+            int neiA = h + directions[d].first;
+            int neiB = w + directions[d].second;
+            if(insidePrimal(neiA, neiB)){
+            {
+                int da = h + primalToDual[d].first;
+                int db = w + primalToDual[d].second;
+                pixelsInS.emplace_back(da, db);
+            }
+            {
+                int da = h + primalToDual[prevDir(d)].first;
+                int db = w + primalToDual[prevDir(d)].second;
+                pixelsInS.emplace_back(da, db);
+            }
+            }
+        }
+
+    }
+    sort(pixelsInS.begin(), pixelsInS.end());
+    pixelsInS.resize(distance(pixelsInS.begin(), unique(pixelsInS.begin(), pixelsInS.end())));
+    return pixelsInS;
 }
