@@ -243,12 +243,20 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 2"<<std::endl;
     static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<bool>> inStPath(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
     static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
     static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
-    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
-
+    enum edgeType{
+        originalGraph, copyGraph, invalid
+    };
+    const static std::array<int, 4> edgesToOriginalGraph = {edgeType::originalGraph,edgeType::originalGraph,edgeType::originalGraph,edgeType::originalGraph};
+    static std::array<std::vector<std::vector<std::array<int, 4>>>,2> edgeTo(
+        {std::vector<std::vector<std::array<int, 4>>>{imgHeight + 1, std::vector<std::array<int, 4>>(imgWidth + 1, edgesToOriginalGraph)},
+         std::vector<std::vector<std::array<int, 4>>>{imgHeight + 1, std::vector<std::array<int, 4>>(imgWidth + 1, edgesToOriginalGraph)}}
+        );
+   
     Intersection intersection;
     /*find intersection*/
     auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
@@ -256,29 +264,71 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     intersection = intersections[0];
     
     /*mark cells in dual of intersection and mark edges costs*/
-    std::vector<std::pair<int, int>> inDual = markIntersectionCellsInDual(intersection, inSubgraph);
-    markIntersectionEdgeCostsInDual(heightOffset, widthOffset, inputImg, inDual, inSubgraph, edgesCosts);
+    std::vector<std::pair<int, int>> cellsInDual = markIntersectionCellsInDual(intersection, inSubgraph);
+    markIntersectionEdgeCostsInDual(heightOffset, widthOffset, inputImg, cellsInDual, inSubgraph, edgesCosts);
 
     /*find ST path*/
     auto S = findSCase2(heightOffset, widthOffset, inputImg);
     auto T = dualBorder(heightOffset, widthOffset, inputImg);
     auto tsPath = findSTPath(S, T, inSubgraph, edgesCosts, dist, vis, parent);
+    
 
-    /*mark ST path*/{
-        //std::cout<<"ST path"<<std::endl;
-        int lastD = -1;
-        for(auto [curI, curJ] : tsPath){
-            if(lastD >= 0){
-                validEdge[curI][curJ][lastD] = false;
+    // sair pelo right e entrar pelo left
+    /*mark ST Path*/{
+        for(auto [x, y] : tsPath)
+            inStPath[x][y] = true;
+        for(auto [x, y] : tsPath){
+            for(int d = 0; d < int(directions.size()); d++){
+                auto [deltaX, deltaY] = directions[d];
+                int nextX = x + deltaX;
+                int nextY = y + deltaY;
+                if(!insideDual(nextX, nextY))
+                    continue;
+                if(inStPath[nextX][nextY]){
+                    edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+                    edgeTo[edgeType::copyGraph][x][y][d] = edgeType::copyGraph;
+                    edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
+                } else{
+                    if(parent[x][y] == -1)
+                        continue;
+                    edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
+                    edgeTo[edgeType::copyGraph][x][y][d] = edgeType::invalid;
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
+                    edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
+                    
+                    if(d == prevDir(parent[x][y])){ // left of path
+                        edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
+                        edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;                        
+                    } else { // right of path
+                        edgeTo[edgeType::copyGraph][x][y][d] = edgeType::originalGraph;
+                        edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph; 
+                    }
+                }
             }
-            int d = parent[curI][curJ];
-            if(d >= 0){
-                //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
-                validEdge[curI][curJ][d] = false;
-                lastD = revDir(d);
-            }
-        }
-    }    
+        }  
+    }
+
+    // /*mark ST path*/{
+    //     //std::cout<<"ST path"<<std::endl;
+    //     int lastD = -1;
+    //     for(auto [curI, curJ] : tsPath){
+    //         if(lastD >= 0){
+    //             validEdge[curI][curJ][lastD] = false;
+    //         }
+    //         int d = parent[curI][curJ];
+    //         if(d >= 0){
+    //             //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+    //             validEdge[curI][curJ][d] = false;
+    //             lastD = revDir(d);
+    //         }
+    //     }
+    // }    
+    
+    /*unmark ST Path*/{
+        for(auto [x, y] : tsPath)
+            inStPath[x][y] = false;
+    }
 
     /*unmark cells in dual of intersection*/{
         for(auto [i,j] : intersection.interPixels)
@@ -292,19 +342,19 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     //TO DO
 
     /*unmark cells in dual of intersection*/{
-    { //unmark ST path
-        int lastD = -1;
-        for(auto [curI, curJ] : tsPath){
-            if(lastD >= 0){
-                validEdge[curI][curJ][lastD] = true;
-            }
-            int d = parent[curI][curJ];
-            if(d >= 0){
-                validEdge[curI][curJ][d] = true;
-                lastD = revDir(d);
-            }
-        }
-    }
+    // { //unmark ST path
+    //     int lastD = -1;
+    //     for(auto [curI, curJ] : tsPath){
+    //         if(lastD >= 0){
+    //             validEdge[curI][curJ][lastD] = true;
+    //         }
+    //         int d = parent[curI][curJ];
+    //         if(d >= 0){
+    //             validEdge[curI][curJ][d] = true;
+    //             lastD = revDir(d);
+    //         }
+    //     }
+    // }
     for(auto [i,j] : intersection.interPixels)
         for(auto [di, dj] : primalToDual)
             if(insideDual(i + di, j + dj)){
@@ -326,6 +376,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                     pixelColorStatus[a][b] = PixelStatusEnum::notcolored;
             }
     }
+    exit(0);
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"BLENDING"<<std::endl;
