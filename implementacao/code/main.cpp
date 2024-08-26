@@ -11,7 +11,8 @@ int main(int argc, char *argv[]){
         std::cerr<<"NEW IMAGE "<<it<<std::endl;
         try{
             ImageTexture texture(300, 300);
-            for(int i = 0; i < 3000; i++){
+            for(int i = 0; i < 500; i++){
+                std::cerr<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 texture.patchFittingIteration("../input/areia_da_praia.png");
                 texture.render("../output/output.png");

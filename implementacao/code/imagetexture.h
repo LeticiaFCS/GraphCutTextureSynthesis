@@ -100,9 +100,11 @@ private:
     std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     //std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
-    std::pair<long double, std::vector<std::pair<int,int>>> minCutCycle(const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts,
-         const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, int left, int right, const std::vector<std::pair<int, int>> &stPath);    
-    std::vector<std::pair<int,int>> findMinFCycle(const std::pair<int,int> &F, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, 
+    std::pair<long double, std::vector<std::array<int,3>>> minCutCycle(const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts,
+         const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, int left, int right, const std::vector<std::pair<int, int>> &stPath,
+         std::array<std::vector<std::vector<long double>>, 2> &dist, std::array<std::vector<std::vector<bool>>, 2> &vis, std::array<std::vector<std::vector<int>>, 2> &parent
+         );    
+    std::vector<std::array<int,3>> findMinFCycle(const std::pair<int,int> &F, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, 
          const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, std::array<std::vector<std::vector<long double>>, 2> &dist, std::array<std::vector<std::vector<bool>>, 2> &vis, std::array<std::vector<std::vector<int>>, 2> &parent);
 };
 
@@ -156,8 +158,8 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
     //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
-    static std::uniform_int_distribution<int> nextHeight(-inputImg.get_height() + 1, imgHeight-1);
-    static std::uniform_int_distribution<int> nextWidth(-inputImg.get_width() + 1, imgWidth-1);
+    static std::uniform_int_distribution<int> nextHeight(-(int) inputImg.get_height() + 1, imgHeight-1);
+    static std::uniform_int_distribution<int> nextWidth(-(int) inputImg.get_width() + 1, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
 }
 bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -326,10 +328,44 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
 
     auto stPath = tsPath;
     reverse(stPath.begin(), stPath.end());
+    std::pair<long double, std::vector<std::array<int,3>>> minCut;
+    { //min cut 
+        static std::array<std::vector<std::vector<long double>>, 2> dist({
+            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
+            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1))
+        });
+        static std::array<std::vector<std::vector<bool>>, 2> vis({
+            std::vector<std::vector<bool>>(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+            std::vector<std::vector<bool>>(imgHeight + 1, std::vector<bool>(imgWidth + 1))
+        });    
+        static std::array<std::vector<std::vector<int>>, 2> parent({
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1))
+        } );   
+        minCut = minCutCycle(inSubgraph, edgesCosts, edgeTo, 0, stPath.size(), stPath, dist, vis, parent);
+        std::cout<<"LIMPANDO: "<<std::endl;
+        std::cout<<" -- "<<heightOffset<<" --> "<<heightOffset + inputImg.get_height()<<std::endl;
+        std::cout<<" -- "<<widthOffset<<" --> "<<widthOffset + inputImg.get_width()<<std::endl;
+        //std::cout<<" lim "<<imgHeight<<" "<<imgWidth<<std::endl;
+        for(int i = heightOffset; i <= heightOffset + (int)inputImg.get_height(); i++){
+            //std::cout<<"i is "<<i<<std::endl;
+            for(int j = widthOffset; j <= widthOffset + (int)inputImg.get_width(); j++){
+                //std::cout<<"j is "<<j<<std::endl;
+                //std::cout<<"Tentando Limpar "<<i<<" "<<j<<" ---> "<<insideDual(i, j)<<std::endl;
+                if(insideDual(i, j)){
+                    //std::cout<<"Limpa "<<i<<" "<<j<<std::endl;
+                    dist[0][i][j] = 0;
+                    dist[1][i][j] = 0;
+                    vis[0][i][j] = false;
+                    vis[1][i][j] = false;
+                    parent[0][i][j] = -1;
+                    parent[1][i][j] = -1;
+                }
+            }
+        }
 
-    auto minCut = minCutCycle(inSubgraph, edgesCosts, edgeTo, 0, stPath.size(), stPath);
-
-    exit(0);
+    }
+    
 
     /*unmark ST Path*/{
         for(auto [x, y] : tsPath)
@@ -439,7 +475,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                     pixelColorStatus[a][b] = PixelStatusEnum::notcolored;
             }
     }
-    exit(0);
+
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"BLENDING"<<std::endl;
@@ -499,8 +535,8 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
         }
 }
 bool ImageTexture::inImgBorder(int i, int j, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    return i == heightOffset || i == std::min<int>(imgHeight - 1, heightOffset + inputImg.get_height() - 1) 
-        || j == widthOffset  || j == std::min<int>(imgWidth - 1, widthOffset + inputImg.get_width() - 1);
+    return i == heightOffset || i == std::min<int>(imgHeight - 1, heightOffset + (int) inputImg.get_height() - 1) 
+        || j == widthOffset  || j == std::min<int>(imgWidth - 1, widthOffset + (int) inputImg.get_width() - 1);
 }
 bool ImageTexture::insidePrimal(int i, int j){
     return 0 <= i && i < imgHeight && 0 <= j && j < imgWidth;
@@ -862,7 +898,7 @@ std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int 
     }
     {//lower edge
         int d = 2;
-        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        int lowerEdgeHeight = std::min<int>(heightOffset + (int) inputImg.get_height() - 1 , this->imgHeight - 1);
         for(int j = 0; j < (int) inputImg.get_width() && j + widthOffset < this->imgWidth; j++){
             if(j + widthOffset < 0)
                 continue;
@@ -882,7 +918,7 @@ std::vector<std::pair<int, int>> ImageTexture::dualBorder(int heightOffset, int 
     }
     {//right 
         int d = 3;
-        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
+        int rightEdgeWidth = std::min<int>(widthOffset + (int) inputImg.get_width() - 1, this->imgWidth - 1);
         for(int i = 0; i < (int) inputImg.get_height() && i + heightOffset < this->imgHeight; i++){
             if(i + heightOffset < 0)
                 continue;
@@ -931,8 +967,8 @@ std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int 
         }
     if(pixelsInS.empty()){
         int leftEdgeWidth = std::max(0, widthOffset);
-        int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
-        int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
+        int rightEdgeWidth = std::min<int>(widthOffset + (int) inputImg.get_width() - 1, this->imgWidth - 1);
+        int lowerEdgeHeight = std::min<int>(heightOffset + (int) inputImg.get_height() - 1 , this->imgHeight - 1);
         int upperEdgeHeight = std::max(0, heightOffset);
         int h = (lowerEdgeHeight + upperEdgeHeight) / 2;
         int w = (rightEdgeWidth + leftEdgeWidth) / 2;
@@ -960,7 +996,7 @@ std::vector<std::pair<int, int>> ImageTexture::findSCase2(int heightOffset, int 
     return pixelsInS;
 }
 
-std::vector<std::pair<int,int>> ImageTexture::findMinFCycle(const std::pair<int,int> &F, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, std::array<std::vector<std::vector<long double>>, 2> &dist, std::array<std::vector<std::vector<bool>>, 2> &vis, std::array<std::vector<std::vector<int>>, 2> &parent){
+std::vector<std::array<int,3>> ImageTexture::findMinFCycle(const std::pair<int,int> &F, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, std::array<std::vector<std::vector<long double>>, 2> &dist, std::array<std::vector<std::vector<bool>>, 2> &vis, std::array<std::vector<std::vector<int>>, 2> &parent){
     std::array<int, 3> S = {0, F.first, F.second};
     std::array<int, 3> T = {1, F.first, F.second};
     using qtype = std::tuple<long double, int, int, int>;
@@ -969,21 +1005,23 @@ std::vector<std::pair<int,int>> ImageTexture::findMinFCycle(const std::pair<int,
     dist[S[0]][S[1]][S[2]] = 0;
     Q.emplace(0, S[0], S[1], S[2]);
     std::cout<<"START DIJKSTRA"<<std::endl;
-    std::vector<std::pair<int, int>> path;
+    std::cout<<" face "<<S[1]<<" "<<S[2]<<std::endl;
+    std::vector<std::array<int,3>> path;
     while(!Q.empty()){
         long double pathCost;
         int g, i, j;
         std::tie(pathCost, g, i, j) = Q.top();
         Q.pop();
-        //std::cout<<"Test "<<i<<" "<<j<<std::endl;
+        std::cout<<"Test "<<g<<" "<<i<<" "<<j<<std::endl;
         assert(i < vis[0].size());
         assert(j < vis[0][i].size());
+        std::cout<<" is vis "<<vis[g][i][j]<<std::endl;
         if(vis[g][i][j])
             continue;
-        //std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
+        std::cout<<"Dijkstra "<<g<<" "<<i<<" "<<j<<std::endl;
         vis[g][i][j] = true;
         if(T == std::array{g,i,j}){
-            path = {{i,j}};
+            path = {{g,i,j}};
             break;
         }
         for(int d = 0; d < int(directions.size()); d++){
@@ -1024,46 +1062,31 @@ std::vector<std::pair<int,int>> ImageTexture::findMinFCycle(const std::pair<int,
     // }
     assert(("path is empty!", !path.empty()));
     int curG = T[0], curI, curJ;
-    std::tie(curI, curJ) = path[0];
+    std::tie(curG, curI, curJ) = std::tuple_cat(path[0]);
     while(parent[curG][curI][curJ] != -2){
         //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
         int d = parent[curG][curI][curJ];
         assert(0 <= d && d < int(directions.size()));
         curG = edgeTo[curG][curI][curJ][d];
         std::tie(curI, curJ) = std::make_tuple(curI + directions[d].first, curJ + directions[d].second);
-        path.emplace_back(curI, curJ);
+        path.push_back({curG, curI, curJ});
     }
-    for(auto [i, j] : path)
-        std::cout<<"sasssdfsaffa "<<i<<" "<<j<<std::endl;
-    // for(auto [h, w] : T){
-    //     isT[h][w] = false;
-    // }
-    // for(auto [h, w] : S){
-    //     isS[h][w] = false;
-    // }
-    // return path;
+    // for(auto [g, i, j] : path)
+    //     std::cout<<"minFCycle "<<g<<" "<<i<<" "<<j<<std::endl;
+    return path;
     return {};
 }
 
 
-std::pair<long double, std::vector<std::pair<int,int>>> ImageTexture::minCutCycle(const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, int left, int right, const std::vector<std::pair<int, int>> &stPath){
+std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle(const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, const std::array<std::vector<std::vector<std::array<int, 4>>>,2> &edgeTo, int left, int right, const std::vector<std::pair<int, int>> &stPath, std::array<std::vector<std::vector<long double>>, 2> &dist, std::array<std::vector<std::vector<bool>>, 2> &vis, std::array<std::vector<std::vector<int>>, 2> &parent){
     
-    static std::array<std::vector<std::vector<int>>, 2> parent({
-        std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
-        std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1))
-    } );    
-    static std::array<std::vector<std::vector<long double>>, 2> dist({
-        std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
-        std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1))
-    });
-    static std::array<std::vector<std::vector<bool>>, 2> vis({
-        std::vector<std::vector<bool>>(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
-        std::vector<std::vector<bool>>(imgHeight + 1, std::vector<bool>(imgWidth + 1))
-    });
+
     int f_mid = (left + right) / 2;
     
-    auto testCutCycle = findMinFCycle(stPath[f_mid], inSubgraph, edgesCosts, edgeTo, dist, vis, parent);
-
+    auto curCutCycle = findMinFCycle(stPath[f_mid], inSubgraph, edgesCosts, edgeTo, dist, vis, parent);
+    if(left == right){
+        return {dist[1][stPath[f_mid].first][stPath[f_mid].second], curCutCycle};
+    }
 
     return {};
 }
