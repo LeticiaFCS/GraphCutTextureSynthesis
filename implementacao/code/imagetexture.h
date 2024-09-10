@@ -154,8 +154,8 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    static const uint64_t rngSeed = 36609795014301;
-    //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
+    //static const uint64_t rngSeed = 36609795014301;
+    static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(-(int) inputImg.get_height() + 1, imgHeight-1);
