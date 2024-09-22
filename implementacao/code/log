@@ -266,8 +266,18 @@ Case 2
  S 293 242
  S 294 241
  S 294 242
+Ts path: 
+ 288 243
+ 289 243
+ 290 243
+ 291 243
+ 292 243
+ 293 243
+ 293 242
+
 min cut cycle dac 0 7
 visited = 2
+f_mid 3
 START DIJKSTRA MIN F CYCLE
  face 291 243
  path = 281.905
@@ -282,5 +292,6 @@ cur cycle dac:
 
 min cut cycle dac 0 3
 visited = 3
+f_mid 1
 START DIJKSTRA MIN F CYCLE
  face 293 243

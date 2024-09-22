@@ -4,8 +4,10 @@
 
 
 int main(int argc, char *argv[]){
-    int lim;
-    std::cin>>lim;
+    int lim = 1;
+    if(argc > 1){
+        lim = atoi(argv[1]);
+    }
     for(int it =0 ; it < lim; it++){
         std::cout<<"NEW IMAGE "<<it<<std::endl;
         std::cerr<<"NEW IMAGE "<<it<<std::endl;

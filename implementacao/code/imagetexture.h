@@ -291,18 +291,25 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     // enter by left - copy graph
     /*mark ST Path*/{
         assert((int(tsPath.size()) >= 2, "tsPath lenght should be at least 2"));
+        std::cout<<"Ts path: "<<std::endl;
+        for(auto [x, y] : tsPath){
+            std::cout<<" "<<x<<" "<<y<<std::endl;
+        }
+        std::cout<<std::endl;
         for(auto [x, y] : tsPath)
             inStPath[x][y] = true;
 
         auto [secondX, secondY] = tsPath[tsPath.size() - 2];
-        int firstParent = revDir(parent[secondX][secondY]);
+        int firstParent = parent[secondX][secondY];
+        std::cout<<"segundoooo "<<secondX<<" "<<secondY<<" "<<parent[secondX][secondY]<<std::endl;
 
         for(auto [x, y] : tsPath){
             for(int d = 0; d < int(directions.size()); d++){
+                std::cout<<"D  is "<<d<<" prev "<<std::endl;
                 auto [deltaX, deltaY] = directions[d];
                 int nextX = x + deltaX;
                 int nextY = y + deltaY;
-                if(!insideDual(nextX, nextY))
+                if(!insideDual(nextX, nextY) || !inSubgraph[nextX][nextY])
                     continue;
                 if(inStPath[nextX][nextY]){
                     edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
@@ -311,19 +318,28 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                     edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
                 } else{
                     int par = parent[x][y];
-                    if(par == -2)
+                    if(par == -2){
                         par = firstParent;
+                        std::cout<<"sem pai "<<x<<" "<<y<<std::endl;
+                    }
+                    std::cout<<"par is  "<<x<<" "<<y<<" par "<< par <<std::endl;
                     edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
                     edgeTo[edgeType::copyGraph][x][y][d] = edgeType::invalid;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
                     edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
                     
-                    if(d == prevDir(par)){ // left of path
+                    if(d == prevDir(par) || (parent[x][y] == -2 && d == par)){ // left of path
                         edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
-                        edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;                        
+                        edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;   
+                        std::cout<<"edge org "<<x<<" "<<y<<" to org "<<nextX<<" "<<nextY<<std::endl;
+                        std::cout<<"edge org "<<nextX<<" "<<nextY<<" to org "<<x<<" "<<y<<std::endl; 
+                        std::cout<<std::endl;                    
                     } else { // right of path
                         edgeTo[edgeType::copyGraph][x][y][d] = edgeType::originalGraph;
                         edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph; 
+                        std::cout<<"edge copy "<<x<<" "<<y<<" to org "<<nextX<<" "<<nextY<<std::endl;
+                        std::cout<<"edge org "<<nextX<<" "<<nextY<<" to copy "<<x<<" "<<y<<std::endl;
+                        std::cout<<std::endl;                    
                     }
                 }
             }
@@ -1104,6 +1120,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
     std::cout<<"visited = "<<visited<<std::endl;
 
     int f_mid = (left + right) / 2;
+    std::cout<<"f_mid "<<f_mid<<std::endl;
     
     auto curCutCycle = findMinFCycle(stPath[f_mid], inSubgraph, edgesCosts, edgeTo, dist, vis, seen, parent, visited);
     std::cout<<"cur cycle dac: \n";
