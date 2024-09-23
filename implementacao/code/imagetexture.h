@@ -158,7 +158,7 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    static const uint64_t rngSeed = 15117361736742;
+    static const uint64_t rngSeed = 49102102093506;
     //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
@@ -1063,7 +1063,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
             int nextG = edgeTo[g][i][j][d];
             if(nextG == 2)
                 continue;
-            if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextG][nextI][nextJ]){
+            if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && vis[nextG][nextI][nextJ] != visited){
                 long double curCost = edgesCosts[i][j][d];
                 // if(isS[i][j] && isT[nextI][nextJ]) //avoid direct empty cut
                 //     continue;
@@ -1157,7 +1157,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
         answerCut = min(answerCut, leftCutCycle);
     }
     //right
-    if(f_mid < right){
+    if(f_mid < right - 1){
         std::vector<std::array<int, 5>> oldEdgeValues;
         for(auto [g, x, y] : curCutCycle.second){
             int par = parent[g][x][y];
