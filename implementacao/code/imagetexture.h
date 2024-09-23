@@ -323,6 +323,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                         std::cout<<"sem pai "<<x<<" "<<y<<std::endl;
                     }
                     std::cout<<"par is  "<<x<<" "<<y<<" par "<< par <<std::endl;
+                    std::cout<<"      par "<<x+directions[par].first<<" "<<y+directions[par].second<<std::endl;
                     edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
                     edgeTo[edgeType::copyGraph][x][y][d] = edgeType::invalid;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;

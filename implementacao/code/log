@@ -618,48 +618,56 @@ Ts path:
 segundoooo 183 290 3
 D  is 0 prev 
 par is  184 284 par 3
+      par 184 285
 edge copy 184 284 to org 183 284
 edge org 183 284 to copy 184 284
 
 D  is 1 prev 
 D  is 2 prev 
 par is  184 284 par 3
+      par 184 285
 edge org 184 284 to org 185 284
 edge org 185 284 to org 184 284
 
 D  is 3 prev 
 D  is 0 prev 
 par is  184 285 par 3
+      par 184 286
 edge copy 184 285 to org 183 285
 edge org 183 285 to copy 184 285
 
 D  is 1 prev 
 D  is 2 prev 
 par is  184 285 par 3
+      par 184 286
 edge org 184 285 to org 185 285
 edge org 185 285 to org 184 285
 
 D  is 3 prev 
 D  is 0 prev 
 par is  184 286 par 3
+      par 184 287
 edge copy 184 286 to org 183 286
 edge org 183 286 to copy 184 286
 
 D  is 1 prev 
 D  is 2 prev 
 par is  184 286 par 3
+      par 184 287
 edge org 184 286 to org 185 286
 edge org 185 286 to org 184 286
 
 D  is 3 prev 
 D  is 0 prev 
 par is  184 287 par 3
+      par 184 288
 edge copy 184 287 to org 183 287
 edge org 183 287 to copy 184 287
 
 D  is 1 prev 
 D  is 2 prev 
 par is  184 287 par 3
+      par 184 288
 edge org 184 287 to org 185 287
 edge org 185 287 to org 184 287
 
@@ -668,21 +676,25 @@ D  is 0 prev
 D  is 1 prev 
 D  is 2 prev 
 par is  184 288 par 0
+      par 183 288
 edge copy 184 288 to org 185 288
 edge org 185 288 to copy 184 288
 
 D  is 3 prev 
 par is  184 288 par 0
+      par 183 288
 edge org 184 288 to org 184 289
 edge org 184 289 to org 184 288
 
 D  is 0 prev 
 par is  183 288 par 3
+      par 183 289
 edge copy 183 288 to org 182 288
 edge org 182 288 to copy 183 288
 
 D  is 1 prev 
 par is  183 288 par 3
+      par 183 289
 edge copy 183 288 to org 183 287
 edge org 183 287 to copy 183 288
 
@@ -690,24 +702,28 @@ D  is 2 prev
 D  is 3 prev 
 D  is 0 prev 
 par is  183 289 par 3
+      par 183 290
 edge copy 183 289 to org 182 289
 edge org 182 289 to copy 183 289
 
 D  is 1 prev 
 D  is 2 prev 
 par is  183 289 par 3
+      par 183 290
 edge org 183 289 to org 184 289
 edge org 184 289 to org 183 289
 
 D  is 3 prev 
 D  is 0 prev 
 par is  183 290 par 3
+      par 183 291
 edge copy 183 290 to org 182 290
 edge org 182 290 to copy 183 290
 
 D  is 1 prev 
 D  is 2 prev 
 par is  183 290 par 3
+      par 183 291
 edge org 183 290 to org 184 290
 edge org 184 290 to org 183 290
 
@@ -715,6 +731,7 @@ D  is 3 prev
 D  is 0 prev 
 sem pai 183 291
 par is  183 291 par 3
+      par 183 292
 edge copy 183 291 to org 182 291
 edge org 182 291 to copy 183 291
 
@@ -722,12 +739,14 @@ D  is 1 prev
 D  is 2 prev 
 sem pai 183 291
 par is  183 291 par 3
+      par 183 292
 edge org 183 291 to org 184 291
 edge org 184 291 to org 183 291
 
 D  is 3 prev 
 sem pai 183 291
 par is  183 291 par 3
+      par 183 292
 edge org 183 291 to org 183 292
 edge org 183 292 to org 183 291
 
