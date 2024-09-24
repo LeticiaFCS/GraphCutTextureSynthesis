@@ -1,888 +1,833 @@
 NEW IMAGE 0
 ITERATION 0 ------------------------------- 
-Seed is 49102102093506
-30 289
-NEW COLOR 352
+Seed is 7847891524704
+262 119
+NEW COLOR 1024
 ITERATION 1 ------------------------------- 
-Seed is 49102102093506
-2 297
-BLENDING
-Case 1
- S is 30 300
- T is 30 297
- T 30 297
- S 30 300
-NEW COLOR 86
+Seed is 7847891524704
+282 -4
+NEW COLOR 504
 ITERATION 2 ------------------------------- 
-Seed is 49102102093506
-221 85
+Seed is 7847891524704
+102 218
 NEW COLOR 1024
 ITERATION 3 ------------------------------- 
-Seed is 49102102093506
-232 64
-BLENDING
-Case 1
- S is 232 85
- T is 253 96
- T 253 96
- S 232 85
-NEW COLOR 893
+Seed is 7847891524704
+198 299
+NEW COLOR 32
 ITERATION 4 ------------------------------- 
-Seed is 49102102093506
-113 82
+Seed is 7847891524704
+114 100
 NEW COLOR 1024
 ITERATION 5 ------------------------------- 
-Seed is 49102102093506
-38 283
+Seed is 7847891524704
+294 59
+NEW COLOR 192
+ITERATION 6 ------------------------------- 
+Seed is 7847891524704
+297 198
+NEW COLOR 96
+ITERATION 7 ------------------------------- 
+Seed is 7847891524704
+268 111
 BLENDING
 Case 1
- S is 38 289
- T is 62 300
- T 62 300
- S 38 289
-NEW COLOR 376
-ITERATION 6 ------------------------------- 
-Seed is 49102102093506
-194 293
-NEW COLOR 224
-ITERATION 7 ------------------------------- 
-Seed is 49102102093506
-220 161
-NEW COLOR 1024
+ S is 268 119
+ T is 294 143
+ T (294, 143)
+ S (268, 119)
+NEW COLOR 794
 ITERATION 8 ------------------------------- 
-Seed is 49102102093506
-276 259
-NEW COLOR 768
+Seed is 7847891524704
+57 231
+NEW COLOR 1024
 ITERATION 9 ------------------------------- 
-Seed is 49102102093506
-36 130
+Seed is 7847891524704
+75 33
 NEW COLOR 1024
 ITERATION 10 ------------------------------- 
-Seed is 49102102093506
-9 275
-BLENDING
-Case 1
- S is 9 297
- T is 41 283
- T 41 283
- S 9 297
-NEW COLOR 660
+Seed is 7847891524704
+23 123
+NEW COLOR 1024
 ITERATION 11 ------------------------------- 
-Seed is 49102102093506
-267 97
+Seed is 7847891524704
+181 133
 NEW COLOR 1024
 ITERATION 12 ------------------------------- 
-Seed is 49102102093506
-201 277
+Seed is 7847891524704
+124 113
 BLENDING
 Case 1
- S is 201 293
- T is 226 300
- T 226 300
- S 201 293
-NEW COLOR 637
+ S is 146 113
+ T is 124 132
+ T (124, 132)
+ S (146, 113)
+NEW COLOR 811
 ITERATION 13 ------------------------------- 
-Seed is 49102102093506
-98 104
+Seed is 7847891524704
+298 40
 BLENDING
 Case 1
- S is 130 114
- T is 113 104
- T 113 104
- S 130 114
-NEW COLOR 932
+ S is 298 59
+ T is 300 59
+ T (300, 59)
+ S (298, 59)
+NEW COLOR 38
 ITERATION 14 ------------------------------- 
-Seed is 49102102093506
--27 -12
-NEW COLOR 100
+Seed is 7847891524704
+40 201
+BLENDING
+Case 1
+ S is 57 233
+ T is 72 231
+ T (72, 231)
+ S (57, 233)
+NEW COLOR 1010
 ITERATION 15 ------------------------------- 
-Seed is 49102102093506
-239 206
+Seed is 7847891524704
+149 175
 NEW COLOR 1024
 ITERATION 16 ------------------------------- 
-Seed is 49102102093506
-286 164
-NEW COLOR 448
+Seed is 7847891524704
+242 56
+NEW COLOR 1024
 ITERATION 17 ------------------------------- 
-Seed is 49102102093506
-138 143
-NEW COLOR 1024
+Seed is 7847891524704
+-19 296
+NEW COLOR 52
 ITERATION 18 ------------------------------- 
-Seed is 49102102093506
-238 184
-BLENDING
-Case 1
- S is 252 184
- T is 238 193
- T 238 193
- S 252 184
- S is 239 216
- T is 270 206
- T 270 206
- S 239 216
-NEW COLOR 801
+Seed is 7847891524704
+151 242
+NEW COLOR 1024
 ITERATION 19 ------------------------------- 
-Seed is 49102102093506
-126 75
-BLENDING
-Case 1
- S is 126 82
- T is 145 107
- T 145 107
- S 126 82
-NEW COLOR 730
+Seed is 7847891524704
+144 56
+NEW COLOR 1024
 ITERATION 20 ------------------------------- 
-Seed is 49102102093506
-169 70
-NEW COLOR 1024
+Seed is 7847891524704
+180 214
+BLENDING
+Case 1
+ S is 180 242
+ T is 183 246
+ T (183, 246)
+ S (180, 242)
+NEW COLOR 1018
 ITERATION 21 ------------------------------- 
-Seed is 49102102093506
-98 202
-NEW COLOR 1024
+Seed is 7847891524704
+231 116
+BLENDING
+Case 1
+ S is 262 148
+ T is 263 119
+ T (263, 119)
+ S (262, 148)
+NEW COLOR 1007
 ITERATION 22 ------------------------------- 
-Seed is 49102102093506
-123 24
-NEW COLOR 1024
+Seed is 7847891524704
+111 -3
+NEW COLOR 928
 ITERATION 23 ------------------------------- 
-Seed is 49102102093506
-255 294
-NEW COLOR 192
+Seed is 7847891524704
+218 269
+BLENDING
+Case 1
+ S is 218 299
+ T is 230 300
+ T (230, 300)
+ S (218, 299)
+NEW COLOR 983
 ITERATION 24 ------------------------------- 
-Seed is 49102102093506
-299 70
-NEW COLOR 32
-ITERATION 25 ------------------------------- 
-Seed is 49102102093506
-122 6
-BLENDING
-Case 1
- S is 123 38
- T is 154 24
- T 154 24
- S 123 38
-NEW COLOR 764
-ITERATION 26 ------------------------------- 
-Seed is 49102102093506
-140 -24
-BLENDING
-Case 1
- S is 140 6
- T is 154 8
- T 154 8
- S 140 6
-NEW COLOR 242
-ITERATION 27 ------------------------------- 
-Seed is 49102102093506
-28 32
-NEW COLOR 1024
-ITERATION 28 ------------------------------- 
-Seed is 49102102093506
-125 122
-BLENDING
-Case 1
- S is 130 122
- T is 125 136
- T 125 136
- S 130 122
- S is 138 154
- T is 157 143
- T 157 143
- S 138 154
-NEW COLOR 829
-ITERATION 29 ------------------------------- 
-Seed is 49102102093506
-195 280
-BLENDING
-Case 1
- S is 195 293
- T is 201 280
- T 201 280
- S 195 293
-NEW COLOR 115
-ITERATION 30 ------------------------------- 
-Seed is 49102102093506
--27 104
-NEW COLOR 160
-ITERATION 31 ------------------------------- 
-Seed is 49102102093506
-76 84
-BLENDING
-Case 1
- S is 98 116
- T is 108 104
- T 108 104
- S 98 116
-NEW COLOR 963
-ITERATION 32 ------------------------------- 
-Seed is 49102102093506
-42 77
-NEW COLOR 1024
-ITERATION 33 ------------------------------- 
-Seed is 49102102093506
-227 -17
-NEW COLOR 480
-ITERATION 34 ------------------------------- 
-Seed is 49102102093506
-112 22
-BLENDING
-Case 1
- S is 123 54
- T is 122 22
- T 122 22
- S 123 54
-NEW COLOR 437
-ITERATION 35 ------------------------------- 
-Seed is 49102102093506
-45 72
-BLENDING
-Case 1
- S is 45 77
- T is 74 104
- T 74 104
- S 45 77
- S is 76 104
- T is 77 84
- T 77 84
- S 76 104
-NEW COLOR 463
-ITERATION 36 ------------------------------- 
-Seed is 49102102093506
-182 6
-NEW COLOR 1024
-ITERATION 37 ------------------------------- 
-Seed is 49102102093506
-203 140
-BLENDING
-Case 1
- S is 220 172
- T is 235 161
- T 235 161
- S 220 172
-NEW COLOR 959
-ITERATION 38 ------------------------------- 
-Seed is 49102102093506
-264 170
-BLENDING
-Case 1
- S is 264 184
- T is 270 202
- T 270 202
- S 264 184
- S is 296 196
- T is 286 170
- T 286 170
- S 296 196
-NEW COLOR 816
-ITERATION 39 ------------------------------- 
-Seed is 49102102093506
-264 -19
+Seed is 7847891524704
+252 287
 NEW COLOR 416
-ITERATION 40 ------------------------------- 
-Seed is 49102102093506
-260 110
+ITERATION 25 ------------------------------- 
+Seed is 7847891524704
+176 106
 BLENDING
 Case 1
- S is 292 129
- T is 267 110
- T 267 110
- S 292 129
-NEW COLOR 842
-ITERATION 41 ------------------------------- 
-Seed is 49102102093506
-117 100
+ S is 181 138
+ T is 208 133
+ T (208, 133)
+ S (181, 138)
+NEW COLOR 934
+ITERATION 26 ------------------------------- 
+Seed is 7847891524704
+276 -16
 BLENDING
 Case 1
- S is 149 107
- T is 149 122
- T 149 122
- S 149 107
-NEW COLOR 298
-ITERATION 42 ------------------------------- 
-Seed is 49102102093506
-166 273
+ S is 282 16
+ T is 282 0
+ T (282, 0)
+ S (282, 16)
+NEW COLOR 121
+ITERATION 27 ------------------------------- 
+Seed is 7847891524704
+149 284
+NEW COLOR 512
+ITERATION 28 ------------------------------- 
+Seed is 7847891524704
+115 192
 BLENDING
 Case 1
- S is 194 300
- T is 198 280
- T 198 280
- S 194 300
-NEW COLOR 834
-ITERATION 43 ------------------------------- 
-Seed is 49102102093506
-137 6
+ S is 115 218
+ T is 134 224
+ T (134, 224)
+ S (115, 218)
+NEW COLOR 975
+ITERATION 29 ------------------------------- 
+Seed is 7847891524704
+143 -14
+NEW COLOR 576
+ITERATION 30 ------------------------------- 
+Seed is 7847891524704
+221 91
 BLENDING
 Case 1
- S is 169 8
- T is 155 38
- T 155 38
- S 169 8
-NEW COLOR 534
-ITERATION 44 ------------------------------- 
-Seed is 49102102093506
-129 294
-NEW COLOR 192
-ITERATION 45 ------------------------------- 
-Seed is 49102102093506
-97 167
+ S is 231 123
+ T is 253 116
+ T (253, 116)
+ S (231, 123)
+NEW COLOR 953
+ITERATION 31 ------------------------------- 
+Seed is 7847891524704
+179 28
 NEW COLOR 1024
-ITERATION 46 ------------------------------- 
-Seed is 49102102093506
-3 142
-NEW COLOR 1024
-ITERATION 47 ------------------------------- 
-Seed is 49102102093506
-89 46
+ITERATION 32 ------------------------------- 
+Seed is 7847891524704
+119 32
 BLENDING
 Case 1
- S is 121 54
- T is 112 46
- T 112 46
- S 121 54
+ S is 144 64
+ T is 151 56
+ T (151, 56)
+ S (144, 64)
+NEW COLOR 985
+ITERATION 33 ------------------------------- 
+Seed is 7847891524704
+7 53
+NEW COLOR 1024
+ITERATION 34 ------------------------------- 
+Seed is 7847891524704
+232 27
+BLENDING
+Case 1
+ S is 242 59
+ T is 264 56
+ T (264, 56)
+ S (242, 59)
+NEW COLOR 985
+ITERATION 35 ------------------------------- 
+Seed is 7847891524704
+295 142
+BLENDING
+Case 1
+ S is 300 143
+ T is 295 143
+ T (295, 143)
+ S (300, 143)
+NEW COLOR 155
+ITERATION 36 ------------------------------- 
+Seed is 7847891524704
+180 94
+BLENDING
+Case 1
+ S is 180 106
+ T is 208 126
+ T (208, 126)
+ S (180, 106)
+NEW COLOR 759
+ITERATION 37 ------------------------------- 
+Seed is 7847891524704
+99 138
+BLENDING
+Case 1
+ S is 131 145
+ T is 124 138
+ T (124, 138)
+ S (131, 145)
 NEW COLOR 995
+ITERATION 38 ------------------------------- 
+Seed is 7847891524704
+140 16
+BLENDING
+Case 1
+ S is 172 18
+ T is 140 29
+ T (140, 29)
+ S (172, 18)
+ S is 140 32
+ T is 151 48
+ T (151, 48)
+ S (140, 32)
+NEW COLOR 926
+ITERATION 39 ------------------------------- 
+Seed is 7847891524704
+162 253
+BLENDING
+Case 1
+ S is 183 253
+ T is 162 274
+ T (162, 274)
+ S (183, 253)
+ S is 162 284
+ T is 181 285
+ T (181, 285)
+ S (162, 284)
+NEW COLOR 827
+ITERATION 40 ------------------------------- 
+Seed is 7847891524704
+220 -19
+NEW COLOR 416
+ITERATION 41 ------------------------------- 
+Seed is 7847891524704
+59 5
+BLENDING
+Case 1
+ S is 75 37
+ T is 91 33
+ T (91, 33)
+ S (75, 37)
+NEW COLOR 986
+ITERATION 42 ------------------------------- 
+Seed is 7847891524704
+-29 163
+NEW COLOR 96
+ITERATION 43 ------------------------------- 
+Seed is 7847891524704
+127 127
+BLENDING
+Case 1
+ S is 156 127
+ T is 131 159
+ T (131, 159)
+ S (156, 127)
+NEW COLOR 718
+ITERATION 44 ------------------------------- 
+Seed is 7847891524704
+28 101
+BLENDING
+Case 1
+ S is 28 123
+ T is 55 133
+ T (55, 133)
+ S (28, 123)
+NEW COLOR 883
+ITERATION 45 ------------------------------- 
+Seed is 7847891524704
+105 -23
+BLENDING
+Case 1
+ S is 111 9
+ T is 111 0
+ T (111, 0)
+ S (111, 9)
+NEW COLOR 69
+ITERATION 46 ------------------------------- 
+Seed is 7847891524704
+292 17
+BLENDING
+Case 1
+ S is 300 28
+ T is 292 28
+ T (292, 28)
+ S (300, 28)
+ S is 298 49
+ T is 300 40
+ T (300, 40)
+ S (298, 49)
+NEW COLOR 170
+ITERATION 47 ------------------------------- 
+Seed is 7847891524704
+150 11
+BLENDING
+Case 1
+ S is 175 11
+ T is 172 43
+ T (172, 43)
+ S (175, 11)
+ S is 179 43
+ T is 182 28
+ T (182, 28)
+ S (179, 43)
+NEW COLOR 367
 ITERATION 48 ------------------------------- 
-Seed is 49102102093506
-166 222
-NEW COLOR 1024
+Seed is 7847891524704
+-5 36
+BLENDING
+Case 1
+ S is 7 68
+ T is 27 53
+ T (27, 53)
+ S (7, 68)
+NEW COLOR 699
 ITERATION 49 ------------------------------- 
-Seed is 49102102093506
-270 297
+Seed is 7847891524704
+167 288
 BLENDING
 Case 1
- S is 287 297
- T is 287 300
- T 287 300
- S 287 297
-NEW COLOR 42
+ S is 181 288
+ T is 181 300
+ T (181, 300)
+ S (181, 288)
+ S is 198 300
+ T is 199 299
+ T (199, 299)
+ S (198, 300)
+NEW COLOR 226
 ITERATION 50 ------------------------------- 
-Seed is 49102102093506
-209 288
+Seed is 7847891524704
+-8 14
 BLENDING
 Case 1
- S is 233 288
- T is 233 300
- T 233 300
- S 233 288
-NEW COLOR 119
+ S is 0 36
+ T is 24 36
+ T (24, 36)
+ S (0, 36)
+NEW COLOR 554
 ITERATION 51 ------------------------------- 
-Seed is 49102102093506
-197 93
-BLENDING
-Case 1
- S is 201 93
- T is 197 102
- T 197 102
- S 201 93
- S is 229 117
- T is 221 93
- T 221 93
- S 229 117
-NEW COLOR 901
+Seed is 7847891524704
+274 231
+NEW COLOR 832
 ITERATION 52 ------------------------------- 
-Seed is 49102102093506
-200 -5
+Seed is 7847891524704
+189 201
 BLENDING
 Case 1
- S is 200 6
- T is 214 27
- T 214 27
- S 200 6
- S is 232 15
- T is 227 0
- T 227 0
- S 232 15
-NEW COLOR 678
+ S is 189 214
+ T is 212 233
+ T (212, 233)
+ S (189, 214)
+NEW COLOR 750
 ITERATION 53 ------------------------------- 
-Seed is 49102102093506
-252 200
+Seed is 7847891524704
+66 56
 BLENDING
 Case 1
- S is 284 202
- T is 271 232
- T 271 232
- S 284 202
-NEW COLOR 497
+ S is 98 65
+ T is 75 56
+ T (75, 56)
+ S (98, 65)
+NEW COLOR 909
 ITERATION 54 ------------------------------- 
-Seed is 49102102093506
-158 -12
-BLENDING
-Case 1
- S is 172 0
- T is 169 20
- T 169 20
- S 172 0
- S is 182 20
- T is 190 6
- T 190 6
- S 182 20
-NEW COLOR 364
+Seed is 7847891524704
+-17 219
+NEW COLOR 480
 ITERATION 55 ------------------------------- 
-Seed is 49102102093506
-228 297
+Seed is 7847891524704
+117 147
 BLENDING
 Case 1
- S is 241 297
- T is 241 300
- T 241 300
- S 241 297
- S is 255 300
- T is 255 297
- T 255 297
- S 255 300
-NEW COLOR 47
+ S is 149 159
+ T is 117 170
+ T (117, 170)
+ S (149, 159)
+NEW COLOR 642
 ITERATION 56 ------------------------------- 
-Seed is 49102102093506
-54 197
+Seed is 7847891524704
+64 264
 NEW COLOR 1024
 ITERATION 57 ------------------------------- 
-Seed is 49102102093506
-82 267
-NEW COLOR 1024
+Seed is 7847891524704
+223 242
+BLENDING
+Case 1
+ S is 223 269
+ T is 250 274
+ T (250, 274)
+ S (223, 269)
+NEW COLOR 942
 ITERATION 58 ------------------------------- 
-Seed is 49102102093506
-257 47
+Seed is 7847891524704
+51 179
 BLENDING
 Case 1
- S is 257 64
- T is 264 79
- T 264 79
- S 257 64
-NEW COLOR 973
+ S is 51 201
+ T is 72 211
+ T (72, 211)
+ S (51, 201)
+NEW COLOR 913
 ITERATION 59 ------------------------------- 
-Seed is 49102102093506
-153 203
+Seed is 7847891524704
+-3 116
 BLENDING
 Case 1
- S is 166 235
- T is 185 222
- T 185 222
- S 166 235
-NEW COLOR 836
+ S is 23 148
+ T is 28 116
+ T (28, 116)
+ S (23, 148)
+NEW COLOR 828
 ITERATION 60 ------------------------------- 
-Seed is 49102102093506
-211 -7
+Seed is 7847891524704
+128 65
 BLENDING
 Case 1
- S is 243 15
- T is 232 25
- T 232 25
- S 243 15
-NEW COLOR 148
+ S is 160 88
+ T is 144 65
+ T (144, 65)
+ S (160, 88)
+NEW COLOR 848
 ITERATION 61 ------------------------------- 
-Seed is 49102102093506
-84 -12
-NEW COLOR 640
+Seed is 7847891524704
+200 -6
+BLENDING
+Case 1
+ S is 232 13
+ T is 220 0
+ T (220, 0)
+ S (232, 13)
+NEW COLOR 757
 ITERATION 62 ------------------------------- 
-Seed is 49102102093506
-105 107
+Seed is 7847891524704
+-20 76
 BLENDING
 Case 1
- S is 125 139
- T is 105 136
- T 105 136
- S 125 139
-NEW COLOR 108
+ S is 12 85
+ T is 7 76
+ T (7, 76)
+ S (12, 85)
+NEW COLOR 367
 ITERATION 63 ------------------------------- 
-Seed is 49102102093506
-69 288
+Seed is 7847891524704
+19 35
 BLENDING
 Case 1
- S is 70 288
- T is 70 300
- T 70 300
- S 70 288
- S is 101 299
- T is 82 288
- T 82 288
- S 101 299
-NEW COLOR 260
+ S is 24 35
+ T is 39 67
+ T (39, 67)
+ S (24, 35)
+NEW COLOR 802
 ITERATION 64 ------------------------------- 
-Seed is 49102102093506
-49 -10
-NEW COLOR 704
+Seed is 7847891524704
+57 207
+BLENDING
+Case 1
+ S is 83 207
+ T is 89 231
+ T (89, 231)
+ S (83, 207)
+NEW COLOR 562
 ITERATION 65 ------------------------------- 
-Seed is 49102102093506
-167 284
+Seed is 7847891524704
+-2 51
+BLENDING
+Case 1
+ S is 0 76
+ T is 0 68
+ T (0, 68)
+ S (0, 76)
+NEW COLOR 87
+ITERATION 66 ------------------------------- 
+Seed is 7847891524704
+151 185
+BLENDING
+Case 1
+ S is 181 185
+ T is 151 207
+ T (151, 207)
+ S (181, 185)
+ S is 180 217
+ T is 183 214
+ T (183, 214)
+ S (180, 217)
+NEW COLOR 793
+ITERATION 67 ------------------------------- 
+Seed is 7847891524704
+125 49
+BLENDING
+Case 1
+ S is 128 81
+ T is 157 56
+ T (157, 56)
+ S (128, 81)
+NEW COLOR 740
+ITERATION 68 ------------------------------- 
+Seed is 7847891524704
+-1 110
+BLENDING
+Case 1
+ S is 0 116
+ T is 28 110
+ T (28, 110)
+ S (0, 116)
+NEW COLOR 208
+ITERATION 69 ------------------------------- 
+Seed is 7847891524704
+128 51
+BLENDING
+Case 1
+ S is 157 51
+ T is 160 56
+ T (160, 56)
+ S (157, 51)
+NEW COLOR 24
+ITERATION 70 ------------------------------- 
+Seed is 7847891524704
+46 65
+BLENDING
+Case 1
+ S is 51 65
+ T is 46 67
+ T (46, 67)
+ S (51, 65)
+ S is 78 88
+ T is 66 65
+ T (66, 65)
+ S (78, 88)
+NEW COLOR 840
+ITERATION 71 ------------------------------- 
+Seed is 7847891524704
+56 33
+BLENDING
+Case 1
+ S is 66 65
+ T is 59 33
+ T (59, 33)
+ S (66, 65)
+NEW COLOR 592
+ITERATION 72 ------------------------------- 
+Seed is 7847891524704
+232 267
+BLENDING
+Case 1
+ S is 255 267
+ T is 250 299
+ T (250, 299)
+ S (255, 267)
+ S is 252 299
+ T is 264 287
+ T (264, 287)
+ S (252, 299)
+NEW COLOR 394
+ITERATION 73 ------------------------------- 
+Seed is 7847891524704
+35 279
+BLENDING
+Case 1
+ S is 67 296
+ T is 64 279
+ T (64, 279)
+ S (67, 296)
+NEW COLOR 649
+ITERATION 74 ------------------------------- 
+Seed is 7847891524704
+103 -19
+BLENDING
+Case 1
+ S is 111 13
+ T is 105 0
+ T (105, 0)
+ S (111, 13)
+NEW COLOR 87
+ITERATION 75 ------------------------------- 
+Seed is 7847891524704
+209 -4
+BLENDING
+Case 1
+ S is 241 13
+ T is 209 26
+ T (209, 26)
+ S (241, 13)
+ S is 232 28
+ T is 241 27
+ T (241, 27)
+ S (232, 28)
+NEW COLOR 420
+ITERATION 76 ------------------------------- 
+Seed is 7847891524704
+237 -30
+BLENDING
+Case 1
+ S is 252 0
+ T is 252 2
+ T (252, 2)
+ S (252, 0)
+NEW COLOR 34
+ITERATION 77 ------------------------------- 
+Seed is 7847891524704
+35 37
+BLENDING
+Case 1
+ S is 46 69
+ T is 56 37
+ T (56, 37)
+ S (46, 69)
+NEW COLOR 710
+ITERATION 78 ------------------------------- 
+Seed is 7847891524704
+204 23
+BLENDING
+Case 1
+ S is 232 55
+ T is 211 55
+ T (211, 55)
+ S (232, 55)
+NEW COLOR 733
+ITERATION 79 ------------------------------- 
+Seed is 7847891524704
+163 22
+BLENDING
+Case 1
+ S is 179 54
+ T is 195 28
+ T (195, 28)
+ S (179, 54)
+NEW COLOR 804
+ITERATION 80 ------------------------------- 
+Seed is 7847891524704
+223 246
 BLENDING
 Case 2
- T 167 284
- T 167 285
- T 167 286
- T 167 287
- T 167 288
- T 167 289
- T 167 290
- T 167 291
- T 167 292
- T 167 293
- T 167 294
- T 167 295
- T 167 296
- T 167 297
- T 167 298
- T 167 299
- T 167 300
- T 168 284
- T 168 300
- T 169 284
- T 169 300
- T 170 284
- T 170 300
- T 171 284
- T 171 300
- T 172 284
- T 172 300
- T 173 284
- T 173 300
- T 174 284
- T 174 300
- T 175 284
- T 175 300
- T 176 284
- T 176 300
- T 177 284
- T 177 300
- T 178 284
- T 178 300
- T 179 284
- T 179 300
- T 180 284
- T 180 300
- T 181 284
- T 181 300
- T 182 284
- T 182 300
- T 183 284
- T 183 300
- T 184 284
- T 184 300
- T 185 284
- T 185 300
- T 186 284
- T 186 300
- T 187 284
- T 187 300
- T 188 284
- T 188 300
- T 189 284
- T 189 300
- T 190 284
- T 190 300
- T 191 284
- T 191 300
- T 192 284
- T 192 300
- T 193 284
- T 193 300
- T 194 284
- T 194 300
- T 195 284
- T 195 300
- T 196 284
- T 196 300
- T 197 284
- T 197 300
- T 198 284
- T 198 300
- T 199 284
- T 199 285
- T 199 286
- T 199 287
- T 199 288
- T 199 289
- T 199 290
- T 199 291
- T 199 292
- T 199 293
- T 199 294
- T 199 295
- T 199 296
- T 199 297
- T 199 298
- T 199 299
- T 199 300
- S 182 291
- S 182 292
- S 183 291
- S 183 292
+ T (223, 246)
+ T (223, 247)
+ T (223, 248)
+ T (223, 249)
+ T (223, 250)
+ T (223, 251)
+ T (223, 252)
+ T (223, 253)
+ T (223, 254)
+ T (223, 255)
+ T (223, 256)
+ T (223, 257)
+ T (223, 258)
+ T (223, 259)
+ T (223, 260)
+ T (223, 261)
+ T (223, 262)
+ T (223, 263)
+ T (223, 264)
+ T (223, 265)
+ T (223, 266)
+ T (223, 267)
+ T (223, 268)
+ T (223, 269)
+ T (223, 270)
+ T (223, 271)
+ T (223, 272)
+ T (223, 273)
+ T (223, 274)
+ T (223, 275)
+ T (223, 276)
+ T (223, 277)
+ T (223, 278)
+ T (224, 246)
+ T (224, 278)
+ T (225, 246)
+ T (225, 278)
+ T (226, 246)
+ T (226, 278)
+ T (227, 246)
+ T (227, 278)
+ T (228, 246)
+ T (228, 278)
+ T (229, 246)
+ T (229, 278)
+ T (230, 246)
+ T (230, 278)
+ T (231, 246)
+ T (231, 278)
+ T (232, 246)
+ T (232, 278)
+ T (233, 246)
+ T (233, 278)
+ T (234, 246)
+ T (234, 278)
+ T (235, 246)
+ T (235, 278)
+ T (236, 246)
+ T (236, 278)
+ T (237, 246)
+ T (237, 278)
+ T (238, 246)
+ T (238, 278)
+ T (239, 246)
+ T (239, 278)
+ T (240, 246)
+ T (240, 278)
+ T (241, 246)
+ T (241, 278)
+ T (242, 246)
+ T (242, 278)
+ T (243, 246)
+ T (243, 278)
+ T (244, 246)
+ T (244, 278)
+ T (245, 246)
+ T (245, 278)
+ T (246, 246)
+ T (246, 278)
+ T (247, 246)
+ T (247, 278)
+ T (248, 246)
+ T (248, 278)
+ T (249, 246)
+ T (249, 278)
+ T (250, 246)
+ T (250, 278)
+ T (251, 246)
+ T (251, 278)
+ T (252, 246)
+ T (252, 278)
+ T (253, 246)
+ T (253, 278)
+ T (254, 246)
+ T (254, 278)
+ T (255, 246)
+ T (255, 247)
+ T (255, 248)
+ T (255, 249)
+ T (255, 250)
+ T (255, 251)
+ T (255, 252)
+ T (255, 253)
+ T (255, 254)
+ T (255, 255)
+ T (255, 256)
+ T (255, 257)
+ T (255, 258)
+ T (255, 259)
+ T (255, 260)
+ T (255, 261)
+ T (255, 262)
+ T (255, 263)
+ T (255, 264)
+ T (255, 265)
+ T (255, 266)
+ T (255, 267)
+ T (255, 268)
+ T (255, 269)
+ T (255, 270)
+ T (255, 271)
+ T (255, 272)
+ T (255, 273)
+ T (255, 274)
+ T (255, 275)
+ T (255, 276)
+ T (255, 277)
+ T (255, 278)
+ S (238, 261)
+ S (238, 262)
+ S (239, 261)
+ S (239, 262)
 Ts path: 
- 184 284
- 184 285
- 184 286
- 184 287
- 184 288
- 183 288
- 183 289
- 183 290
- 183 291
+ (237, 278)
+ (237, 277)
+ (237, 276)
+ (237, 275)
+ (237, 274)
+ (237, 273)
+ (237, 272)
+ (237, 271)
+ (237, 270)
+ (237, 269)
+ (238, 269)
+ (238, 268)
+ (238, 267)
+ (238, 266)
+ (238, 265)
+ (238, 264)
+ (238, 263)
+ (238, 262)
 
-segundoooo 183 290 3
-D  is 0 prev 
-par is  184 284 par 3
-      par 184 285
-edge copy 184 284 to org 183 284
-edge org 183 284 to copy 184 284
-
-D  is 1 prev 
-D  is 2 prev 
-par is  184 284 par 3
-      par 184 285
-edge org 184 284 to org 185 284
-edge org 185 284 to org 184 284
-
-D  is 3 prev 
-D  is 0 prev 
-par is  184 285 par 3
-      par 184 286
-edge copy 184 285 to org 183 285
-edge org 183 285 to copy 184 285
-
-D  is 1 prev 
-D  is 2 prev 
-par is  184 285 par 3
-      par 184 286
-edge org 184 285 to org 185 285
-edge org 185 285 to org 184 285
-
-D  is 3 prev 
-D  is 0 prev 
-par is  184 286 par 3
-      par 184 287
-edge copy 184 286 to org 183 286
-edge org 183 286 to copy 184 286
-
-D  is 1 prev 
-D  is 2 prev 
-par is  184 286 par 3
-      par 184 287
-edge org 184 286 to org 185 286
-edge org 185 286 to org 184 286
-
-D  is 3 prev 
-D  is 0 prev 
-par is  184 287 par 3
-      par 184 288
-edge copy 184 287 to org 183 287
-edge org 183 287 to copy 184 287
-
-D  is 1 prev 
-D  is 2 prev 
-par is  184 287 par 3
-      par 184 288
-edge org 184 287 to org 185 287
-edge org 185 287 to org 184 287
-
-D  is 3 prev 
-D  is 0 prev 
-D  is 1 prev 
-D  is 2 prev 
-par is  184 288 par 0
-      par 183 288
-edge copy 184 288 to org 185 288
-edge org 185 288 to copy 184 288
-
-D  is 3 prev 
-par is  184 288 par 0
-      par 183 288
-edge org 184 288 to org 184 289
-edge org 184 289 to org 184 288
-
-D  is 0 prev 
-par is  183 288 par 3
-      par 183 289
-edge copy 183 288 to org 182 288
-edge org 182 288 to copy 183 288
-
-D  is 1 prev 
-par is  183 288 par 3
-      par 183 289
-edge copy 183 288 to org 183 287
-edge org 183 287 to copy 183 288
-
-D  is 2 prev 
-D  is 3 prev 
-D  is 0 prev 
-par is  183 289 par 3
-      par 183 290
-edge copy 183 289 to org 182 289
-edge org 182 289 to copy 183 289
-
-D  is 1 prev 
-D  is 2 prev 
-par is  183 289 par 3
-      par 183 290
-edge org 183 289 to org 184 289
-edge org 184 289 to org 183 289
-
-D  is 3 prev 
-D  is 0 prev 
-par is  183 290 par 3
-      par 183 291
-edge copy 183 290 to org 182 290
-edge org 182 290 to copy 183 290
-
-D  is 1 prev 
-D  is 2 prev 
-par is  183 290 par 3
-      par 183 291
-edge org 183 290 to org 184 290
-edge org 184 290 to org 183 290
-
-D  is 3 prev 
-D  is 0 prev 
-sem pai 183 291
-par is  183 291 par 3
-      par 183 292
-edge copy 183 291 to org 182 291
-edge org 182 291 to copy 183 291
-
-D  is 1 prev 
-D  is 2 prev 
-sem pai 183 291
-par is  183 291 par 3
-      par 183 292
-edge org 183 291 to org 184 291
-edge org 184 291 to org 183 291
-
-D  is 3 prev 
-sem pai 183 291
-par is  183 291 par 3
-      par 183 292
-edge org 183 291 to org 183 292
-edge org 183 292 to org 183 291
-
-min cut cycle dac 0 9
-visited = 2
-f_mid 4
-START DIJKSTRA MIN F CYCLE
- face 184 288
- path = 434.708
-cur cycle dac: 
-1 184 288
-0 185 288
-0 186 288
-0 186 289
-0 185 289
-0 184 289
-0 184 288
-
-invalid left 1 184 288 --> 184 287
-invalid left 0 185 288 --> 185 287
-invalid left 0 186 288 --> 187 288
-invalid left 0 186 289 --> 186 290
-invalid left 0 185 289 --> 185 290
-invalid left 0 184 289 --> 183 289
-min cut cycle dac 0 4
-visited = 3
-f_mid 2
-START DIJKSTRA MIN F CYCLE
- face 183 289
- path = 517.874
-cur cycle dac: 
-1 183 289
-0 182 289
-0 182 290
-0 182 291
-0 182 292
-0 183 292
-0 183 291
-0 183 290
-0 183 289
-
-min cut cycle dac 0 2
-visited = 4
-f_mid 1
-START DIJKSTRA MIN F CYCLE
- face 183 290
- path = 475.937
-cur cycle dac: 
-1 183 290
-0 182 290
-0 182 291
-0 182 292
-0 183 292
-0 183 291
-0 183 290
-
-min cut cycle dac 0 1
-visited = 5
-f_mid 0
-START DIJKSTRA MIN F CYCLE
- face 183 291
- path = 475.937
-cur cycle dac: 
-1 183 291
-1 183 290
-0 182 290
-0 182 291
-0 182 292
-0 183 292
-0 183 291
-
-invalid right 1 183 289 --> 183 288
-invalid right 0 182 289 --> 181 289
-invalid right 0 182 290 --> 181 290
-invalid right 0 182 291 --> 181 291
-invalid right 0 182 292 --> 182 293
-invalid right 0 183 292 --> 184 292
-min cut cycle dac 2 4
-visited = 6
-f_mid 3
-START DIJKSTRA MIN F CYCLE
- face 183 288
- path = 517.694
-cur cycle dac: 
-1 183 288
-1 184 288
-0 185 288
-0 186 288
-0 186 289
-0 185 289
-0 184 289
-0 184 288
-0 183 288
-
-invalid left 1 183 288 --> 183 287
-min cut cycle dac 2 3
-visited = 7
-f_mid 2
-START DIJKSTRA MIN F CYCLE
- face 183 289
- path = 517.874
-cur cycle dac: 
-1 183 289
-0 182 289
-0 182 290
-0 182 291
-0 182 292
-0 183 292
-0 183 291
-0 183 290
-0 183 289
-
-invalid right 0 184 288 --> 184 287
-min cut cycle dac 4 9
-visited = 8
-f_mid 6
-START DIJKSTRA MIN F CYCLE
- face 184 286
- path = 509.727
-cur cycle dac: 
-1 184 286
-1 184 287
-1 184 288
-0 185 288
-0 186 288
-0 186 287
-0 186 286
-0 185 286
-0 184 286
-
-invalid left 0 185 288 --> 185 287
-invalid left 0 186 287 --> 185 287
-invalid left 0 185 286 --> 185 287
-min cut cycle dac 4 6
-visited = 9
-f_mid 5
-START DIJKSTRA MIN F CYCLE
- face 184 287
- path = 452.341
+segundoooo 238 263 1
