@@ -32,6 +32,8 @@ public:
     void patchFitting(const png::image<png::rgb_pixel> &inputImg);
     void patchFitting(const std::string &file_name);
 private:
+    const uint64_t rngSeed;
+    std::mt19937_64 rng;
     enum PixelStatusEnum{
         colored, intersection, newcolor, notcolored
     };
@@ -116,16 +118,29 @@ private:
 Constructors
 */
 ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img) 
-    : outputImg(_img), 
+    : 
+    //rngSeed(7847891524704), //https://www.geogebra.org/calculator/xafaqxnx
+    //rngSeed(10698447507461),  //https://www.geogebra.org/calculator/fhtqafpt
+    //rngSeed(49102102093506),  // https://www.geogebra.org/calculator/kesrjeex //too small
+    //rngSeed(23796671245129),  //path empty
+    //rngSeed(31740571079601),  //path empty - solved
+    //rngSeed(39937168697097),
+    rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
+    rng(rngSeed),
+    outputImg(_img), 
     imgWidth(_img.get_width()),
     imgHeight(_img.get_height()),
     pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)){
+    std::cout<<"Seed is "<<rngSeed<<std::endl;
 }
 ImageTexture::ImageTexture(int width, int height) 
-    : outputImg(width, height), 
+    :  rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
+    rng(rngSeed),
+    outputImg(width, height), 
     imgWidth(width),
     imgHeight(height), 
-    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)){    
+    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)){
+    std::cout<<"Seed is "<<rngSeed<<std::endl;    
 }
 
 /*
@@ -158,13 +173,6 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    //static const uint64_t rngSeed = 7847891524704; //https://www.geogebra.org/calculator/xafaqxnx
-    //static const uint64_t rngSeed = 10698447507461; //https://www.geogebra.org/calculator/fhtqafpt
-    //static const uint64_t rngSeed = 49102102093506; // https://www.geogebra.org/calculator/kesrjeex //too small
-    //static const uint64_t rngSeed = 23796671245129; //path empty
-    static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
-    std::cout<<"Seed is "<<rngSeed<<std::endl;
-    static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(-(int) inputImg.get_height() + 1, imgHeight-1);
     static std::uniform_int_distribution<int> nextWidth(-(int) inputImg.get_width() + 1, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
@@ -323,9 +331,9 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             auto [lastX, lastY] = tsPath.back();
             for(int i = 0; i < 3; i++){
                 int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
-                //std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
+                std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
                 if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
-                    //std::cout<<"INVALID LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
+                    std::cout<<"INVALID LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
                     if(inS[nextX][nextY]) break;
                 }
@@ -334,9 +342,9 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             d = nextDir( revDir(parent[secondX][secondY]) );
             for(int i = 0; i < 3; i++){
                 int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
-                //std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
+                std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
                 if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
-                    //std::cout<<"COPY LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
+                    std::cout<<"COPY LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
                     edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::invalid;
                     if(inS[nextX][nextY]) break;
@@ -869,12 +877,12 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
         int i, j;
         std::tie(pathCost, i, j) = Q.top();
         Q.pop();
-        //std::cout<<"Test "<<i<<" "<<j<<std::endl;
+        std::cout<<"Test "<<i<<" "<<j<<std::endl;
         assert(i < vis.size());
         assert(j < vis[i].size());
         if(vis[i][j])
             continue;
-        //std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
+        std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
         vis[i][j] = true;
         if(isT[i][j]){
             path = {{i,j}};
@@ -882,10 +890,9 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
         }
         for(int d = 0; d < int(directions.size()); d++){
             int nextI = i + directions[d].first, nextJ = j + directions[d].second;
+            std::cout<<" --> "<<nextI<<" "<<nextJ<<std::endl;
             if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && !vis[nextI][nextJ]){
                 long double curCost = edgesCosts[i][j][d];
-                if(isS[i][j] && isT[nextI][nextJ]) //avoid direct empty cut
-                    continue;
                 if(parent[nextI][nextJ] == -1 || pathCost + curCost < dist[nextI][nextJ]){
                     parent[nextI][nextJ] = revDir(d);
                     dist[nextI][nextJ] = pathCost + curCost; // avoid overflow
