@@ -160,9 +160,9 @@ Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
     //static const uint64_t rngSeed = 7847891524704; //https://www.geogebra.org/calculator/xafaqxnx
     //static const uint64_t rngSeed = 10698447507461; //https://www.geogebra.org/calculator/fhtqafpt
-    static const uint64_t rngSeed = 49102102093506; // https://www.geogebra.org/calculator/kesrjeex //too small
+    //static const uint64_t rngSeed = 49102102093506; // https://www.geogebra.org/calculator/kesrjeex //too small
     //static const uint64_t rngSeed = 23796671245129; //path empty
-    //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
+    static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
     static std::uniform_int_distribution<int> nextHeight(-(int) inputImg.get_height() + 1, imgHeight-1);
@@ -327,13 +327,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                 if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                     //std::cout<<"INVALID LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
-                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
-                }
-                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
-                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
-                    break;
+                    if(inS[nextX][nextY]) break;
                 }
                 d = prevDir(d);
             }
@@ -345,13 +339,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                     //std::cout<<"COPY LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
                     edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::invalid;
-                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
-                }
-                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
-                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
-                    break;
+                    if(inS[nextX][nextY]) break;
                 }
                 d = nextDir(d);
             }
@@ -455,7 +443,6 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
         }
 
     }
-    //exit(0);
 
     /*unmark ST Path*/{
 
@@ -474,13 +461,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                 int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
                 if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
-                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
-                }
-                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
-                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
-                    break;
+                    if(inS[nextX][nextY]) break;
                 }
                 d = prevDir(d);
             }
@@ -490,13 +471,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                 if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                     edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
                     edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::originalGraph;
-                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
-                }
-                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
-                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
-                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
-                    break;
+                    if(inS[nextX][nextY]) break;
                 }
                 d = nextDir(d);
             }
