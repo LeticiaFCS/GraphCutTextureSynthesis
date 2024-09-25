@@ -158,8 +158,10 @@ Private Functions
 
 // Main Private Functions
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    //static const uint64_t rngSeed = 49102102093506; // https://www.geogebra.org/calculator/kesrjeex
-    static const uint64_t rngSeed = 7847891524704;
+    //static const uint64_t rngSeed = 7847891524704; //https://www.geogebra.org/calculator/xafaqxnx
+    //static const uint64_t rngSeed = 10698447507461; //https://www.geogebra.org/calculator/fhtqafpt
+    static const uint64_t rngSeed = 49102102093506; // https://www.geogebra.org/calculator/kesrjeex //too small
+    //static const uint64_t rngSeed = 23796671245129; //path empty
     //static const uint64_t rngSeed = std::chrono::steady_clock::now().time_since_epoch().count();
     std::cout<<"Seed is "<<rngSeed<<std::endl;
     static std::mt19937_64 rng(rngSeed);
@@ -258,6 +260,7 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::cout<<"Case 2"<<std::endl;
     static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<bool>> inS(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<bool>> inStPath(imgHeight + 1, std::vector<bool>(imgWidth + 1));
     static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
     static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
@@ -276,6 +279,8 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     /*find intersection*/
     auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
     assert(intersections.size() == 1);
+    if(intersections[0].interPixels.size() == 1) //corner case
+        return;
     intersection = intersections[0];
     
     /*mark cells in dual of intersection and mark edges costs*/
@@ -297,46 +302,67 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             std::cout<<" ("<<x<<", "<<y<<")"<<std::endl;
         }
         std::cout<<std::endl;
+        for(auto [x, y] : S)
+            inS[x][y] = true;
         for(auto [x, y] : tsPath)
             inStPath[x][y] = true;
 
         auto [secondX, secondY] = tsPath[tsPath.size() - 2];
         int firstParent = (parent[secondX][secondY]);
         std::cout<<"segundoooo "<<secondX<<" "<<secondY<<" "<<parent[secondX][secondY]<<std::endl;
-        for(int i =0; i < int(tsPath.size()) + 1; i++){
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
             auto [x, y] = tsPath[i];
             auto [nextX, nextY] = tsPath[i+1];
-            int d = parent[nextX][nextY];
-            edgeTo[edgeType::copyGraph][nextX][nextY][d] = edgeType::copyGraph;
-            edgeTo[edgeType::copyGraph][x][y][revDir(d)] = edgeType::copyGraph;
+            int d = parent[x][y];
+            edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
+            edgeTo[edgeType::copyGraph][x][y][d] = edgeType::copyGraph;
+            std::cout<<"creating copy path"<<x<<" "<<y<<" "<<d<<" --> "<<nextX<<" "<<nextY<<" "<<revDir(d)<<std::endl;
         }
-        {   
-            bool invalidEdges = false;
-            int d = revDir(firstParent);
+        {// dealing with edges of T
+            int d = prevDir( revDir(parent[secondX][secondY]) );
             auto [lastX, lastY] = tsPath.back();
-            for(int i = 0; i < 4; i++){
-                if(invalidEdges){
-                    edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::invalid;
-                    std::cout<<"INVALID!!!! ("<<lastX<<", "<<lastY<<") "<<d<<std::endl;
+            for(int i = 0; i < 3; i++){
+                int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
+                //std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
+                if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                    //std::cout<<"INVALID LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
+                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
                 }
-                if(find(S.begin(), S.end(), std::make_pair(lastX + directions[d].first, lastY + directions[d].second)) != S.end()){
-                    invalidEdges = true;
+                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
+                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
+                    break;
                 }
                 d = prevDir(d);
             }
+            d = nextDir( revDir(parent[secondX][secondY]) );
+            for(int i = 0; i < 3; i++){
+                int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
+                //std::cout<<"LAST "<<lastX<<" "<<lastY<<" --> "<<nextX<<" "<<nextY<<std::endl;
+                if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                    //std::cout<<"COPY LAST "<<"("<<nextX<<", "<<nextY<<"), ("<<lastX<<", "<<lastY<<")"<<std::endl;
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
+                    edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::invalid;
+                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
+                }
+                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
+                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
+                    break;
+                }
+                d = nextDir(d);
+            }
+
         }
-        std::cout<<"AQUI"<<std::endl;
-        for(int i =0; i < int(tsPath.size()); i++){
+        // edges from original graph to copy graph, to close the cycle
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
             auto [x, y] = tsPath[i];
-            std::cout<<"X "<<x<<" Y "<<y<<std::endl;
-            int par = parent[x][y];
-            if(par == -2)
-                par = firstParent;
-            std::cout<<"par "<<par<<std::endl;
-            int d = prevDir(par);
+            int d = prevDir(parent[x][y]);
             int nextX = x + directions[d].first, nextY = y + directions[d].second;
-            std::cout<<"d "<<d<<" next "<<nextX<<" "<<nextY<<std::endl;
-            if(i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY))
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
                 continue;
             if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                 std::cout<<"Copy ("<<nextX<<", "<<nextY<<") , ("<<x<<", "<<y<<")"<<std::endl;
@@ -345,12 +371,35 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             }
             d = prevDir(d);
             nextX = x + directions[d].first, nextY = y + directions[d].second;
-            std::cout<<"d "<<d<<" next "<<nextX<<" "<<nextY<<std::endl;
-            if(i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY))
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY))|| (i == 0 && d == revDir(parent[x][y])))
                 continue;
             if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                 std::cout<<"Copy ("<<nextX<<", "<<nextY<<") , ("<<x<<", "<<y<<")"<<std::endl;
+                edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
                 edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
+            }
+        }
+        // invalid edges, so we must go to the left first
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
+            auto [x, y] = tsPath[i];
+            std::cout<<"X "<<x<<" Y "<<y<<std::endl;
+            std::cout<<"par "<<parent[x][y]<<std::endl;
+            int d = nextDir(parent[x][y]);
+            int nextX = x + directions[d].first, nextY = y + directions[d].second;
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
+                continue;
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                std::cout<<"Invalid ("<<nextX<<", "<<nextY<<") , ("<<x<<", "<<y<<")"<<std::endl;
+                edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
+            }
+            d = nextDir(d);
+            nextX = x + directions[d].first, nextY = y + directions[d].second;
+            std::cout<<"d "<<d<<" next "<<nextX<<" "<<nextY<<std::endl;
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
+                continue;
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                std::cout<<"Invalid ("<<nextX<<", "<<nextY<<") , ("<<x<<", "<<y<<")"<<std::endl;
+                edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::invalid;
             }
         }
     }
@@ -406,33 +455,86 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
         }
 
     }
-    exit(0);
+    //exit(0);
 
     /*unmark ST Path*/{
-        for(int i =0; i < int(tsPath.size()) + 1; i++){
+
+        auto [secondX, secondY] = tsPath[tsPath.size() - 2];
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
             auto [x, y] = tsPath[i];
             auto [nextX, nextY] = tsPath[i+1];
-            int d = parent[nextX][nextY];
-            edgeTo[edgeType::copyGraph][nextX][nextY][d] = edgeType::originalGraph;
-            edgeTo[edgeType::copyGraph][x][y][revDir(d)] = edgeType::originalGraph;
+            int d = parent[x][y];
+            edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+            edgeTo[edgeType::copyGraph][x][y][d] = edgeType::originalGraph;
         }
-        auto [secondX, secondY] = tsPath[tsPath.size() - 2];
-        int firstParent = (parent[secondX][secondY]);
-        for(int i =0; i < int(tsPath.size()); i++){
+        {// dealing with edges of T
+            int d = prevDir( revDir(parent[secondX][secondY]) );
+            auto [lastX, lastY] = tsPath.back();
+            for(int i = 0; i < 3; i++){
+                int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
+                if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
+                }
+                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
+                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
+                    break;
+                }
+                d = prevDir(d);
+            }
+            d = nextDir( revDir(parent[secondX][secondY]) );
+            for(int i = 0; i < 3; i++){
+                int nextX = lastX + directions[d].first, nextY = lastY + directions[d].second;
+                if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                    edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+                    edgeTo[edgeType::originalGraph][lastX][lastY][d] = edgeType::originalGraph;
+                    std::cout<<"testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert(("wrong inS ", (find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()) == inS[nextX][nextY]));
+                }
+                if(find(S.begin(), S.end(), std::make_pair(nextX, nextY)) != S.end()){ // linear, melhorar
+                    std::cout<<"break testing S "<<"("<<nextX<<", "<<nextY<<")"<<std::endl;
+                    assert((insideDual(nextX, nextY) && inSubgraph[nextX][nextY]));
+                    break;
+                }
+                d = nextDir(d);
+            }
+
+        }
+        // edges from original graph to copy graph, to close the cycle
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
             auto [x, y] = tsPath[i];
-            int par = parent[x][y];
-            if(par == -2)
-                par = firstParent;
-            int d = prevDir(par);
+            int d = prevDir(parent[x][y]);
             int nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if(i < int(tsPath.size()) - 1 && tsPath[i+1] == std::make_pair(nextX, nextY))
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
+                continue;
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+                edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
+            }
+            d = prevDir(d);
+            nextX = x + directions[d].first, nextY = y + directions[d].second;
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY))|| (i == 0 && d == revDir(parent[x][y])))
+                continue;
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+                edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
+                edgeTo[edgeType::originalGraph][x][y][d] = edgeType::originalGraph;
+            }
+        }
+        // invalid edges, so we must go to the left first
+        for(int i =0; i < int(tsPath.size()) - 1; i++){
+            auto [x, y] = tsPath[i];
+            int d = nextDir(parent[x][y]);
+            int nextX = x + directions[d].first, nextY = y + directions[d].second;
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
                 continue;
             if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                 edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
             }
-            d = prevDir(d);
+            d = nextDir(d);
             nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if(i < int(tsPath.size()) - 1 && tsPath[i+1] == std::make_pair(nextX, nextY))
+            if((i > 0 && tsPath[i-1] == std::make_pair(nextX, nextY)) || (i == 0 && d == revDir(parent[x][y])))
                 continue;
             if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
                 edgeTo[edgeType::originalGraph][nextX][nextY][revDir(d)] = edgeType::originalGraph;
@@ -440,6 +542,8 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
         }
         for(auto [x, y] : tsPath)
             inStPath[x][y] = false;
+        for(auto [x, y] : S)
+            inS[x][y] = false;
     }
 
     /*clean dijkstra matrices*/{
@@ -483,7 +587,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     }
     //TO DO
 
-    /*unmark cells in dual of intersection*/{
+    /*unmark cells in dual of intersection*/
     // { //unmark ST path
     //     int lastD = -1;
     //     for(auto [curI, curJ] : tsPath){
@@ -497,16 +601,6 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     //         }
     //     }
     // }
-    for(auto [i,j] : intersection.interPixels)
-        for(auto [di, dj] : primalToDual)
-            if(insideDual(i + di, j + dj)){
-                inSubgraph[i + di][j + dj] = false;
-                parent[i + di][j + dj] = -1;
-                vis[i + di][j + dj] = false;
-            }
-    }
-
-
     /*undoing intersections*/{ //REMOVE LATER
         for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
             for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
@@ -1080,7 +1174,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
                 //     continue;
                 if(seen[nextG][nextI][nextJ] != visited || pathCost + curCost < dist[nextG][nextI][nextJ]){
                     seen[nextG][nextI][nextJ] = visited;
-                    parent[nextG][nextI][nextJ] = revDir(d);
+                    parent[nextG][nextI][nextJ] = revDir(d)*10+g;
                     dist[nextG][nextI][nextJ] = pathCost + curCost; // avoid overflow
                     Q.emplace(dist[nextG][nextI][nextJ], nextG, nextI, nextJ);
                 }
@@ -1110,15 +1204,16 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
     int curG = T[0], curI, curJ;
     std::tie(curG, curI, curJ) = std::tuple_cat(path[0]);
     while(parent[curG][curI][curJ] != -2){
-        //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
-        int d = parent[curG][curI][curJ];
-        assert(0 <= d && d < int(directions.size()));
-        curG = edgeTo[curG][curI][curJ][d];
+        int d = parent[curG][curI][curJ]/10;
+        //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curG<<" "<<curI<<" "<<curJ<<" -- dir "<<d<<" distance "<<dist[curG][curI][curJ]<<std::endl;
+        curG = parent[curG][curI][curJ]%10;
+        //std::cout<<"curG = "<<curG<<std::endl;
+        assert(("direction must be valid!", 0 <= d && d < int(directions.size())));
         std::tie(curI, curJ) = std::make_tuple(curI + directions[d].first, curJ + directions[d].second);
+        //std::cout<<" going to "<<curG<<" "<<curI<<" "<<curJ<<std::endl;
         path.push_back({curG, curI, curJ});
     }
-    // for(auto [g, i, j] : path)
-    //     std::cout<<"minFCycle "<<g<<" "<<i<<" "<<j<<std::endl;
+
     return {dist[T[0]][T[1]][T[2]], path};
 }
 
@@ -1139,7 +1234,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
         std::cout<<g<<" ("<<i<<", "<<j<<")"<<std::endl;
     }
     std::cout<<std::endl;
-    exit(0);
+    return curCutCycle; //remove later
 
     auto answerCut = curCutCycle;
 
