@@ -130,8 +130,8 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
 }
 ImageTexture::ImageTexture(int width, int height) 
     :  
-    //rngSeed(7847891524704), //https://www.geogebra.org/calculator/xafaqxnx
-    rngSeed(10698447507461),  //https://www.geogebra.org/calculator/fhtqafpt
+    rngSeed(7847891524704), //https://www.geogebra.org/calculator/xafaqxnx
+    //rngSeed(10698447507461),  //https://www.geogebra.org/calculator/fhtqafpt
     //rngSeed(49102102093506),  // https://www.geogebra.org/calculator/kesrjeex //too small
     //rngSeed(23796671245129),  //path empty
     //rngSeed(31740571079601),  //path empty - solved
@@ -598,7 +598,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
                     pixelColorStatus[a][b] = PixelStatusEnum::notcolored;
             }
     }
-    exit(0);
+    //exit(0);
 
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -1223,19 +1223,26 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
 
     auto answerCut = curCutCycle;
 
-    for(auto [g, i, j] : curCutCycle.second)
-        inCutCycle[i][j]++;    
+    std::vector<int> parentsOfCutCycle(curCutCycle.second.size());
+    for(int i = 0; i < (int) curCutCycle.second.size(); i++){
+        auto [g, x, y] = curCutCycle.second[i];
+        parentsOfCutCycle[i] = parent[g][x][y];
+        inCutCycle[x][y]++;
+    }  
     
     if(left < f_mid){
         std::cout<<"marking invalid left"<<std::endl;
         std::vector<std::array<int, 5>> oldEdgeValues;
         for(int i =0; i < int(curCutCycle.second.size()) - 1; i++){
             auto [g, x, y] = curCutCycle.second[i];
-            int d = prevDir(parent[g][x][y]);
+            assert(parentsOfCutCycle[i] >= 0);
+            int d = prevDir(parentsOfCutCycle[i]);
             int nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if((i > 0 && inCutCycle[nextX][nextY]) || (i == 0 && d == revDir(parent[g][x][y])))
-                continue;
-            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+            if(insideDual(nextX, nextY) && inCutCycle[nextX][nextY]){
+                //if(inStPath[nextX][nextY] == -1 || (left <= inStPath[nextX][nextY] && inStPath[nextX][nextY] < f_mid))
+                    continue;
+            }
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY] && inStPath[nextX][nextY] == -1){
                 std::cout<<"Invalid ("<<x<<", "<<y<<") , ("<<nextX<<", "<<nextY<<") --> g is "<<g<<std::endl;
                 oldEdgeValues.push_back({edgeType::originalGraph,x,y,d,edgeTo[edgeType::originalGraph][x][y][d]});
                 edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
@@ -1244,11 +1251,12 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
             }
             d = prevDir(d);
             nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if((i > 0 && inCutCycle[nextX][nextY]) || (i == 0 && d == revDir(parent[g][x][y])))
-                continue;
-            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+            if(insideDual(nextX, nextY) && inCutCycle[nextX][nextY]){
+                //if(inStPath[nextX][nextY] == -1 || (left <= inStPath[nextX][nextY] && inStPath[nextX][nextY] < f_mid))
+                    continue;
+            }
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY] && inStPath[nextX][nextY] == -1){
                 std::cout<<"Invalid ("<<x<<", "<<y<<") , ("<<nextX<<", "<<nextY<<") --> g is "<<g<<std::endl;
-                oldEdgeValues.push_back({g,x,y,d,edgeTo[g][x][y][d]});
                 oldEdgeValues.push_back({edgeType::originalGraph,x,y,d,edgeTo[edgeType::originalGraph][x][y][d]});
                 edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
                 oldEdgeValues.push_back({edgeType::copyGraph,x,y,d,edgeTo[edgeType::copyGraph][x][y][d]});
@@ -1262,16 +1270,19 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
         answerCut = min(answerCut, leftCutCycle);
     }
     //right
-    if(f_mid < right - 1){
+    if(f_mid + 1 < right){
         std::cout<<"marking invalid right"<<std::endl;
         std::vector<std::array<int, 5>> oldEdgeValues;
         for(int i =0; i < int(curCutCycle.second.size()) - 1; i++){
             auto [g, x, y] = curCutCycle.second[i];
-            int d = nextDir(parent[g][x][y]);
+            assert(parentsOfCutCycle[i] >= 0);
+            int d = nextDir(parentsOfCutCycle[i]);
             int nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if((i > 0 && inCutCycle[nextX][nextY]) || (i == 0 && d == revDir(parent[g][x][y])))
-                continue;
-            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+            if(insideDual(nextX,nextY) && inCutCycle[nextX][nextY]){
+                //if(inStPath[nextX][nextY] == -1 || (f_mid <= inStPath[nextX][nextY] && inStPath[nextX][nextY] < right))
+                    continue;
+            }
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY] && inStPath[nextX][nextY] == -1){
                 std::cout<<"Invalid ("<<x<<", "<<y<<") , ("<<nextX<<", "<<nextY<<") --> g is "<<g<<std::endl;
                 oldEdgeValues.push_back({edgeType::originalGraph,x,y,d,edgeTo[edgeType::originalGraph][x][y][d]});
                 edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
@@ -1280,18 +1291,19 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
             }
             d = nextDir(d);
             nextX = x + directions[d].first, nextY = y + directions[d].second;
-            if((i > 0 && inCutCycle[nextX][nextY]) || (i == 0 && d == revDir(parent[g][x][y])))
-                continue;
-            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY]){
+            if(insideDual(nextX,nextY) && inCutCycle[nextX][nextY]){
+                //if(inStPath[nextX][nextY] == -1 || (f_mid <= inStPath[nextX][nextY] && inStPath[nextX][nextY] < right))
+                    continue;
+            }
+            if(insideDual(nextX, nextY) && inSubgraph[nextX][nextY] && inStPath[nextX][nextY] == -1){
                 std::cout<<"Invalid ("<<x<<", "<<y<<") , ("<<nextX<<", "<<nextY<<") --> g is "<<g<<std::endl;
-                oldEdgeValues.push_back({g,x,y,d,edgeTo[g][x][y][d]});
                 oldEdgeValues.push_back({edgeType::originalGraph,x,y,d,edgeTo[edgeType::originalGraph][x][y][d]});
                 edgeTo[edgeType::originalGraph][x][y][d] = edgeType::invalid;
                 oldEdgeValues.push_back({edgeType::copyGraph,x,y,d,edgeTo[edgeType::copyGraph][x][y][d]});
                 edgeTo[edgeType::copyGraph][x][y][d] = edgeType::invalid;
             }
         }
-        auto rightCutCycle = minCutCycle(inSubgraph,edgesCosts,edgeTo, f_mid, right, stPath, dist, vis, seen, parent, inStPath, visited);
+        auto rightCutCycle = minCutCycle(inSubgraph,edgesCosts,edgeTo, f_mid + 1, right, stPath, dist, vis, seen, parent, inStPath, visited);
         for(auto [g,x,y,dir,value] : oldEdgeValues){
             edgeTo[g][x][y][dir] = value;
         }
