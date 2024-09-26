@@ -17,8 +17,8 @@ int main(int argc, char *argv[]){
                 std::cerr<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 texture.patchFittingIteration("../input/areia_da_praia.png");
-                texture.render("../output/output.png");
-                if(argc > 1)
+                //texture.render("../output/output.png");
+                if(argc > 2)
                     usleep(400000);
             }
         } catch(...){
