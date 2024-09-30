@@ -89,6 +89,14 @@ private:
             std::vector<std::pair<int, int>> interPixels;
             Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
     };
+    //Auxiliar variables case 1
+    std::vector<std::vector<bool>> inSubgraph;
+    std::vector<std::vector<std::array<long double, 4>>> edgesCosts;    
+    std::vector<std::vector<long double>> dist;
+    std::vector<std::vector<bool>> vis;
+    std::vector<std::vector<int>> parent;
+    std::vector<std::vector<std::array<bool, 4>>> validEdge;
+
     //int heightOffset, int widthOffset for debug, will change later
     std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersectionCase1(Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     std::vector<Intersection> findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
@@ -125,7 +133,14 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
     outputImg(_img), 
     imgWidth(_img.get_width()),
     imgHeight(_img.get_height()),
-    pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)){
+    pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)),
+    inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
+    dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
+    vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
+    validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}))  
+    {
     std::cout<<"Seed is "<<rngSeed<<std::endl;
 }
 ImageTexture::ImageTexture(int width, int height) 
@@ -142,7 +157,13 @@ ImageTexture::ImageTexture(int width, int height)
     outputImg(width, height), 
     imgWidth(width),
     imgHeight(height), 
-    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)){
+    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)),
+    inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
+    dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
+    vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
+    validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true})){
     std::cout<<"Seed is "<<rngSeed<<std::endl;    
 }
 
@@ -652,7 +673,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
         }
     std::cout<<"NEW COLOR "<<cnt<<std::endl;
     //render("../output/output.png"); //debug descomentar!!!
-    //usleep(800000);
+    //usleep(80000);
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -707,13 +728,13 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         }
     }
     if((S) == (std::pair<int, int>{-1,-1}) || (T) == (std::pair<int, int>{-1,-1})){
-        //usleep(800000);
+        //usleep(80000);
         //std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
         //render("../output/output.png"); //debug descomentar!!
-        //usleep(2000000);
+        //usleep(200000);
 
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
@@ -768,17 +789,17 @@ std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heig
     return intersectionsList;
 }
 void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
-    static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
-    static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
-    static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
-    static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
-    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
-
     /*mark cells in dual of intersection and mark edges costs*/
+    //static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    //static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
+    //static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
+    //static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    //static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
+    //static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
+
+
     std::vector<std::pair<int, int>> inDual = markIntersectionCellsInDual(inter, inSubgraph);
     markIntersectionEdgeCostsInDual(heightOffset, widthOffset, inputImg, inDual, inSubgraph, edgesCosts);
-
     /*find min cut (min s-t path)*/
     auto tsPath = findSTPath({S}, {T}, inSubgraph, edgesCosts, dist, vis, parent);
     
@@ -825,6 +846,8 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
                 }
             }
         }
+        
+
         for(auto [i,j] : inter.interPixels)
             for(auto [di, dj] : primalToDual)
                 if(insideDual(i + di, j + dj)){
@@ -868,11 +891,13 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
     for(auto [h, w] : T){
         std::cout<<" T ("<<h<<", "<<w<<"),"<<std::endl;
         isT[h][w] = true;
+        assert(("T should be in subgraph", inSubgraph[h][w]));
     }
     using qtype = std::tuple<long double, int, int>;
     std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
     for(auto [h, w] : S){
         std::cout<<" S ("<<h<<", "<<w<<"),"<<std::endl;
+        assert(("S should be in subgraph", inSubgraph[h][w]));
         isS[h][w] = true;
         parent[h][w] = -2;
         dist[h][w] = 0;
@@ -891,6 +916,7 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
         if(vis[i][j])
             continue;
         //std::cout<<"Dijkstra "<<i<<" "<<j<<std::endl;
+        
         vis[i][j] = true;
         if(isT[i][j]){
             path = {{i,j}};
@@ -930,7 +956,7 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
     int curI, curJ;
     std::tie(curI, curJ) = path[0];
     while(parent[curI][curJ] != -2){
-        //std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
+        std::cout<<std::fixed<<std::setprecision(10)<<"\t"<<curI<<" "<<curJ<<" -- dir "<<parent[curI][curJ]<<" distance "<<dist[curI][curJ]<<std::endl;
         int d = parent[curI][curJ];
         assert(0 <= d && d < int(directions.size()));
         std::tie(curI, curJ) = std::make_pair(curI + directions[d].first, curJ + directions[d].second);
