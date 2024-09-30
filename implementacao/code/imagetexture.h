@@ -136,7 +136,7 @@ ImageTexture::ImageTexture(int width, int height)
     //rngSeed(23796671245129),  //path empty
     //rngSeed(31740571079601),  //path empty - solved
     //rngSeed(39937168697097),
-    rngSeed(31808842946432),
+    rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
     //rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
     rng(rngSeed),
     outputImg(width, height), 
