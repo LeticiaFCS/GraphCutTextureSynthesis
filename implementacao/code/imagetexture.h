@@ -26,6 +26,7 @@ class ImageTexture{
 public:
     ImageTexture(const png::image<png::rgb_pixel> & _img);
     ImageTexture(int width, int height);
+    ImageTexture(int width, int height, uint64_t seed); // debug
     void render(const std::string &file_name);
     void patchFittingIteration(const png::image<png::rgb_pixel> &inputImg);
     void patchFittingIteration(const std::string &file_name);
@@ -153,7 +154,24 @@ ImageTexture::ImageTexture(int width, int height)
     //rngSeed(31740571079601),  //path empty - solved
     //rngSeed(39937168697097),
     //rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
+    //rngSeed(1377732719224),
     rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
+    rng(rngSeed),
+    outputImg(width, height), 
+    imgWidth(width),
+    imgHeight(height), 
+    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)),
+    inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
+    dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
+    vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
+    parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
+    validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true})){
+    std::cout<<"Seed is "<<rngSeed<<std::endl;    
+}
+ImageTexture::ImageTexture(int width, int height, uint64_t seed) 
+    :
+    rngSeed(seed),
     rng(rngSeed),
     outputImg(width, height), 
     imgWidth(width),
@@ -355,7 +373,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             int d = parent[x][y];
             edgeTo[edgeType::copyGraph][nextX][nextY][revDir(d)] = edgeType::copyGraph;
             edgeTo[edgeType::copyGraph][x][y][d] = edgeType::copyGraph;
-            std::cout<<"creating copy path"<<x<<" "<<y<<" "<<d<<" --> "<<nextX<<" "<<nextY<<" "<<revDir(d)<<std::endl;
+            std::cout<<"creating copy path "<<x<<" "<<y<<" "<<d<<" --> "<<nextX<<" "<<nextY<<" "<<revDir(d)<<std::endl;
         }
         {// dealing with edges of T
             int d = prevDir( revDir(parent[secondX][secondY]) );
@@ -434,22 +452,22 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     std::pair<long double, std::vector<std::array<int,3>>> minCut;
     { //min cut 
         static std::array<std::vector<std::vector<long double>>, 2> distCase2({
-            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
-            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1))
+            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1, 0)),
+            std::vector<std::vector<long double>>(imgHeight + 1, std::vector<long double>(imgWidth + 1, 0))
         });
         static std::array<std::vector<std::vector<int>>, 2> visCase2({
-            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1)),
-            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1))
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, 0)),
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, 0))
         });
         static std::array<std::vector<std::vector<int>>, 2> seenCase2({
-            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1)),
-            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1))
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, 0)),
+            std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, 0))
         });    
         static std::array<std::vector<std::vector<int>>, 2> parentCase2({
             std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
             std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1))
         } );
-        int visited = 1;   
+        int visited = 0;   
         minCut = minCutCycle(inSubgraph, edgesCosts, edgeTo, 0, tsPath.size(), tsPath, distCase2, visCase2, seenCase2, parentCase2, inStPath, visited);
         std::cout<<"MIN CUT CYCLE: "<<minCut.first<<std::endl;
         for(auto [g,i,j] : minCut.second){
@@ -791,12 +809,12 @@ std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heig
 }
 void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, const ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     /*mark cells in dual of intersection and mark edges costs*/
-    //static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
-    //static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
-    //static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
-    //static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
-    //static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
-    //static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
+    static std::vector<std::vector<bool>> inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<std::array<long double, 4>>> edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1));    
+    static std::vector<std::vector<long double>> dist(imgHeight + 1, std::vector<long double>(imgWidth + 1));
+    static std::vector<std::vector<bool>> vis(imgHeight + 1, std::vector<bool>(imgWidth + 1));
+    static std::vector<std::vector<int>> parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1));
+    static std::vector<std::vector<std::array<bool, 4>>> validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true}));
 
 
     std::vector<std::pair<int, int>> inDual = markIntersectionCellsInDual(inter, inSubgraph);
@@ -1172,13 +1190,13 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
         int g, i, j;
         std::tie(pathCost, g, i, j) = Q.top();
         Q.pop();
-        //std::cout<<"Test "<<g<<" "<<i<<" "<<j<<std::endl;
+        std::cout<<"Test "<<g<<" "<<i<<" "<<j<<std::endl;
         assert(i < visCase2[0].size());
         assert(j < visCase2[0][i].size());
-        //std::cout<<" is vis "<<visCase2[g][i][j]<<std::endl;
+        std::cout<<" is vis "<<visCase2[g][i][j]<<std::endl;
         if(visCase2[g][i][j] == visited)
             continue;
-        //std::cout<<"Dijkstra "<<g<<" "<<i<<" "<<j<<std::endl;
+        std::cout<<"Dijkstra "<<g<<" "<<i<<" "<<j<<std::endl;
         visCase2[g][i][j] = visited;
         if(T == std::array{g,i,j}){
             path = {{g,i,j}};
@@ -1186,8 +1204,8 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
         }
         for(int d = 0; d < int(directions.size()); d++){
             int nextI = i + directions[d].first, nextJ = j + directions[d].second;
-            //std::cout<<"to --> "<<nextI<<" "<<nextJ<<std::endl;
             int nextG = edgeTo[g][i][j][d];
+            std::cout<<" to --> "<<nextG<<" "<<nextI<<" "<<nextJ<<std::endl;
             if(nextG == 2)
                 continue;
             if(insideDual(nextI, nextJ) && inSubgraph[nextI][nextJ] && visCase2[nextG][nextI][nextJ] != visited){
@@ -1195,6 +1213,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
                 // if(isS[i][j] && isT[nextI][nextJ]) //avoid direct empty cut
                 //     continue;
                 if(seenCase2[nextG][nextI][nextJ] != visited || pathCost + curCost < distCase2[nextG][nextI][nextJ]){
+                    std::cout<<" add --> "<<nextG<<" "<<nextI<<" "<<nextJ<<std::endl;
                     seenCase2[nextG][nextI][nextJ] = visited;
                     parent[nextG][nextI][nextJ] = revDir(d)*10+g;
                     distCase2[nextG][nextI][nextJ] = pathCost + curCost; // avoid overflow
@@ -1298,6 +1317,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
             }
         }
         auto leftCutCycle = minCutCycle(inSubgraph,edgesCosts,edgeTo, left, f_mid, stPath, distCase2, visCase2, seenCase2, parent, inStPath, visited);
+        reverse(oldEdgeValues.begin(), oldEdgeValues.end());
         for(auto [g,x,y,dir,value] : oldEdgeValues){
             edgeTo[g][x][y][dir] = value;
         }
@@ -1336,6 +1356,7 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::minCutCycle
             }
         }
         auto rightCutCycle = minCutCycle(inSubgraph,edgesCosts,edgeTo, f_mid + 1, right, stPath, distCase2, visCase2, seenCase2, parent, inStPath, visited);
+        reverse(oldEdgeValues.begin(), oldEdgeValues.end());
         for(auto [g,x,y,dir,value] : oldEdgeValues){
             edgeTo[g][x][y][dir] = value;
         }
