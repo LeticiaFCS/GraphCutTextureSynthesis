@@ -89,7 +89,7 @@ private:
             std::vector<std::pair<int, int>> interPixels;
             Intersection(const std::vector<std::pair<int,int>> &pixels = {}) : interPixels(pixels){}
     };
-    //Auxiliar variables case 1
+    //Case 1 auxiliar variables
     std::vector<std::vector<bool>> inSubgraph;
     std::vector<std::vector<std::array<long double, 4>>> edgesCosts;    
     std::vector<std::vector<long double>> dist;
@@ -108,7 +108,8 @@ private:
     std::vector<std::pair<int,int>> findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, 
          const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, 
          std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent);
-    void markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::vector<std::vector<int>> &parent, const std::vector<std::vector<std::array<bool, 4>>> &validEdge);
+    void markLeftOfMinCut(const std::vector<std::pair<int, int>> &cut, const std::vector<std::vector<int>> &parent, const std::vector<std::vector<std::array<bool, 4>>> &validEdge);
+    
     //Case 2 auxiliar functions
     std::vector<std::pair<int, int>> dualBorder(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     std::vector<std::pair<int, int>> findSCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
@@ -151,8 +152,8 @@ ImageTexture::ImageTexture(int width, int height)
     //rngSeed(23796671245129),  //path empty
     //rngSeed(31740571079601),  //path empty - solved
     //rngSeed(39937168697097),
-    rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
-    //rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
+    //rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
+    rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
     rng(rngSeed),
     outputImg(width, height), 
     imgWidth(width),
@@ -971,7 +972,7 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
     return path;
 }
 
-void ImageTexture::markLeftOfMinCut(std::vector<std::pair<int, int>> &cut, std::vector<std::vector<int>> &parent, const std::vector<std::vector<std::array<bool, 4>>> &validEdge){
+void ImageTexture::markLeftOfMinCut(const std::vector<std::pair<int, int>> &cut, const std::vector<std::vector<int>> &parent, const std::vector<std::vector<std::array<bool, 4>>> &validEdge){
     for(auto [i, j] : cut){
         int d = parent[i][j];
         if(d < 0)
