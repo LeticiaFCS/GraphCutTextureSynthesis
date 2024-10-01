@@ -97,7 +97,8 @@ private:
     std::vector<std::vector<bool>> vis;
     std::vector<std::vector<int>> parent;
     std::vector<std::vector<std::array<bool, 4>>> validEdge;
-    std::vector<std::vector<int>> lastVisit;
+    std::vector<std::vector<bool>> isT;
+    std::vector<std::vector<bool>> isS;
 
     //int heightOffset, int widthOffset for debug, will change later
     std::pair<std::pair<int, int>, std::pair<int, int> > findSTInIntersectionCase1(Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
@@ -152,8 +153,8 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
     dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
     vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
-    validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true})),
-    lastVisit(imgHeight, std::vector<int>(imgWidth, 0)),
+    isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
+    isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
     inS(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     inStPath(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
     edgeTo({
@@ -201,7 +202,8 @@ ImageTexture::ImageTexture(int width, int height)
     vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
     validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true})),
-    lastVisit(imgHeight, std::vector<int>(imgWidth, 0)),
+    isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
+    isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
     inS(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     inStPath(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
     edgeTo({
@@ -241,7 +243,8 @@ ImageTexture::ImageTexture(int width, int height, uint64_t seed)
     vis(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     parent(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
     validEdge(imgHeight + 1, std::vector<std::array<bool, 4>>(imgWidth + 1, {true,true,true,true})),
-    lastVisit(imgHeight, std::vector<int>(imgWidth, 0)),
+    isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
+    isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false)),
     inS(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     inStPath(imgHeight + 1, std::vector<int>(imgWidth + 1, -1)),
     edgeTo({
@@ -831,18 +834,15 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
 }
 std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     //static std::vector<std::vector<int>> lastVisit(imgHeight, std::vector<int>(imgWidth, 0));
-    static int Time = 0;
     std::vector<Intersection> intersectionsList;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
                 continue;
             if(pixelColorStatus[a][b] == PixelStatusEnum::colored){
-                Time++;
                 std::vector<std::pair<int,int>> interPixels;
                 pixelColorStatus[a][b] = PixelStatusEnum::intersection;
                 interPixels.emplace_back(a,b);
-                lastVisit[a][b] = Time;
                 for(int front = 0; front < (int) interPixels.size(); front++){
                     auto [iFront, jFront] = interPixels[front];
                     for(auto [deltaI, deltaJ] : directions){
@@ -853,7 +853,6 @@ std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heig
                         if(nborI - heightOffset < 0 || nborJ - widthOffset < 0) continue;
                         if(pixelColorStatus[nborI][nborJ] != PixelStatusEnum::colored) continue;
                         interPixels.emplace_back(nborI,nborJ);
-                        lastVisit[nborI][nborJ] = Time;
                         pixelColorStatus[nborI][nborJ] = PixelStatusEnum::intersection;
                     
                     }
@@ -963,8 +962,8 @@ void ImageTexture::markIntersectionEdgeCostsInDual(int heightOffset, int widthOf
 }
 
 std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T, const std::vector<std::vector<bool>> &inSubgraph, const std::vector<std::vector<std::array<long double, 4>>> &edgesCosts, std::vector<std::vector<long double>> &dist, std::vector<std::vector<bool>> &vis, std::vector<std::vector<int>> &parent){
-    static std::vector<std::vector<bool>> isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
-    static std::vector<std::vector<bool>> isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
+    // static std::vector<std::vector<bool>> isT(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
+    // static std::vector<std::vector<bool>> isS(imgHeight + 1, std::vector<bool>(imgWidth+1, false));
     for(auto [h, w] : T){
         std::cout<<" T ("<<h<<", "<<w<<"),"<<std::endl;
         isT[h][w] = true;
