@@ -10,5 +10,11 @@ main.o: main.cpp imagetexture.hpp
 imagetexture.o: imagetexture.cpp imagetexture.hpp
 	g++ -c imagetexture.cpp -o imagetexture.o $(CPPFLAGS)
 
+educational: main.o eduimagetexture.o
+	g++ -o educational eduimagetexture.o main.o $(LDFLAGS)
+
+eduimagetexture.o: eduimagetexture.cpp imagetexture.hpp
+	g++ -c eduimagetexture.cpp -o eduimagetexture.o $(CPPFLAGS)
+
 clean:
-	rm -f main main.o imagetexture.o log
+	rm -f main educational main.o imagetexture.o log
