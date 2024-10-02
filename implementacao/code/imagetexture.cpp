@@ -157,7 +157,14 @@ void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &input
         blending(heightOffset, widthOffset, inputImg);
 }
 void ImageTexture::patchFittingIteration(const std::string &file_name){
-    patchFittingIteration(png::image<png::rgb_pixel>(file_name));
+    png::image<png::rgb_pixel> input_file;
+    try{
+        input_file = png::image<png::rgb_pixel>(file_name);
+    } catch(...){
+        std::cout<<"Invalid name for input file"<<std::endl;
+        return;
+    }
+    patchFittingIteration(input_file);
 }
 /*
 Private Functions
@@ -290,7 +297,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
             inSubgraph[i][j] = false;
         std::cout<<"degenerate case"<<std::endl;
         std::cerr<<"degenerate case"<<std::endl;
-        //usleep(80000);
+        usleep(800000);
         return;
     }
     auto T = dualBorder(heightOffset, widthOffset, inputImg);
@@ -598,8 +605,8 @@ long double ImageTexture::pow2(long double x){
 template<typename Pixel>
 long double ImageTexture::calcCost(const Pixel &as, const Pixel &bs, const Pixel &at, const Pixel &bt){
     long double cost =
-    sqrtl(pow2(as.red-bs.red) + pow2(as.green-bs.green) + pow2(as.blue-bs.blue)) +
-    sqrtl(pow2(at.red-bt.red) + pow2(at.green-bt.green) + pow2(at.blue-bt.blue));
+    sqrtl(pow2((int)as.red-bs.red) + pow2((int)as.green-bs.green) + pow2((int)as.blue-bs.blue)) +
+    sqrtl(pow2((int)at.red-bt.red) + pow2((int)at.green-bt.green) + pow2((int)at.blue-bt.blue));
     return cost;
 }
 
@@ -630,10 +637,10 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             }
         }
     std::cout<<"NEW COLOR "<<cnt<<std::endl;
-    //render("../output/output.png"); //debug descomentar!!!
-    if(case2){
-        //usleep(800000);
-    }
+    render("../output/output.png"); //debug descomentar!!!
+    usleep(800000);
+    
+    int countNewPixels = 0;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -641,8 +648,11 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
                 outputImg[a][b] = inputImg[i][j];
                 pixelColorStatus[a][b] = PixelStatusEnum::colored;
+                countNewPixels++;
             }
         }
+    std::cout<<countNewPixels<<" new pixels "<<std::endl;
+    std::cerr<<countNewPixels<<" new pixels "<<std::endl;
 }
 bool ImageTexture::inImgBorder(int i, int j, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     return i == heightOffset || i == std::min<int>(imgHeight - 1, heightOffset + (int) inputImg.get_height() - 1) 
@@ -689,13 +699,13 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         }
     }
     if((S) == (std::pair<int, int>{-1,-1}) || (T) == (std::pair<int, int>{-1,-1})){
-        //usleep(800000);
-        //std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
+        usleep(800000);
+        std::cout<<"OFFSET height "<<heightOffset<<" width "<<widthOffset<<std::endl;
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
-        //render("../output/output.png"); //debug descomentar!!
-        //usleep(2000000);
+        render("../output/output.png"); //debug descomentar!!
+        usleep(2000000);
 
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){

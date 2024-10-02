@@ -15,11 +15,11 @@ int main(int argc, char *argv[]){
         try{
             //ImageTexture texture(300, 300, seeds[it]);
             ImageTexture texture(300, 300);
-            for(int i = 0; i < 1000; i++){
+            for(int i = 0; i < 1200; i++){
                 std::cerr<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
                 std::cout<<"ITERATION "<<i<<" ------------------------------- "<<std::endl;
-                texture.patchFittingIteration("../input/fur1.png");
-                //texture.render("../output/output.png");
+                texture.patchFittingIteration("../input/cafezinho.png");
+                texture.render("../output/output.png");
                 if(argc > 2)
                     usleep(400000);
             }
