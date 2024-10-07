@@ -1,0 +1,46 @@
+\doxysection{/home/leticiafcs/tcc/\+Graph\+Cut\+Texture\+Synthesis/code/imagetexture.hpp File Reference}
+\hypertarget{imagetexture_8hpp}{}\label{imagetexture_8hpp}\index{/home/leticiafcs/tcc/GraphCutTextureSynthesis/code/imagetexture.hpp@{/home/leticiafcs/tcc/GraphCutTextureSynthesis/code/imagetexture.hpp}}
+
+
+This is the header file.  
+
+
+{\ttfamily \#include $<$png++/png.\+hpp$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$random$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for imagetexture.\+hpp\+:
+% FIG 0
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classImageTexture}{Image\+Texture}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is the header file. 
+
+\begin{DoxyAuthor}{Author}
+Letícia Freire Carvalho de Sousa 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/10-\/07
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}
