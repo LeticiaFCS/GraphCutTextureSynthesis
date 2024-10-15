@@ -128,26 +128,36 @@ private:
         newcolor, /// this pixel should be changed to a pixel from the new patch
         notcolored // no pixel from a patch has been copied in this pixel
     };
+    // Enum of the type of the edges
     enum edgeType{
-        originalGraph, copyGraph, invalid
+        originalGraph, // edge to the original graph
+        copyGraph, // edge to the copy graph (to deal with the cut cycles)
+        invalid // invalid edge
     };
+    // Png image that will be construct
     png::image<png::rgb_pixel> outputImg;
+    // width of output image
     const int imgWidth;
+    // height of output image
     const int imgHeight;
+    // pixel of color status, may be useful to change to a counter of the number of improvements of each pixel in some implementations of matching
     std::vector<std::vector<PixelStatusEnum>> pixelColorStatus;
     static constexpr long double inftyCost = 10000000;
+    //pixels adjacent (ccw)
     static constexpr std::array<std::pair<int, int>, 4> directions = {{
         {-1, 0},    //    |0|
         { 0,-1},    //  |1|x|3|
         { 1, 0},    //    |2|
         { 0, 1}     //
     }};
+    // identifiers of each vertex of square in grid (ccw)
     static constexpr std::array<std::pair<int, int>, 4> primalToDual = {{
         { 0, 0},    //  0_3
         { 1, 0},    //  | |
         { 1, 1},    //  1_2
         { 0, 1}     //
     }};
+    // identifiers of each square adjacent to a vertex in grid (ccw)
     static constexpr std::array<std::pair<int, int>, 4> dualToPrimal = {{
         {-1,-1},    //  0|3
         { 0,-1},    //  -*-

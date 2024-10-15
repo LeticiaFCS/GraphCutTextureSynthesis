@@ -52,18 +52,9 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
         std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1))
     } )  
     {
-    //std::cout<<"Seed is "<<rngSeed<<std::endl;
 }
 ImageTexture::ImageTexture(int width, int height) 
     :  
-    //rngSeed(7847891524704), //https://www.geogebra.org/calculator/xafaqxnx
-    //rngSeed(10698447507461),  //https://www.geogebra.org/calculator/fhtqafpt
-    //rngSeed(49102102093506),  // https://www.geogebra.org/calculator/kesrjeex //too small
-    //rngSeed(23796671245129),  //path empty
-    //rngSeed(31740571079601),  //path empty - solved
-    //rngSeed(39937168697097),
-    //rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
-    //rngSeed(1377732719224),
     rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
     rng(rngSeed),
     outputImg(width, height), 
@@ -101,7 +92,6 @@ ImageTexture::ImageTexture(int width, int height)
         std::vector<std::vector<int>>(imgHeight + 1, std::vector<int>(imgWidth + 1, -1))
     } )
         {
-    //std::cout<<"Seed is "<<rngSeed<<std::endl;    
 }
 
 /*
@@ -121,7 +111,6 @@ void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &input
     const auto [heightOffset, widthOffset] = matching(inputImg);
     //std::cout<<heightOffset<<" "<<widthOffset<<"\n";
     if(isFirstPatch(heightOffset, widthOffset, inputImg)){
-        //std::cerr<<"First patch"<<std::endl;
         copyFirstPatch(heightOffset, widthOffset, inputImg);
     }else
         blending(heightOffset, widthOffset, inputImg);
@@ -131,21 +120,18 @@ void ImageTexture::patchFittingIteration(const std::string &file_name){
     try{
         input_file = png::image<png::rgb_pixel>(file_name);
     } catch(...){
-        //std::cout<<"Invalid name for input file"<<std::endl;
+        std::cerr<<"Invalid name for input file"<<std::endl;
         return;
     }
     patchFittingIteration(input_file);
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    //std::cout<<"BLENDING"<<std::endl;
     assert(("the new rectangle can't be all outside the output image",-(int) inputImg.get_height() + 1 <= heightOffset && heightOffset <= imgHeight-1));
     assert(("the new rectangle can't be all outside the output image",-(int) inputImg.get_width() + 1 <= widthOffset && widthOffset <= imgWidth-1));
     if(this->stPlanarGraph(heightOffset, widthOffset, inputImg)){
-        //std::cerr<<"Case 1"<<std::endl;
         this->blendingCase1(heightOffset, widthOffset, inputImg);
     }
     else{
-        //std::cerr<<"Case 2"<<std::endl;
         this->blendingCase2(heightOffset, widthOffset, inputImg);
     }
 }
@@ -154,7 +140,6 @@ void ImageTexture::blending(int heightOffset, int widthOffset, const std::string
     try{
         input_file = png::image<png::rgb_pixel>(file_name);
     } catch(...){
-        //std::cout<<"Invalid name for input file"<<std::endl;
         return;
     }
     blending(heightOffset, widthOffset, file_name);
