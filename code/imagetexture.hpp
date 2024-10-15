@@ -121,8 +121,12 @@ public:
 private:
     const uint64_t rngSeed;
     std::mt19937_64 rng;
+    /// Enum of the status of each pixel on the output image
     enum PixelStatusEnum{
-        colored, intersection, newcolor, notcolored
+        colored, /// at least one pixel from a patch has been copied in this pixel
+        intersection, /// this pixel is in the intersection from the already updated pixels and a pixel of the new rectangle
+        newcolor, /// this pixel should be changed to a pixel from the new patch
+        notcolored // no pixel from a patch has been copied in this pixel
     };
     enum edgeType{
         originalGraph, copyGraph, invalid
