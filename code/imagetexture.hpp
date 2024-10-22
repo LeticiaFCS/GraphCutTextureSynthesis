@@ -169,16 +169,17 @@ private:
     static int prevDir(int i);
     static int revDir(int i);
     static long double pow2(long double x);
+
     template<typename Pixel>
     static long double calcCost(const Pixel &as, const Pixel &bs, const Pixel &at, const Pixel &bt);
     
     std::pair<int, int> matching(const png::image<png::rgb_pixel> &inputImg);
     bool isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
-    void copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     bool stPlanarGraph(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
 
+    void copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);
     void copyPixelsNewColor(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg, bool case2 = false);
     bool inImgBorder(int i, int j, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg);    
     bool insidePrimal(int i, int j);  
