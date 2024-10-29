@@ -77,7 +77,7 @@ public:
      * @param inputImg png::image object from which the patch will be copied
      * @param CntIterations number of iterations
      */
-    void patchFitting(const png::image<png::rgb_pixel> &inputImg, int CntIterations = 100000);
+    void patchFitting(const png::image<png::rgb_pixel> &inputImg, int CntIterations = 10000);
 
     /**
      * @brief Runs 'CntIterations' iterations of the patch fitting
@@ -87,7 +87,7 @@ public:
      * @param file_name file name of the png image from which the patch will be copied
      * @param CntIterations number of iterations
      */
-    void patchFitting(const std::string &file_name, int CntIterations = 100000);
+    void patchFitting(const std::string &file_name, int CntIterations = 10000);
 
     /**
      * @brief Chooses the format of the new patch from the inputImg at this position

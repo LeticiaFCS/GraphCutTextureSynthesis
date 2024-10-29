@@ -105,7 +105,7 @@ void ImageTexture::patchFitting(const png::image<png::rgb_pixel> &inputImg, int 
         patchFittingIteration(inputImg);
 }
 void ImageTexture::patchFitting(const std::string &file_name, int CntIterations){
-    ImageTexture::patchFitting(png::image<png::rgb_pixel>(file_name));
+    ImageTexture::patchFitting(png::image<png::rgb_pixel>(file_name), CntIterations);
 }
 void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &inputImg){
     const auto [heightOffset, widthOffset] = matching(inputImg);
