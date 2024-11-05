@@ -9,8 +9,8 @@ main: main.o imagetexture.o
 main.o: $(mainfile) imagetexture.hpp
 	g++ -c $(mainfile) -o main.o $(CXXFLAGS)
 
-imagetexture.o: imagetexture.cpp imagetexture.hpp
-	g++ -c imagetexture.cpp -o imagetexture.o $(CXXFLAGS)
+imagetexture.o: imagetexture_slow_matching.cpp imagetexture.hpp
+	g++ -c imagetexture_slow_matching.cpp -o imagetexture.o $(CXXFLAGS)
 
 visual: main.o visualimagetexture.o
 	g++ -o visual visualimagetexture.o main.o $(LDFLAGS)
