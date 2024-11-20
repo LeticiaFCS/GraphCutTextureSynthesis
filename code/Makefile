@@ -9,8 +9,8 @@ main: main.o imagetexture.o
 main.o: $(mainfile) imagetexture.hpp
 	g++ -c $(mainfile) -o main.o $(CXXFLAGS)
 
-imagetexture.o: imagetexture_slow_matching.cpp imagetexture.hpp
-	g++ -c imagetexture_slow_matching.cpp -o imagetexture.o $(CXXFLAGS)
+imagetexture.o: imagetexture.cpp imagetexture.hpp
+	g++ -c imagetexture.cpp -o imagetexture.o $(CXXFLAGS)
 
 visual: main.o visualimagetexture.o
 	g++ -o visual visualimagetexture.o main.o $(LDFLAGS)
@@ -18,5 +18,11 @@ visual: main.o visualimagetexture.o
 visualimagetexture.o: visualimagetexture.cpp imagetexture.hpp
 	g++ -c visualimagetexture.cpp -o visualimagetexture.o $(CXXFLAGS)
 
+slow: main.o slowimagetexture.o
+	g++ -o slow slowimagetexture.o main.o $(LDFLAGS)
+
+slowimagetexture.o: imagetexture_slow_matching.cpp imagetexture.hpp
+	g++ -c imagetexture_slow_matching.cpp -o slowimagetexture.o $(CXXFLAGS)
+
 clean:
-	rm -f $(outputobj) visual main.o imagetexture.o visualimagetexture.o log
+	rm -f $(outputobj) visual slow main.o imagetexture.o visualimagetexture.o slowimagetexture.o log

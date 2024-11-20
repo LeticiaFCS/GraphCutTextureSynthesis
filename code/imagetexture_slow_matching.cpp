@@ -109,7 +109,7 @@ void ImageTexture::patchFitting(const std::string &file_name, int CntIterations)
 }
 void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &inputImg){
     const auto [heightOffset, widthOffset] = matching(inputImg);
-    //std::cout<<heightOffset<<" "<<widthOffset<<"\n";
+    std::cout<<heightOffset<<" "<<widthOffset<<"\n";
     if(isFirstPatch(heightOffset, widthOffset, inputImg)){
         copyFirstPatch(heightOffset, widthOffset, inputImg);
     }else
@@ -157,10 +157,9 @@ Private Functions
  * @return std::pair<int, int> 
  */
 std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inputImg){
-    constexpr int K = 0.1;
+    constexpr int K = 1;
     long double stdVar;
     {    //calc stdDev of input img
-        std::cerr<<"HERE"<<std::endl;
         //https://www.odelama.com/data-analysis/How-to-Compute-RGB-Image-Standard-Deviation-from-Channels-Statistics/#photoshopaverageandstandarddeviationformulas
         long double avgRed = 0, avgGreen = 0, avgBlue = 0;
         long double varRed = 0, varGreen = 0, varBlue = 0;
@@ -174,7 +173,6 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
         avgRed /= pixelCnt;
         avgGreen /= pixelCnt;
         avgBlue /= pixelCnt;
-        std::cerr<<"HERE"<<std::endl;
         for(int i = 0; i < (int) inputImg.get_height(); i++)
             for(int j = 0; j < (int) inputImg.get_width(); j++){
                 varRed += pow2(avgRed -inputImg[i][j].red);
@@ -184,11 +182,11 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
         varRed /= pixelCnt;
         varGreen /= pixelCnt;
         varBlue /= pixelCnt;
-        std::cerr<<"HERE"<<std::endl;
         long double stdVar = (1.0/3) * (varRed + varGreen + varBlue)
                            + (2.0/9) * (pow2(avgRed) + pow2(avgGreen) + pow2(avgBlue))
                            + (2.0/9) * (avgRed * avgGreen + avgRed * avgBlue + avgGreen * avgBlue);
-        std::cerr<<"HERE"<<std::endl;
+        stdVar += 1e-12; //avoids division by zero
+        //std::cout<<"var "<<std::fixed<<std::setprecision(20)<<stdVar<<std::endl;
     }
 
     std::vector<long double> weightProb;
@@ -210,21 +208,31 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
             }
             if(!weightProb.empty()) weightProb.push_back(weightProb.back());
             else weightProb.push_back(0);
-            if(A > 0)
-                weightProb.back() += exp(-cost/(K*stdVar)) / A;
+            if(A > 0){
+                cost /= A;
+                long double curWeight = cost;
+                curWeight += 1e-12;
+                //std::cout<<"   cur Weight = "<<std::fixed<<std::setprecision(20)<<curWeight<<std::endl;
+                weightProb.back() += std::exp(-curWeight/K);
+            }
         }
     }
 
     std::uniform_real_distribution<> urd(0, weightProb.back());
     long double selected = urd(rng);
+    //std::cerr<<"size "<<weightProb.size()<<std::endl;
+    std::cerr<<"range "<<0<<" "<<weightProb.back()<<std::endl;
+    //std::cerr<<"selected "<<std::fixed<<std::setprecision(20)<<selected<<std::endl;
+    std::cerr<<"weight "<<" "<<weightProb[0]<<" "<<weightProb[1]<<" "<<weightProb[2]<<" "<<weightProb[3]<<" "<<weightProb[4]<<std::endl;
     int id = 0;
+    int matchingHeight = 0, matchingWidth = 0;
     for(int heightOffset = -imgHeight + 1; heightOffset < imgHeight; heightOffset++){
         for(int widthOffset = - imgWidth + 1; widthOffset < imgWidth; widthOffset++){
-            id++;
-            std::cerr<<"selected "<<selected<<" -- "<<weightProb[id]<<std::endl;
-            if(weightProb[id] > selected){
+            if(weightProb[id] >= selected){
+                std::cerr<<"selected "<<selected<<" -- "<<weightProb[id]<<" --- "<<heightOffset<<" "<<widthOffset<<std::endl;
                 return {heightOffset, widthOffset};
-            }            
+            }      
+            id++;      
         }
     }
     return {0, 0};
