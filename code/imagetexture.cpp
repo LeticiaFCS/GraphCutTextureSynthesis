@@ -95,7 +95,7 @@ ImageTexture::ImageTexture(int width, int height)
 }
 
 /*
-Public Functions
+Public Functions 
 */
 void ImageTexture::render(const std::string &file_name){
     outputImg.write(file_name);
