@@ -18,11 +18,5 @@ visual: main.o visualimagetexture.o
 visualimagetexture.o: visualimagetexture.cpp imagetexture.hpp
 	g++ -c visualimagetexture.cpp -o visualimagetexture.o $(CXXFLAGS)
 
-slow: main.o slowimagetexture.o
-	g++ -o slow slowimagetexture.o main.o $(LDFLAGS)
-
-slowimagetexture.o: imagetexture_slow_matching.cpp imagetexture.hpp
-	g++ -c imagetexture_slow_matching.cpp -o slowimagetexture.o $(CXXFLAGS)
-
 clean:
-	rm -f $(outputobj) visual slow main.o imagetexture.o visualimagetexture.o slowimagetexture.o log
+	rm -f $(outputobj) visual main.o imagetexture.o visualimagetexture.o log

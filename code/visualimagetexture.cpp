@@ -165,6 +165,7 @@ Private Functions
 */
 
 // Main Private Functions
+
 /**
  * @brief chooses matching position randomly
  * 
@@ -176,6 +177,17 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
     static std::uniform_int_distribution<int> nextWidth(-(int) inputImg.get_width() + 1, imgWidth-1);
     return {nextHeight(rng), nextWidth(rng)};
 }
+
+/**
+ * @brief tests if the input image has any intersection with existing patches
+ * 
+ * @param heightOffset height position of the upper left corner of the input image on the output image
+ * @param widthOffset width position of the upper left corner of the input image on the output image
+ * @param inputImg png::image object from which the patch will be copied 
+ * 
+ * @return bool
+ */
+
 bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
