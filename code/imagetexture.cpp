@@ -611,7 +611,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             }
         }
     //std::cout<<"NEW COLOR "<<cnt<<std::endl;
-    //render("../output/output.png"); //debug descomentar!!!
+    //render("../output_images/output.png"); //debug descomentar!!!
     //usleep(800000);
     
     int countNewPixels = 0;
@@ -678,7 +678,7 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         for(auto [x,y] : inter.interPixels){
             outputImg[x][y] = png::rgb_pixel(0,155,0);
         }
-        //render("../output/output.png"); //debug descomentar!!
+        //render("../output_images/output.png"); //debug descomentar!!
         //usleep(2000000);
 
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
