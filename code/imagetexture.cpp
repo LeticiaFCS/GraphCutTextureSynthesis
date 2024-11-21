@@ -165,7 +165,7 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
 
 /**
  * @brief tests if the input image has any intersection with existing patches
- * 
+ *
  * @param heightOffset height position of the upper left corner of the input image on the output image
  * @param widthOffset width position of the upper left corner of the input image on the output image
  * @param inputImg png::image object from which the patch will be copied 
