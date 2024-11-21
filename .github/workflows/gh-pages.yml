@@ -28,7 +28,7 @@ jobs:
         run: hugo --minify
 
       - name: Deploy
-        uses: LeticiaFCS/GraphCutTextureSynthesis@v4
+        uses: LeticiaFCS/GraphCutTextureSynthesis
         # If you're changing the branch from main,
         # also change the `main` in `refs/heads/main`
         # below accordingly.
