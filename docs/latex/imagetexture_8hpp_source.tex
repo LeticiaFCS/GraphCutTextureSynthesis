@@ -40,112 +40,112 @@
 \DoxyCodeLine{00113\ \ \ \ \ }
 \DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_a019036d96f5e6c6d7cd09f969fa70f35}{render}}(\textcolor{keyword}{const}\ std::string\ \&file\_name);}
 \DoxyCodeLine{00122\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ rngSeed;}
-\DoxyCodeLine{00124\ \ \ \ \ std::mt19937\_64\ rng;}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{enum}\ PixelStatusEnum\{}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ colored,\ }
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ intersection,\ }
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ newcolor,\ }
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ notcolored\ \textcolor{comment}{//\ no\ pixel\ from\ a\ patch\ has\ been\ copied\ in\ this\ pixel}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ \mbox{\hyperlink{classImageTexture_aa8b7b039e3c5beb5017f9e890db518f1}{rngSeed}};}
+\DoxyCodeLine{00124\ \ \ \ \ std::mt19937\_64\ \mbox{\hyperlink{classImageTexture_a553cbec46cb60c98ff0ea4865ef48153}{rng}};}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188}{PixelStatusEnum}}\{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1}{colored}},\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3}{intersection}},\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e}{newcolor}},\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894}{notcolored}}\ \textcolor{comment}{//\ no\ pixel\ from\ a\ patch\ has\ been\ copied\ in\ this\ pixel}}
 \DoxyCodeLine{00131\ \ \ \ \ \};}
 \DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ Enum\ of\ the\ type\ of\ the\ edges}}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{enum}\ edgeType\{}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ originalGraph,\ \textcolor{comment}{//\ edge\ to\ the\ original\ graph}}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ copyGraph,\ \textcolor{comment}{//\ edge\ to\ the\ copy\ graph\ (to\ deal\ with\ the\ cut\ cycles)}}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ invalid\ \textcolor{comment}{//\ invalid\ edge}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923a}{edgeType}}\{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{originalGraph}},\ \textcolor{comment}{//\ edge\ to\ the\ original\ graph}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365}{copyGraph}},\ \textcolor{comment}{//\ edge\ to\ the\ copy\ graph\ (to\ deal\ with\ the\ cut\ cycles)}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6}{invalid}}\ \textcolor{comment}{//\ invalid\ edge}}
 \DoxyCodeLine{00137\ \ \ \ \ \};}
 \DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Png\ image\ that\ will\ be\ construct}}
-\DoxyCodeLine{00139\ \ \ \ \ png::image<png::rgb\_pixel>\ outputImg;}
+\DoxyCodeLine{00139\ \ \ \ \ png::image<png::rgb\_pixel>\ \mbox{\hyperlink{classImageTexture_a17868825a58005d8667793362a235d9a}{outputImg}};}
 \DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ width\ of\ output\ image}}
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ imgWidth;}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classImageTexture_a9dafef836db47169a19c2cb250fcdc4d}{imgWidth}};}
 \DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ height\ of\ output\ image}}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ imgHeight;}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classImageTexture_a38179afbf4440ad6fb880e856be8204c}{imgHeight}};}
 \DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ pixel\ of\ color\ status,\ may\ be\ useful\ to\ change\ to\ a\ counter\ of\ the\ number\ of\ improvements\ of\ each\ pixel\ in\ some\ implementations\ of\ matching}}
-\DoxyCodeLine{00145\ \ \ \ \ std::vector<std::vector<PixelStatusEnum>>\ pixelColorStatus;}
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ inftyCost\ =\ 10000000;}
+\DoxyCodeLine{00145\ \ \ \ \ std::vector<std::vector<PixelStatusEnum>>\ \mbox{\hyperlink{classImageTexture_aa0c4332dc760aab71d8fdb4201f8fb51}{pixelColorStatus}};}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classImageTexture_a100747a1207ee26cc20f2811ffabf59f}{inftyCost}}\ =\ 10000000;}
 \DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//pixels\ adjacent\ (ccw)}}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ directions\ =\ \{\{}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ \mbox{\hyperlink{classImageTexture_a45fdc478480d21c9951414765d02ea8e}{directions}}\ =\ \{\{}
 \DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \{-\/1,\ 0\},\ \ \ \ \textcolor{comment}{//\ \ \ \ |0|}}
 \DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \{\ 0,-\/1\},\ \ \ \ \textcolor{comment}{//\ \ |1|x|3|}}
 \DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \{\ 1,\ 0\},\ \ \ \ \textcolor{comment}{//\ \ \ \ |2|}}
 \DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \{\ 0,\ 1\}\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00153\ \ \ \ \ \}\};}
 \DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ identifiers\ of\ each\ vertex\ of\ square\ in\ grid\ (ccw)}}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ primalToDual\ =\ \{\{}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ \mbox{\hyperlink{classImageTexture_a108241ccd5910577ea4cc81165a85b0f}{primalToDual}}\ =\ \{\{}
 \DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{\ 0,\ 0\},\ \ \ \ \textcolor{comment}{//\ \ 0\_3}}
 \DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \{\ 1,\ 0\},\ \ \ \ \textcolor{comment}{//\ \ |\ |}}
 \DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \{\ 1,\ 1\},\ \ \ \ \textcolor{comment}{//\ \ 1\_2}}
 \DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \{\ 0,\ 1\}\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00160\ \ \ \ \ \}\};}
 \DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ identifiers\ of\ each\ square\ adjacent\ to\ a\ vertex\ in\ grid\ (ccw)}}
-\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ dualToPrimal\ =\ \{\{}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<int,\ int>,\ 4>\ \mbox{\hyperlink{classImageTexture_a40bc98074e97c0b36dfe76b7fb618764}{dualToPrimal}}\ =\ \{\{}
 \DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \{-\/1,-\/1\},\ \ \ \ \textcolor{comment}{//\ \ 0|3}}
 \DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \{\ 0,-\/1\},\ \ \ \ \textcolor{comment}{//\ \ -\/*-\/}}
 \DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \{\ 0,\ 0\},\ \ \ \ \textcolor{comment}{//\ \ 1|2\ }}
 \DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \{-\/1,\ 0\}\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00167\ \ \ \ \ \}\};}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ nextDir(\textcolor{keywordtype}{int}\ i);}
-\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ prevDir(\textcolor{keywordtype}{int}\ i);}
-\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ revDir(\textcolor{keywordtype}{int}\ i);}
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ pow2(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x);}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classImageTexture_ade769e7e90cf1da43b71bce09184d4ea}{nextDir}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classImageTexture_afbf45ac431d4cf3f8ce49d74ec3873ab}{prevDir}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classImageTexture_a74af23f961b1d9ecca7bb5a34036c5f2}{revDir}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classImageTexture_a19e42424d98c9e6347c61b90016fe084}{pow2}}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ x);}
 \DoxyCodeLine{00172\ }
 \DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Pixel>}
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ calcCost(\textcolor{keyword}{const}\ Pixel\ \&as,\ \textcolor{keyword}{const}\ Pixel\ \&bs,\ \textcolor{keyword}{const}\ Pixel\ \&at,\ \textcolor{keyword}{const}\ Pixel\ \&bt);}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classImageTexture_a65ca46c6dcefe98783136d153ee13ec3}{calcCost}}(\textcolor{keyword}{const}\ Pixel\ \&as,\ \textcolor{keyword}{const}\ Pixel\ \&bs,\ \textcolor{keyword}{const}\ Pixel\ \&at,\ \textcolor{keyword}{const}\ Pixel\ \&bt);}
 \DoxyCodeLine{00175\ \ \ \ \ }
-\DoxyCodeLine{00176\ \ \ \ \ std::pair<int,\ int>\ matching(\textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFirstPatch(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ stPlanarGraph(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ blendingCase1(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{void}\ blendingCase2(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00176\ \ \ \ \ std::pair<int,\ int>\ \mbox{\hyperlink{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a}{matching}}(\textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_a010d3427b09b785012b6c442c4fb125d}{isFirstPatch}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6}{stPlanarGraph}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a}{blendingCase1}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_a907394ffa0169b6d08eb23d7a82ecdca}{blendingCase2}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
 \DoxyCodeLine{00181\ }
-\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{void}\ copyFirstPatch(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{void}\ copyPixelsNewColor(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg,\ \textcolor{keywordtype}{bool}\ case2\ =\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{bool}\ inImgBorder(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);\ \ \ \ }
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ insidePrimal(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);\ \ }
-\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{bool}\ insideDual(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);}
-\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ insideImg(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&img);}
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{class\ }Intersection\{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_a8878c56adea95f10b5e80ada2186d23c}{copyFirstPatch}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_a7c217e29124976de33f0a7a54be001ff}{copyPixelsNewColor}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg,\ \textcolor{keywordtype}{bool}\ case2\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_aa628663103eb39a8b573836e1bd81064}{inImgBorder}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);\ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_a186a6fb3f8c88200f7475f75afe499ff}{insidePrimal}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);\ \ }
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_a4509e9ec35bb9695cfbca1254c596ff4}{insideDual}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classImageTexture_a8c80eebcf700ade05cc61821de5aee50}{insideImg}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&img);}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}}\{}
 \DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ counter\ clockwise,\ starting\ with\ upper\ neighbor}}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::pair<int,\ int>>\ interPixels;}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ Intersection(\textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&pixels\ =\ \{\});}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::pair<int,\ int>>\ \mbox{\hyperlink{classImageTexture_1_1Intersection_a39ec418b1282409a394b1675815107bb}{interPixels}};}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}}(\textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&pixels\ =\ \{\});}
 \DoxyCodeLine{00193\ \ \ \ \ \};}
 \DoxyCodeLine{00194\ \ \ \ \ }
 \DoxyCodeLine{00195\ \ \ \ \ \textcolor{comment}{//Case\ 1\ auxiliar\ variables}}
-\DoxyCodeLine{00196\ \ \ \ \ std::vector<std::vector<bool>>\ inSubgraph;}
-\DoxyCodeLine{00197\ \ \ \ \ std::vector<std::vector<std::array<long\ double,\ 4>>>\ edgesCosts;\ \ \ \ }
-\DoxyCodeLine{00198\ \ \ \ \ std::vector<std::vector<long\ double>>\ dist;}
-\DoxyCodeLine{00199\ \ \ \ \ std::vector<std::vector<bool>>\ vis;}
-\DoxyCodeLine{00200\ \ \ \ \ std::vector<std::vector<int>>\ parent;}
-\DoxyCodeLine{00201\ \ \ \ \ std::vector<std::vector<std::array<bool,\ 4>>>\ validEdge;}
-\DoxyCodeLine{00202\ \ \ \ \ std::vector<std::vector<bool>>\ isT;}
-\DoxyCodeLine{00203\ \ \ \ \ std::vector<std::vector<bool>>\ isS;}
+\DoxyCodeLine{00196\ \ \ \ \ std::vector<std::vector<bool>>\ \mbox{\hyperlink{classImageTexture_a52c5945a2e69b862edc7b881c9bf0689}{inSubgraph}};}
+\DoxyCodeLine{00197\ \ \ \ \ std::vector<std::vector<std::array<long\ double,\ 4>>>\ \mbox{\hyperlink{classImageTexture_aa27bfdd0c5639b675f32a0430629a6ad}{edgesCosts}};\ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ std::vector<std::vector<long\ double>>\ \mbox{\hyperlink{classImageTexture_a870beb1b271b75cebe9dd6757c8c838c}{dist}};}
+\DoxyCodeLine{00199\ \ \ \ \ std::vector<std::vector<bool>>\ \mbox{\hyperlink{classImageTexture_a03f2b76f73ccc5a8789da32d2a38be32}{vis}};}
+\DoxyCodeLine{00200\ \ \ \ \ std::vector<std::vector<int>>\ \mbox{\hyperlink{classImageTexture_aac60f0bc5b650580d12d4e94d902e4ed}{parent}};}
+\DoxyCodeLine{00201\ \ \ \ \ std::vector<std::vector<std::array<bool,\ 4>>>\ \mbox{\hyperlink{classImageTexture_ada7fc9ed92c5127ba5fb3ea5cf3c12ea}{validEdge}};}
+\DoxyCodeLine{00202\ \ \ \ \ std::vector<std::vector<bool>>\ \mbox{\hyperlink{classImageTexture_a9f20cb208bc0cc8dded0c905f66125f7}{isT}};}
+\DoxyCodeLine{00203\ \ \ \ \ std::vector<std::vector<bool>>\ \mbox{\hyperlink{classImageTexture_a79f3fbf5e3bf4e2742539eaa5f41b592}{isS}};}
 \DoxyCodeLine{00204\ }
 \DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//Case\ 1\ auxiliar\ methods}}
-\DoxyCodeLine{00206\ \ \ \ \ std::pair<std::pair<int,\ int>,\ std::pair<int,\ int>\ >\ findSTInIntersectionCase1(Intersection\ \&inter,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00207\ \ \ \ \ std::vector<Intersection>\ findIntersections(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{void}\ markMinABCut(std::pair<int,\ int>\ S,\ std::pair<int,\ int>\ T,\ \textcolor{keyword}{const}\ ImageTexture::Intersection\ \&inter,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00206\ \ \ \ \ std::pair<std::pair<int,\ int>,\ std::pair<int,\ int>\ >\ \mbox{\hyperlink{classImageTexture_ae3a2d44a6cbe21931cfda8a486606e2b}{findSTInIntersectionCase1}}(\mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}}\ \&inter,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00207\ \ \ \ \ std::vector<Intersection>\ \mbox{\hyperlink{classImageTexture_a58b47cbdac82da44d907f56fda600542}{findIntersections}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_ae6f8bcbe4355d68f3d2a7b2ad7c562d5}{markMinABCut}}(std::pair<int,\ int>\ S,\ std::pair<int,\ int>\ T,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classImageTexture_1_1Intersection}{ImageTexture::Intersection}}\ \&inter,\ \textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
 \DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//MarkMinABCut\ auxiliar\ methods}}
-\DoxyCodeLine{00210\ \ \ \ \ std::vector<std::pair<int,\ int>>\ markIntersectionCellsInDual(\textcolor{keyword}{const}\ ImageTexture::Intersection\ \&inter);}
-\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{void}\ markIntersectionEdgeCostsInDual(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&inDual);}
-\DoxyCodeLine{00212\ \ \ \ \ std::vector<std::pair<int,int>>\ findSTPath(\textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&S,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&T);}
-\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{void}\ markLeftOfMinCut(\textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&cut);}
+\DoxyCodeLine{00210\ \ \ \ \ std::vector<std::pair<int,\ int>>\ \mbox{\hyperlink{classImageTexture_a61468b4a7819036b21abba0961d91cb7}{markIntersectionCellsInDual}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classImageTexture_1_1Intersection}{ImageTexture::Intersection}}\ \&inter);}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_ac99813db63a775e932032ba5d855a052}{markIntersectionEdgeCostsInDual}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&inDual);}
+\DoxyCodeLine{00212\ \ \ \ \ std::vector<std::pair<int,int>>\ \mbox{\hyperlink{classImageTexture_abe1ce2ecc5ef8a8beb4bab0e7ecead3f}{findSTPath}}(\textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&S,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,int>>\ \&T);}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classImageTexture_ae5026158ecb1487b5bc6fb17ad621d0d}{markLeftOfMinCut}}(\textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&cut);}
 \DoxyCodeLine{00214\ \ \ \ \ }
 \DoxyCodeLine{00215\ \ \ \ \ \textcolor{comment}{//Case\ 2\ auxiliar\ variables}}
-\DoxyCodeLine{00216\ \ \ \ \ std::vector<std::vector<bool>>\ inS;}
-\DoxyCodeLine{00217\ \ \ \ \ std::vector<std::vector<int>>\ inStPath;}
-\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ std::array<int,\ 4>\ edgesToOriginalGraph\ =\ \{edgeType::originalGraph,edgeType::originalGraph,edgeType::originalGraph,edgeType::originalGraph\};}
-\DoxyCodeLine{00219\ \ \ \ \ std::array<std::vector<std::vector<std::array<int,\ 4>>>,2>\ edgeTo;}
-\DoxyCodeLine{00220\ \ \ \ \ std::array<std::vector<std::vector<long\ double>>,\ 2>\ distCase2;}
-\DoxyCodeLine{00221\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ visCase2;}
-\DoxyCodeLine{00222\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ seenCase2;}
-\DoxyCodeLine{00223\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ parentCase2;}
+\DoxyCodeLine{00216\ \ \ \ \ std::vector<std::vector<bool>>\ \mbox{\hyperlink{classImageTexture_a1b2ec959da198b32ac035398ce07f5e6}{inS}};}
+\DoxyCodeLine{00217\ \ \ \ \ std::vector<std::vector<int>>\ \mbox{\hyperlink{classImageTexture_a8cdbc685a164864e6e623a7ea723136b}{inStPath}};}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ std::array<int,\ 4>\ \mbox{\hyperlink{classImageTexture_acd306c99d66f429b765334b5e57d00b3}{edgesToOriginalGraph}}\ =\ \{\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edgeType::originalGraph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edgeType::originalGraph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edgeType::originalGraph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edgeType::originalGraph}}\};}
+\DoxyCodeLine{00219\ \ \ \ \ std::array<std::vector<std::vector<std::array<int,\ 4>>>,2>\ \mbox{\hyperlink{classImageTexture_a709deedad25b76f1d30f181ecfd67420}{edgeTo}};}
+\DoxyCodeLine{00220\ \ \ \ \ std::array<std::vector<std::vector<long\ double>>,\ 2>\ \mbox{\hyperlink{classImageTexture_a6e07f012417a3336938729a58aa571cc}{distCase2}};}
+\DoxyCodeLine{00221\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ \mbox{\hyperlink{classImageTexture_ae93cc229b922c8e446636a02f3647015}{visCase2}};}
+\DoxyCodeLine{00222\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ \mbox{\hyperlink{classImageTexture_abfc4c3fa3d28dd7164d7aff2728c4d09}{seenCase2}};}
+\DoxyCodeLine{00223\ \ \ \ \ std::array<std::vector<std::vector<int>>,\ 2>\ \mbox{\hyperlink{classImageTexture_a66643636d7bd4d9102067789bbed234b}{parentCase2}};}
 \DoxyCodeLine{00224\ }
 \DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//Case\ 2\ auxiliar\ functions}}
-\DoxyCodeLine{00226\ \ \ \ \ std::vector<std::pair<int,\ int>>\ dualBorder(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00227\ \ \ \ \ std::vector<std::pair<int,\ int>>\ findSCase2(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
-\DoxyCodeLine{00228\ \ \ \ \ std::pair<long\ double,\ std::vector<std::array<int,3>>>\ minCutCycle(\textcolor{keywordtype}{int}\ left,\ \textcolor{keywordtype}{int}\ right,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&stPath,\ \textcolor{keywordtype}{int}\ \&visited);\ \ \ \ }
-\DoxyCodeLine{00229\ \ \ \ \ std::pair<long\ double,\ std::vector<std::array<int,3>>>\ findMinFCycle(\textcolor{keyword}{const}\ std::pair<int,int>\ \&F,\ \textcolor{keywordtype}{int}\ visited);}
+\DoxyCodeLine{00226\ \ \ \ \ std::vector<std::pair<int,\ int>>\ \mbox{\hyperlink{classImageTexture_a7703fc86776a6a1d763ff9a3dbc04559}{dualBorder}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00227\ \ \ \ \ std::vector<std::pair<int,\ int>>\ \mbox{\hyperlink{classImageTexture_a5a9fcf1a6731bb01139c832927a3d9f7}{findSCase2}}(\textcolor{keywordtype}{int}\ heightOffset,\ \textcolor{keywordtype}{int}\ widthOffset,\ \textcolor{keyword}{const}\ png::image<png::rgb\_pixel>\ \&inputImg);}
+\DoxyCodeLine{00228\ \ \ \ \ std::pair<long\ double,\ std::vector<std::array<int,3>>>\ \mbox{\hyperlink{classImageTexture_a941bed619845ae07dfa4cd5a9a3af9d7}{minCutCycle}}(\textcolor{keywordtype}{int}\ left,\ \textcolor{keywordtype}{int}\ right,\ \textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\ \&stPath,\ \textcolor{keywordtype}{int}\ \&visited);\ \ \ \ }
+\DoxyCodeLine{00229\ \ \ \ \ std::pair<long\ double,\ std::vector<std::array<int,3>>>\ \mbox{\hyperlink{classImageTexture_a5860e1f67a5e0eaa50fda888b7eaba01}{findMinFCycle}}(\textcolor{keyword}{const}\ std::pair<int,int>\ \&F,\ \textcolor{keywordtype}{int}\ visited);}
 \DoxyCodeLine{00230\ \};}
 
 \end{DoxyCode}

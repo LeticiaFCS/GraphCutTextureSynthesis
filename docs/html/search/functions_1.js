@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['imagetexture_0',['imagetexture',['../classImageTexture.html#aee8d8b6cb95ca4e37521d77f6be430b3',1,'ImageTexture::ImageTexture(const png::image&lt; png::rgb_pixel &gt; &amp;_img)'],['../classImageTexture.html#a2994a8694b72bcec15274bbf5a8eadfa',1,'ImageTexture::ImageTexture(int width, int height)']]]
+  ['calccost_0',['calcCost',['../classImageTexture.html#a65ca46c6dcefe98783136d153ee13ec3',1,'ImageTexture']]],
+  ['copyfirstpatch_1',['copyFirstPatch',['../classImageTexture.html#a8878c56adea95f10b5e80ada2186d23c',1,'ImageTexture']]],
+  ['copypixelsnewcolor_2',['copyPixelsNewColor',['../classImageTexture.html#a7c217e29124976de33f0a7a54be001ff',1,'ImageTexture']]]
 ];

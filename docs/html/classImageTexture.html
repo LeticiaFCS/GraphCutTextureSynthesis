@@ -73,11 +73,23 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classImageTexture-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ImageTexture Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="imagetexture_8hpp_source.html">imagetexture.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture_1_1Intersection.html">Intersection</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aee8d8b6cb95ca4e37521d77f6be430b3" id="r_aee8d8b6cb95ca4e37521d77f6be430b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aee8d8b6cb95ca4e37521d77f6be430b3">ImageTexture</a> (const png::image&lt; png::rgb_pixel &gt; &amp;_img)</td></tr>
@@ -107,7 +119,204 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a019036d96f5e6c6d7cd09f969fa70f35" id="r_a019036d96f5e6c6d7cd09f969fa70f35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a019036d96f5e6c6d7cd09f969fa70f35">render</a> (const std::string &amp;file_name)</td></tr>
 <tr class="memdesc:a019036d96f5e6c6d7cd09f969fa70f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the constructed texture image.  <br /></td></tr>
 <tr class="separator:a019036d96f5e6c6d7cd09f969fa70f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-types" name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a6baa39a71179dd0211a23c308d450188" id="r_a6baa39a71179dd0211a23c308d450188"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188">PixelStatusEnum</a> { <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1">colored</a>
+, <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3">intersection</a>
+, <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e">newcolor</a>
+, <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894">notcolored</a>
+ }</td></tr>
+<tr class="memdesc:a6baa39a71179dd0211a23c308d450188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum of the status of each pixel on the output image.  <a href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188">More...</a><br /></td></tr>
+<tr class="separator:a6baa39a71179dd0211a23c308d450188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45e33657083d691e2ea022b32f10923a" id="r_a45e33657083d691e2ea022b32f10923a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923a">edgeType</a> { <a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">originalGraph</a>
+, <a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365">copyGraph</a>
+, <a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6">invalid</a>
+ }</td></tr>
+<tr class="separator:a45e33657083d691e2ea022b32f10923a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a8dbcb4bef8041132e4a6a9c8169f2e4a" id="r_a8dbcb4bef8041132e4a6a9c8169f2e4a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a8dbcb4bef8041132e4a6a9c8169f2e4a">matching</a> (const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="memdesc:a8dbcb4bef8041132e4a6a9c8169f2e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">chooses matching position randomly  <br /></td></tr>
+<tr class="separator:a8dbcb4bef8041132e4a6a9c8169f2e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010d3427b09b785012b6c442c4fb125d" id="r_a010d3427b09b785012b6c442c4fb125d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a010d3427b09b785012b6c442c4fb125d">isFirstPatch</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="memdesc:a010d3427b09b785012b6c442c4fb125d"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if the input image has any intersection with existing patches  <br /></td></tr>
+<tr class="separator:a010d3427b09b785012b6c442c4fb125d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea4d4843bd70efffedd8d19e2063f7a6" id="r_aea4d4843bd70efffedd8d19e2063f7a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aea4d4843bd70efffedd8d19e2063f7a6">stPlanarGraph</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:aea4d4843bd70efffedd8d19e2063f7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af07a431bd6ab81cdba45ab32ba82f03a" id="r_af07a431bd6ab81cdba45ab32ba82f03a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#af07a431bd6ab81cdba45ab32ba82f03a">blendingCase1</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:af07a431bd6ab81cdba45ab32ba82f03a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a907394ffa0169b6d08eb23d7a82ecdca" id="r_a907394ffa0169b6d08eb23d7a82ecdca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a907394ffa0169b6d08eb23d7a82ecdca">blendingCase2</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:a907394ffa0169b6d08eb23d7a82ecdca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8878c56adea95f10b5e80ada2186d23c" id="r_a8878c56adea95f10b5e80ada2186d23c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a8878c56adea95f10b5e80ada2186d23c">copyFirstPatch</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:a8878c56adea95f10b5e80ada2186d23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c217e29124976de33f0a7a54be001ff" id="r_a7c217e29124976de33f0a7a54be001ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a7c217e29124976de33f0a7a54be001ff">copyPixelsNewColor</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg, bool case2=false)</td></tr>
+<tr class="separator:a7c217e29124976de33f0a7a54be001ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa628663103eb39a8b573836e1bd81064" id="r_aa628663103eb39a8b573836e1bd81064"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aa628663103eb39a8b573836e1bd81064">inImgBorder</a> (int i, int j, int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:aa628663103eb39a8b573836e1bd81064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186a6fb3f8c88200f7475f75afe499ff" id="r_a186a6fb3f8c88200f7475f75afe499ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a186a6fb3f8c88200f7475f75afe499ff">insidePrimal</a> (int i, int j)</td></tr>
+<tr class="separator:a186a6fb3f8c88200f7475f75afe499ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4509e9ec35bb9695cfbca1254c596ff4" id="r_a4509e9ec35bb9695cfbca1254c596ff4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a4509e9ec35bb9695cfbca1254c596ff4">insideDual</a> (int i, int j)</td></tr>
+<tr class="separator:a4509e9ec35bb9695cfbca1254c596ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c80eebcf700ade05cc61821de5aee50" id="r_a8c80eebcf700ade05cc61821de5aee50"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a8c80eebcf700ade05cc61821de5aee50">insideImg</a> (int i, int j, const png::image&lt; png::rgb_pixel &gt; &amp;img)</td></tr>
+<tr class="separator:a8c80eebcf700ade05cc61821de5aee50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a2d44a6cbe21931cfda8a486606e2b" id="r_ae3a2d44a6cbe21931cfda8a486606e2b"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::pair&lt; int, int &gt;, std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ae3a2d44a6cbe21931cfda8a486606e2b">findSTInIntersectionCase1</a> (<a class="el" href="classImageTexture_1_1Intersection.html">Intersection</a> &amp;inter, int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:ae3a2d44a6cbe21931cfda8a486606e2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b47cbdac82da44d907f56fda600542" id="r_a58b47cbdac82da44d907f56fda600542"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classImageTexture_1_1Intersection.html">Intersection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a58b47cbdac82da44d907f56fda600542">findIntersections</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:a58b47cbdac82da44d907f56fda600542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6f8bcbe4355d68f3d2a7b2ad7c562d5" id="r_ae6f8bcbe4355d68f3d2a7b2ad7c562d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ae6f8bcbe4355d68f3d2a7b2ad7c562d5">markMinABCut</a> (std::pair&lt; int, int &gt; S, std::pair&lt; int, int &gt; T, const <a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &amp;inter, int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:ae6f8bcbe4355d68f3d2a7b2ad7c562d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61468b4a7819036b21abba0961d91cb7" id="r_a61468b4a7819036b21abba0961d91cb7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a61468b4a7819036b21abba0961d91cb7">markIntersectionCellsInDual</a> (const <a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &amp;inter)</td></tr>
+<tr class="separator:a61468b4a7819036b21abba0961d91cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac99813db63a775e932032ba5d855a052" id="r_ac99813db63a775e932032ba5d855a052"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ac99813db63a775e932032ba5d855a052">markIntersectionEdgeCostsInDual</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg, const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;inDual)</td></tr>
+<tr class="separator:ac99813db63a775e932032ba5d855a052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe1ce2ecc5ef8a8beb4bab0e7ecead3f" id="r_abe1ce2ecc5ef8a8beb4bab0e7ecead3f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#abe1ce2ecc5ef8a8beb4bab0e7ecead3f">findSTPath</a> (const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;S, const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;T)</td></tr>
+<tr class="separator:abe1ce2ecc5ef8a8beb4bab0e7ecead3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5026158ecb1487b5bc6fb17ad621d0d" id="r_ae5026158ecb1487b5bc6fb17ad621d0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ae5026158ecb1487b5bc6fb17ad621d0d">markLeftOfMinCut</a> (const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;cut)</td></tr>
+<tr class="separator:ae5026158ecb1487b5bc6fb17ad621d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7703fc86776a6a1d763ff9a3dbc04559" id="r_a7703fc86776a6a1d763ff9a3dbc04559"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a7703fc86776a6a1d763ff9a3dbc04559">dualBorder</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:a7703fc86776a6a1d763ff9a3dbc04559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a9fcf1a6731bb01139c832927a3d9f7" id="r_a5a9fcf1a6731bb01139c832927a3d9f7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a5a9fcf1a6731bb01139c832927a3d9f7">findSCase2</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="separator:a5a9fcf1a6731bb01139c832927a3d9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a941bed619845ae07dfa4cd5a9a3af9d7" id="r_a941bed619845ae07dfa4cd5a9a3af9d7"><td class="memItemLeft" align="right" valign="top">std::pair&lt; long double, std::vector&lt; std::array&lt; int, 3 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a941bed619845ae07dfa4cd5a9a3af9d7">minCutCycle</a> (int left, int right, const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;stPath, int &amp;visited)</td></tr>
+<tr class="separator:a941bed619845ae07dfa4cd5a9a3af9d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5860e1f67a5e0eaa50fda888b7eaba01" id="r_a5860e1f67a5e0eaa50fda888b7eaba01"><td class="memItemLeft" align="right" valign="top">std::pair&lt; long double, std::vector&lt; std::array&lt; int, 3 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a5860e1f67a5e0eaa50fda888b7eaba01">findMinFCycle</a> (const std::pair&lt; int, int &gt; &amp;F, int visited)</td></tr>
+<tr class="separator:a5860e1f67a5e0eaa50fda888b7eaba01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:ade769e7e90cf1da43b71bce09184d4ea" id="r_ade769e7e90cf1da43b71bce09184d4ea"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ade769e7e90cf1da43b71bce09184d4ea">nextDir</a> (int i)</td></tr>
+<tr class="separator:ade769e7e90cf1da43b71bce09184d4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbf45ac431d4cf3f8ce49d74ec3873ab" id="r_afbf45ac431d4cf3f8ce49d74ec3873ab"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#afbf45ac431d4cf3f8ce49d74ec3873ab">prevDir</a> (int i)</td></tr>
+<tr class="separator:afbf45ac431d4cf3f8ce49d74ec3873ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74af23f961b1d9ecca7bb5a34036c5f2" id="r_a74af23f961b1d9ecca7bb5a34036c5f2"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a74af23f961b1d9ecca7bb5a34036c5f2">revDir</a> (int i)</td></tr>
+<tr class="separator:a74af23f961b1d9ecca7bb5a34036c5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19e42424d98c9e6347c61b90016fe084" id="r_a19e42424d98c9e6347c61b90016fe084"><td class="memItemLeft" align="right" valign="top">static long double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a19e42424d98c9e6347c61b90016fe084">pow2</a> (long double x)</td></tr>
+<tr class="separator:a19e42424d98c9e6347c61b90016fe084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ca46c6dcefe98783136d153ee13ec3" id="r_a65ca46c6dcefe98783136d153ee13ec3"><td class="memTemplParams" colspan="2">template&lt;typename Pixel &gt; </td></tr>
+<tr class="memitem:a65ca46c6dcefe98783136d153ee13ec3"><td class="memTemplItemLeft" align="right" valign="top">static long double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a65ca46c6dcefe98783136d153ee13ec3">calcCost</a> (const Pixel &amp;as, const Pixel &amp;bs, const Pixel &amp;at, const Pixel &amp;bt)</td></tr>
+<tr class="separator:a65ca46c6dcefe98783136d153ee13ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa8b7b039e3c5beb5017f9e890db518f1" id="r_aa8b7b039e3c5beb5017f9e890db518f1"><td class="memItemLeft" align="right" valign="top">const uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aa8b7b039e3c5beb5017f9e890db518f1">rngSeed</a></td></tr>
+<tr class="separator:aa8b7b039e3c5beb5017f9e890db518f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553cbec46cb60c98ff0ea4865ef48153" id="r_a553cbec46cb60c98ff0ea4865ef48153"><td class="memItemLeft" align="right" valign="top">std::mt19937_64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a553cbec46cb60c98ff0ea4865ef48153">rng</a></td></tr>
+<tr class="separator:a553cbec46cb60c98ff0ea4865ef48153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17868825a58005d8667793362a235d9a" id="r_a17868825a58005d8667793362a235d9a"><td class="memItemLeft" align="right" valign="top">png::image&lt; png::rgb_pixel &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a17868825a58005d8667793362a235d9a">outputImg</a></td></tr>
+<tr class="separator:a17868825a58005d8667793362a235d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dafef836db47169a19c2cb250fcdc4d" id="r_a9dafef836db47169a19c2cb250fcdc4d"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a9dafef836db47169a19c2cb250fcdc4d">imgWidth</a></td></tr>
+<tr class="separator:a9dafef836db47169a19c2cb250fcdc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38179afbf4440ad6fb880e856be8204c" id="r_a38179afbf4440ad6fb880e856be8204c"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a38179afbf4440ad6fb880e856be8204c">imgHeight</a></td></tr>
+<tr class="separator:a38179afbf4440ad6fb880e856be8204c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0c4332dc760aab71d8fdb4201f8fb51" id="r_aa0c4332dc760aab71d8fdb4201f8fb51"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188">PixelStatusEnum</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aa0c4332dc760aab71d8fdb4201f8fb51">pixelColorStatus</a></td></tr>
+<tr class="separator:aa0c4332dc760aab71d8fdb4201f8fb51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c5945a2e69b862edc7b881c9bf0689" id="r_a52c5945a2e69b862edc7b881c9bf0689"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a52c5945a2e69b862edc7b881c9bf0689">inSubgraph</a></td></tr>
+<tr class="separator:a52c5945a2e69b862edc7b881c9bf0689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa27bfdd0c5639b675f32a0430629a6ad" id="r_aa27bfdd0c5639b675f32a0430629a6ad"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; std::array&lt; long double, 4 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aa27bfdd0c5639b675f32a0430629a6ad">edgesCosts</a></td></tr>
+<tr class="separator:aa27bfdd0c5639b675f32a0430629a6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870beb1b271b75cebe9dd6757c8c838c" id="r_a870beb1b271b75cebe9dd6757c8c838c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; long double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a870beb1b271b75cebe9dd6757c8c838c">dist</a></td></tr>
+<tr class="separator:a870beb1b271b75cebe9dd6757c8c838c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03f2b76f73ccc5a8789da32d2a38be32" id="r_a03f2b76f73ccc5a8789da32d2a38be32"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a03f2b76f73ccc5a8789da32d2a38be32">vis</a></td></tr>
+<tr class="separator:a03f2b76f73ccc5a8789da32d2a38be32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac60f0bc5b650580d12d4e94d902e4ed" id="r_aac60f0bc5b650580d12d4e94d902e4ed"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aac60f0bc5b650580d12d4e94d902e4ed">parent</a></td></tr>
+<tr class="separator:aac60f0bc5b650580d12d4e94d902e4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada7fc9ed92c5127ba5fb3ea5cf3c12ea" id="r_ada7fc9ed92c5127ba5fb3ea5cf3c12ea"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; std::array&lt; bool, 4 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ada7fc9ed92c5127ba5fb3ea5cf3c12ea">validEdge</a></td></tr>
+<tr class="separator:ada7fc9ed92c5127ba5fb3ea5cf3c12ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f20cb208bc0cc8dded0c905f66125f7" id="r_a9f20cb208bc0cc8dded0c905f66125f7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a9f20cb208bc0cc8dded0c905f66125f7">isT</a></td></tr>
+<tr class="separator:a9f20cb208bc0cc8dded0c905f66125f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79f3fbf5e3bf4e2742539eaa5f41b592" id="r_a79f3fbf5e3bf4e2742539eaa5f41b592"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a79f3fbf5e3bf4e2742539eaa5f41b592">isS</a></td></tr>
+<tr class="separator:a79f3fbf5e3bf4e2742539eaa5f41b592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b2ec959da198b32ac035398ce07f5e6" id="r_a1b2ec959da198b32ac035398ce07f5e6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a1b2ec959da198b32ac035398ce07f5e6">inS</a></td></tr>
+<tr class="separator:a1b2ec959da198b32ac035398ce07f5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cdbc685a164864e6e623a7ea723136b" id="r_a8cdbc685a164864e6e623a7ea723136b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a8cdbc685a164864e6e623a7ea723136b">inStPath</a></td></tr>
+<tr class="separator:a8cdbc685a164864e6e623a7ea723136b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a709deedad25b76f1d30f181ecfd67420" id="r_a709deedad25b76f1d30f181ecfd67420"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::vector&lt; std::vector&lt; std::array&lt; int, 4 &gt; &gt; &gt;, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a709deedad25b76f1d30f181ecfd67420">edgeTo</a></td></tr>
+<tr class="separator:a709deedad25b76f1d30f181ecfd67420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e07f012417a3336938729a58aa571cc" id="r_a6e07f012417a3336938729a58aa571cc"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::vector&lt; std::vector&lt; long double &gt; &gt;, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a6e07f012417a3336938729a58aa571cc">distCase2</a></td></tr>
+<tr class="separator:a6e07f012417a3336938729a58aa571cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae93cc229b922c8e446636a02f3647015" id="r_ae93cc229b922c8e446636a02f3647015"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::vector&lt; std::vector&lt; int &gt; &gt;, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#ae93cc229b922c8e446636a02f3647015">visCase2</a></td></tr>
+<tr class="separator:ae93cc229b922c8e446636a02f3647015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfc4c3fa3d28dd7164d7aff2728c4d09" id="r_abfc4c3fa3d28dd7164d7aff2728c4d09"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::vector&lt; std::vector&lt; int &gt; &gt;, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#abfc4c3fa3d28dd7164d7aff2728c4d09">seenCase2</a></td></tr>
+<tr class="separator:abfc4c3fa3d28dd7164d7aff2728c4d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66643636d7bd4d9102067789bbed234b" id="r_a66643636d7bd4d9102067789bbed234b"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::vector&lt; std::vector&lt; int &gt; &gt;, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a66643636d7bd4d9102067789bbed234b">parentCase2</a></td></tr>
+<tr class="separator:a66643636d7bd4d9102067789bbed234b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a100747a1207ee26cc20f2811ffabf59f" id="r_a100747a1207ee26cc20f2811ffabf59f"><td class="memItemLeft" align="right" valign="top">static constexpr long double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a100747a1207ee26cc20f2811ffabf59f">inftyCost</a> = 10000000</td></tr>
+<tr class="separator:a100747a1207ee26cc20f2811ffabf59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45fdc478480d21c9951414765d02ea8e" id="r_a45fdc478480d21c9951414765d02ea8e"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; int, int &gt;, 4 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a45fdc478480d21c9951414765d02ea8e">directions</a></td></tr>
+<tr class="separator:a45fdc478480d21c9951414765d02ea8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108241ccd5910577ea4cc81165a85b0f" id="r_a108241ccd5910577ea4cc81165a85b0f"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; int, int &gt;, 4 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a108241ccd5910577ea4cc81165a85b0f">primalToDual</a></td></tr>
+<tr class="separator:a108241ccd5910577ea4cc81165a85b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40bc98074e97c0b36dfe76b7fb618764" id="r_a40bc98074e97c0b36dfe76b7fb618764"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; std::pair&lt; int, int &gt;, 4 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a40bc98074e97c0b36dfe76b7fb618764">dualToPrimal</a></td></tr>
+<tr class="separator:a40bc98074e97c0b36dfe76b7fb618764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd306c99d66f429b765334b5e57d00b3" id="r_acd306c99d66f429b765334b5e57d00b3"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; int, 4 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#acd306c99d66f429b765334b5e57d00b3">edgesToOriginalGraph</a> = {<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>}</td></tr>
+<tr class="separator:acd306c99d66f429b765334b5e57d00b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a45e33657083d691e2ea022b32f10923a" name="a45e33657083d691e2ea022b32f10923a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45e33657083d691e2ea022b32f10923a">&#9670;&#160;</a></span>edgeType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923a">ImageTexture::edgeType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a" name="a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a"></a>originalGraph&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365" name="a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365"></a>copyGraph&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6" name="a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6"></a>invalid&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a6baa39a71179dd0211a23c308d450188" name="a6baa39a71179dd0211a23c308d450188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6baa39a71179dd0211a23c308d450188">&#9670;&#160;</a></span>PixelStatusEnum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188">ImageTexture::PixelStatusEnum</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enum of the status of each pixel on the output image. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1" name="a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1"></a>colored&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3" name="a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3"></a>intersection&#160;</td><td class="fielddoc"><p>at least one pixel from a patch has been copied in this pixel </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e" name="a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e"></a>newcolor&#160;</td><td class="fielddoc"><p>this pixel is in the intersection from the already updated pixels and a pixel of the new rectangle </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894" name="a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894"></a>notcolored&#160;</td><td class="fielddoc"><p>this pixel should be changed to a pixel from the new patch </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aee8d8b6cb95ca4e37521d77f6be430b3" name="aee8d8b6cb95ca4e37521d77f6be430b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee8d8b6cb95ca4e37521d77f6be430b3">&#9670;&#160;</a></span>ImageTexture() <span class="overload">[1/2]</span></h2>
@@ -265,6 +474,966 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af07a431bd6ab81cdba45ab32ba82f03a" name="af07a431bd6ab81cdba45ab32ba82f03a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af07a431bd6ab81cdba45ab32ba82f03a">&#9670;&#160;</a></span>blendingCase1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::blendingCase1 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a907394ffa0169b6d08eb23d7a82ecdca" name="a907394ffa0169b6d08eb23d7a82ecdca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a907394ffa0169b6d08eb23d7a82ecdca">&#9670;&#160;</a></span>blendingCase2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::blendingCase2 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a65ca46c6dcefe98783136d153ee13ec3" name="a65ca46c6dcefe98783136d153ee13ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ca46c6dcefe98783136d153ee13ec3">&#9670;&#160;</a></span>calcCost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Pixel &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">long double ImageTexture::calcCost </td>
+          <td>(</td>
+          <td class="paramtype">const Pixel &amp;&#160;</td>
+          <td class="paramname"><em>as</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Pixel &amp;&#160;</td>
+          <td class="paramname"><em>bs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Pixel &amp;&#160;</td>
+          <td class="paramname"><em>at</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Pixel &amp;&#160;</td>
+          <td class="paramname"><em>bt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8878c56adea95f10b5e80ada2186d23c" name="a8878c56adea95f10b5e80ada2186d23c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8878c56adea95f10b5e80ada2186d23c">&#9670;&#160;</a></span>copyFirstPatch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::copyFirstPatch </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7c217e29124976de33f0a7a54be001ff" name="a7c217e29124976de33f0a7a54be001ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c217e29124976de33f0a7a54be001ff">&#9670;&#160;</a></span>copyPixelsNewColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::copyPixelsNewColor </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>case2</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7703fc86776a6a1d763ff9a3dbc04559" name="a7703fc86776a6a1d763ff9a3dbc04559"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7703fc86776a6a1d763ff9a3dbc04559">&#9670;&#160;</a></span>dualBorder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, int &gt; &gt; ImageTexture::dualBorder </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58b47cbdac82da44d907f56fda600542" name="a58b47cbdac82da44d907f56fda600542"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58b47cbdac82da44d907f56fda600542">&#9670;&#160;</a></span>findIntersections()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &gt; ImageTexture::findIntersections </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5860e1f67a5e0eaa50fda888b7eaba01" name="a5860e1f67a5e0eaa50fda888b7eaba01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5860e1f67a5e0eaa50fda888b7eaba01">&#9670;&#160;</a></span>findMinFCycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; long double, std::vector&lt; std::array&lt; int, 3 &gt; &gt; &gt; ImageTexture::findMinFCycle </td>
+          <td>(</td>
+          <td class="paramtype">const std::pair&lt; int, int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>F</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>visited</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a9fcf1a6731bb01139c832927a3d9f7" name="a5a9fcf1a6731bb01139c832927a3d9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a9fcf1a6731bb01139c832927a3d9f7">&#9670;&#160;</a></span>findSCase2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, int &gt; &gt; ImageTexture::findSCase2 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae3a2d44a6cbe21931cfda8a486606e2b" name="ae3a2d44a6cbe21931cfda8a486606e2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3a2d44a6cbe21931cfda8a486606e2b">&#9670;&#160;</a></span>findSTInIntersectionCase1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; std::pair&lt; int, int &gt;, std::pair&lt; int, int &gt; &gt; ImageTexture::findSTInIntersectionCase1 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &amp;&#160;</td>
+          <td class="paramname"><em>inter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abe1ce2ecc5ef8a8beb4bab0e7ecead3f" name="abe1ce2ecc5ef8a8beb4bab0e7ecead3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe1ce2ecc5ef8a8beb4bab0e7ecead3f">&#9670;&#160;</a></span>findSTPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, int &gt; &gt; ImageTexture::findSTPath </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>T</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa628663103eb39a8b573836e1bd81064" name="aa628663103eb39a8b573836e1bd81064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa628663103eb39a8b573836e1bd81064">&#9670;&#160;</a></span>inImgBorder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::inImgBorder </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4509e9ec35bb9695cfbca1254c596ff4" name="a4509e9ec35bb9695cfbca1254c596ff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4509e9ec35bb9695cfbca1254c596ff4">&#9670;&#160;</a></span>insideDual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::insideDual </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8c80eebcf700ade05cc61821de5aee50" name="a8c80eebcf700ade05cc61821de5aee50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c80eebcf700ade05cc61821de5aee50">&#9670;&#160;</a></span>insideImg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::insideImg </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>img</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a186a6fb3f8c88200f7475f75afe499ff" name="a186a6fb3f8c88200f7475f75afe499ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a186a6fb3f8c88200f7475f75afe499ff">&#9670;&#160;</a></span>insidePrimal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::insidePrimal </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a010d3427b09b785012b6c442c4fb125d" name="a010d3427b09b785012b6c442c4fb125d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a010d3427b09b785012b6c442c4fb125d">&#9670;&#160;</a></span>isFirstPatch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::isFirstPatch </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>tests if the input image has any intersection with existing patches </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">heightOffset</td><td>height position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">widthOffset</td><td>width position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">inputImg</td><td>png::image object from which the patch will be copied</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a id="a61468b4a7819036b21abba0961d91cb7" name="a61468b4a7819036b21abba0961d91cb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61468b4a7819036b21abba0961d91cb7">&#9670;&#160;</a></span>markIntersectionCellsInDual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, int &gt; &gt; ImageTexture::markIntersectionCellsInDual </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &amp;&#160;</td>
+          <td class="paramname"><em>inter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac99813db63a775e932032ba5d855a052" name="ac99813db63a775e932032ba5d855a052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac99813db63a775e932032ba5d855a052">&#9670;&#160;</a></span>markIntersectionEdgeCostsInDual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::markIntersectionEdgeCostsInDual </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inDual</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5026158ecb1487b5bc6fb17ad621d0d" name="ae5026158ecb1487b5bc6fb17ad621d0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5026158ecb1487b5bc6fb17ad621d0d">&#9670;&#160;</a></span>markLeftOfMinCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::markLeftOfMinCut </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>cut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae6f8bcbe4355d68f3d2a7b2ad7c562d5" name="ae6f8bcbe4355d68f3d2a7b2ad7c562d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6f8bcbe4355d68f3d2a7b2ad7c562d5">&#9670;&#160;</a></span>markMinABCut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ImageTexture::markMinABCut </td>
+          <td>(</td>
+          <td class="paramtype">std::pair&lt; int, int &gt;&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::pair&lt; int, int &gt;&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classImageTexture_1_1Intersection.html">ImageTexture::Intersection</a> &amp;&#160;</td>
+          <td class="paramname"><em>inter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8dbcb4bef8041132e4a6a9c8169f2e4a" name="a8dbcb4bef8041132e4a6a9c8169f2e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dbcb4bef8041132e4a6a9c8169f2e4a">&#9670;&#160;</a></span>matching()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; int, int &gt; ImageTexture::matching </td>
+          <td>(</td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>chooses matching position randomly </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inputImg</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::pair&lt;int, int&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a941bed619845ae07dfa4cd5a9a3af9d7" name="a941bed619845ae07dfa4cd5a9a3af9d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a941bed619845ae07dfa4cd5a9a3af9d7">&#9670;&#160;</a></span>minCutCycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; long double, std::vector&lt; std::array&lt; int, 3 &gt; &gt; &gt; ImageTexture::minCutCycle </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>right</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>stPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>visited</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade769e7e90cf1da43b71bce09184d4ea" name="ade769e7e90cf1da43b71bce09184d4ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade769e7e90cf1da43b71bce09184d4ea">&#9670;&#160;</a></span>nextDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ImageTexture::nextDir </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a825bb0be4bafd0d11c35559785475217" name="a825bb0be4bafd0d11c35559785475217"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a825bb0be4bafd0d11c35559785475217">&#9670;&#160;</a></span>patchFitting() <span class="overload">[1/2]</span></h2>
 
@@ -395,6 +1564,58 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a19e42424d98c9e6347c61b90016fe084" name="a19e42424d98c9e6347c61b90016fe084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19e42424d98c9e6347c61b90016fe084">&#9670;&#160;</a></span>pow2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">long double ImageTexture::pow2 </td>
+          <td>(</td>
+          <td class="paramtype">long double&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afbf45ac431d4cf3f8ce49d74ec3873ab" name="afbf45ac431d4cf3f8ce49d74ec3873ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbf45ac431d4cf3f8ce49d74ec3873ab">&#9670;&#160;</a></span>prevDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ImageTexture::prevDir </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a019036d96f5e6c6d7cd09f969fa70f35" name="a019036d96f5e6c6d7cd09f969fa70f35"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a019036d96f5e6c6d7cd09f969fa70f35">&#9670;&#160;</a></span>render()</h2>
 
@@ -419,6 +1640,665 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a74af23f961b1d9ecca7bb5a34036c5f2" name="a74af23f961b1d9ecca7bb5a34036c5f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74af23f961b1d9ecca7bb5a34036c5f2">&#9670;&#160;</a></span>revDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ImageTexture::revDir </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea4d4843bd70efffedd8d19e2063f7a6" name="aea4d4843bd70efffedd8d19e2063f7a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea4d4843bd70efffedd8d19e2063f7a6">&#9670;&#160;</a></span>stPlanarGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImageTexture::stPlanarGraph </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>heightOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>widthOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const png::image&lt; png::rgb_pixel &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inputImg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a45fdc478480d21c9951414765d02ea8e" name="a45fdc478480d21c9951414765d02ea8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45fdc478480d21c9951414765d02ea8e">&#9670;&#160;</a></span>directions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::array&lt;std::pair&lt;int, int&gt;, 4&gt; ImageTexture::directions</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {{</div>
+<div class="line">        {-1, 0},    </div>
+<div class="line">        { 0,-1},    </div>
+<div class="line">        { 1, 0},    </div>
+<div class="line">        { 0, 1}     </div>
+<div class="line">    }}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a870beb1b271b75cebe9dd6757c8c838c" name="a870beb1b271b75cebe9dd6757c8c838c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a870beb1b271b75cebe9dd6757c8c838c">&#9670;&#160;</a></span>dist</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;long double&gt; &gt; ImageTexture::dist</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e07f012417a3336938729a58aa571cc" name="a6e07f012417a3336938729a58aa571cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e07f012417a3336938729a58aa571cc">&#9670;&#160;</a></span>distCase2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;std::vector&lt;std::vector&lt;long double&gt; &gt;, 2&gt; ImageTexture::distCase2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a40bc98074e97c0b36dfe76b7fb618764" name="a40bc98074e97c0b36dfe76b7fb618764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40bc98074e97c0b36dfe76b7fb618764">&#9670;&#160;</a></span>dualToPrimal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::array&lt;std::pair&lt;int, int&gt;, 4&gt; ImageTexture::dualToPrimal</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {{</div>
+<div class="line">        {-1,-1},    </div>
+<div class="line">        { 0,-1},    </div>
+<div class="line">        { 0, 0},    </div>
+<div class="line">        {-1, 0}     </div>
+<div class="line">    }}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa27bfdd0c5639b675f32a0430629a6ad" name="aa27bfdd0c5639b675f32a0430629a6ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa27bfdd0c5639b675f32a0430629a6ad">&#9670;&#160;</a></span>edgesCosts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;std::array&lt;long double, 4&gt; &gt; &gt; ImageTexture::edgesCosts</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acd306c99d66f429b765334b5e57d00b3" name="acd306c99d66f429b765334b5e57d00b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd306c99d66f429b765334b5e57d00b3">&#9670;&#160;</a></span>edgesToOriginalGraph</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::array&lt;int, 4&gt; ImageTexture::edgesToOriginalGraph = {<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>,<a class="el" href="classImageTexture.html#a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a">edgeType::originalGraph</a>}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a709deedad25b76f1d30f181ecfd67420" name="a709deedad25b76f1d30f181ecfd67420"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a709deedad25b76f1d30f181ecfd67420">&#9670;&#160;</a></span>edgeTo</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;std::vector&lt;std::vector&lt;std::array&lt;int, 4&gt; &gt; &gt;,2&gt; ImageTexture::edgeTo</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38179afbf4440ad6fb880e856be8204c" name="a38179afbf4440ad6fb880e856be8204c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38179afbf4440ad6fb880e856be8204c">&#9670;&#160;</a></span>imgHeight</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int ImageTexture::imgHeight</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9dafef836db47169a19c2cb250fcdc4d" name="a9dafef836db47169a19c2cb250fcdc4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dafef836db47169a19c2cb250fcdc4d">&#9670;&#160;</a></span>imgWidth</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int ImageTexture::imgWidth</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a100747a1207ee26cc20f2811ffabf59f" name="a100747a1207ee26cc20f2811ffabf59f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a100747a1207ee26cc20f2811ffabf59f">&#9670;&#160;</a></span>inftyCost</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr long double ImageTexture::inftyCost = 10000000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1b2ec959da198b32ac035398ce07f5e6" name="a1b2ec959da198b32ac035398ce07f5e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b2ec959da198b32ac035398ce07f5e6">&#9670;&#160;</a></span>inS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;bool&gt; &gt; ImageTexture::inS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8cdbc685a164864e6e623a7ea723136b" name="a8cdbc685a164864e6e623a7ea723136b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cdbc685a164864e6e623a7ea723136b">&#9670;&#160;</a></span>inStPath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; ImageTexture::inStPath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a52c5945a2e69b862edc7b881c9bf0689" name="a52c5945a2e69b862edc7b881c9bf0689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52c5945a2e69b862edc7b881c9bf0689">&#9670;&#160;</a></span>inSubgraph</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;bool&gt; &gt; ImageTexture::inSubgraph</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a79f3fbf5e3bf4e2742539eaa5f41b592" name="a79f3fbf5e3bf4e2742539eaa5f41b592"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f3fbf5e3bf4e2742539eaa5f41b592">&#9670;&#160;</a></span>isS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;bool&gt; &gt; ImageTexture::isS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f20cb208bc0cc8dded0c905f66125f7" name="a9f20cb208bc0cc8dded0c905f66125f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f20cb208bc0cc8dded0c905f66125f7">&#9670;&#160;</a></span>isT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;bool&gt; &gt; ImageTexture::isT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17868825a58005d8667793362a235d9a" name="a17868825a58005d8667793362a235d9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17868825a58005d8667793362a235d9a">&#9670;&#160;</a></span>outputImg</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">png::image&lt;png::rgb_pixel&gt; ImageTexture::outputImg</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac60f0bc5b650580d12d4e94d902e4ed" name="aac60f0bc5b650580d12d4e94d902e4ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac60f0bc5b650580d12d4e94d902e4ed">&#9670;&#160;</a></span>parent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; ImageTexture::parent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a66643636d7bd4d9102067789bbed234b" name="a66643636d7bd4d9102067789bbed234b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66643636d7bd4d9102067789bbed234b">&#9670;&#160;</a></span>parentCase2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;std::vector&lt;std::vector&lt;int&gt; &gt;, 2&gt; ImageTexture::parentCase2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0c4332dc760aab71d8fdb4201f8fb51" name="aa0c4332dc760aab71d8fdb4201f8fb51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0c4332dc760aab71d8fdb4201f8fb51">&#9670;&#160;</a></span>pixelColorStatus</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;<a class="el" href="classImageTexture.html#a6baa39a71179dd0211a23c308d450188">PixelStatusEnum</a>&gt; &gt; ImageTexture::pixelColorStatus</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a108241ccd5910577ea4cc81165a85b0f" name="a108241ccd5910577ea4cc81165a85b0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a108241ccd5910577ea4cc81165a85b0f">&#9670;&#160;</a></span>primalToDual</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::array&lt;std::pair&lt;int, int&gt;, 4&gt; ImageTexture::primalToDual</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {{</div>
+<div class="line">        { 0, 0},    </div>
+<div class="line">        { 1, 0},    </div>
+<div class="line">        { 1, 1},    </div>
+<div class="line">        { 0, 1}     </div>
+<div class="line">    }}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a553cbec46cb60c98ff0ea4865ef48153" name="a553cbec46cb60c98ff0ea4865ef48153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a553cbec46cb60c98ff0ea4865ef48153">&#9670;&#160;</a></span>rng</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mt19937_64 ImageTexture::rng</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8b7b039e3c5beb5017f9e890db518f1" name="aa8b7b039e3c5beb5017f9e890db518f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8b7b039e3c5beb5017f9e890db518f1">&#9670;&#160;</a></span>rngSeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint64_t ImageTexture::rngSeed</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abfc4c3fa3d28dd7164d7aff2728c4d09" name="abfc4c3fa3d28dd7164d7aff2728c4d09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfc4c3fa3d28dd7164d7aff2728c4d09">&#9670;&#160;</a></span>seenCase2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;std::vector&lt;std::vector&lt;int&gt; &gt;, 2&gt; ImageTexture::seenCase2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada7fc9ed92c5127ba5fb3ea5cf3c12ea" name="ada7fc9ed92c5127ba5fb3ea5cf3c12ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada7fc9ed92c5127ba5fb3ea5cf3c12ea">&#9670;&#160;</a></span>validEdge</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;std::array&lt;bool, 4&gt; &gt; &gt; ImageTexture::validEdge</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03f2b76f73ccc5a8789da32d2a38be32" name="a03f2b76f73ccc5a8789da32d2a38be32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03f2b76f73ccc5a8789da32d2a38be32">&#9670;&#160;</a></span>vis</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;bool&gt; &gt; ImageTexture::vis</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae93cc229b922c8e446636a02f3647015" name="ae93cc229b922c8e446636a02f3647015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae93cc229b922c8e446636a02f3647015">&#9670;&#160;</a></span>visCase2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;std::vector&lt;std::vector&lt;int&gt; &gt;, 2&gt; ImageTexture::visCase2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

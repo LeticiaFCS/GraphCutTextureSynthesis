@@ -1,5 +1,14 @@
 \doxysection{Image\+Texture Class Reference}
 \hypertarget{classImageTexture}{}\label{classImageTexture}\index{ImageTexture@{ImageTexture}}
+
+
+{\ttfamily \#include $<$imagetexture.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -21,6 +30,189 @@ void \mbox{\hyperlink{classImageTexture_a04798bba63adc1e53da7729a05ea243e}{blend
 \begin{DoxyCompactList}\small\item\em Chooses the format of the new patch from the png image with this file name at this position. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classImageTexture_a019036d96f5e6c6d7cd09f969fa70f35}{render}} (const std\+::string \&file\+\_\+name)
 \begin{DoxyCompactList}\small\item\em Renders the constructed texture image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188}{Pixel\+Status\+Enum}} \{ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1}{colored}}
+, \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3}{intersection}}
+, \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e}{newcolor}}
+, \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894}{notcolored}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum of the status of each pixel on the output image. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923a}{edge\+Type}} \{ \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{original\+Graph}}
+, \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365}{copy\+Graph}}
+, \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6}{invalid}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a}{matching}} (const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\begin{DoxyCompactList}\small\item\em chooses matching position randomly \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classImageTexture_a010d3427b09b785012b6c442c4fb125d}{is\+First\+Patch}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\begin{DoxyCompactList}\small\item\em tests if the input image has any intersection with existing patches \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6}{st\+Planar\+Graph}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+void \mbox{\hyperlink{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a}{blending\+Case1}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+void \mbox{\hyperlink{classImageTexture_a907394ffa0169b6d08eb23d7a82ecdca}{blending\+Case2}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+void \mbox{\hyperlink{classImageTexture_a8878c56adea95f10b5e80ada2186d23c}{copy\+First\+Patch}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+void \mbox{\hyperlink{classImageTexture_a7c217e29124976de33f0a7a54be001ff}{copy\+Pixels\+New\+Color}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img, bool case2=false)
+\item 
+bool \mbox{\hyperlink{classImageTexture_aa628663103eb39a8b573836e1bd81064}{in\+Img\+Border}} (int i, int j, int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+bool \mbox{\hyperlink{classImageTexture_a186a6fb3f8c88200f7475f75afe499ff}{inside\+Primal}} (int i, int j)
+\item 
+bool \mbox{\hyperlink{classImageTexture_a4509e9ec35bb9695cfbca1254c596ff4}{inside\+Dual}} (int i, int j)
+\item 
+bool \mbox{\hyperlink{classImageTexture_a8c80eebcf700ade05cc61821de5aee50}{inside\+Img}} (int i, int j, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&img)
+\item 
+std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classImageTexture_ae3a2d44a6cbe21931cfda8a486606e2b}{find\+STIn\+Intersection\+Case1}} (\mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}} \&inter, int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classImageTexture_1_1Intersection}{Intersection}} $>$ \mbox{\hyperlink{classImageTexture_a58b47cbdac82da44d907f56fda600542}{find\+Intersections}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+void \mbox{\hyperlink{classImageTexture_ae6f8bcbe4355d68f3d2a7b2ad7c562d5}{mark\+Min\+ABCut}} (std\+::pair$<$ int, int $>$ S, std\+::pair$<$ int, int $>$ T, const \mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} \&inter, int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classImageTexture_a61468b4a7819036b21abba0961d91cb7}{mark\+Intersection\+Cells\+In\+Dual}} (const \mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} \&inter)
+\item 
+void \mbox{\hyperlink{classImageTexture_ac99813db63a775e932032ba5d855a052}{mark\+Intersection\+Edge\+Costs\+In\+Dual}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img, const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&in\+Dual)
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classImageTexture_abe1ce2ecc5ef8a8beb4bab0e7ecead3f}{find\+STPath}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&S, const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&T)
+\item 
+void \mbox{\hyperlink{classImageTexture_ae5026158ecb1487b5bc6fb17ad621d0d}{mark\+Left\+Of\+Min\+Cut}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&cut)
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classImageTexture_a7703fc86776a6a1d763ff9a3dbc04559}{dual\+Border}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classImageTexture_a5a9fcf1a6731bb01139c832927a3d9f7}{find\+SCase2}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
+\item 
+std\+::pair$<$ long double, std\+::vector$<$ std\+::array$<$ int, 3 $>$ $>$ $>$ \mbox{\hyperlink{classImageTexture_a941bed619845ae07dfa4cd5a9a3af9d7}{min\+Cut\+Cycle}} (int left, int right, const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&st\+Path, int \&visited)
+\item 
+std\+::pair$<$ long double, std\+::vector$<$ std\+::array$<$ int, 3 $>$ $>$ $>$ \mbox{\hyperlink{classImageTexture_a5860e1f67a5e0eaa50fda888b7eaba01}{find\+Min\+FCycle}} (const std\+::pair$<$ int, int $>$ \&F, int visited)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{classImageTexture_ade769e7e90cf1da43b71bce09184d4ea}{next\+Dir}} (int i)
+\item 
+static int \mbox{\hyperlink{classImageTexture_afbf45ac431d4cf3f8ce49d74ec3873ab}{prev\+Dir}} (int i)
+\item 
+static int \mbox{\hyperlink{classImageTexture_a74af23f961b1d9ecca7bb5a34036c5f2}{rev\+Dir}} (int i)
+\item 
+static long double \mbox{\hyperlink{classImageTexture_a19e42424d98c9e6347c61b90016fe084}{pow2}} (long double x)
+\item 
+{\footnotesize template$<$typename Pixel $>$ }\\static long double \mbox{\hyperlink{classImageTexture_a65ca46c6dcefe98783136d153ee13ec3}{calc\+Cost}} (const Pixel \&as, const Pixel \&bs, const Pixel \&at, const Pixel \&bt)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const uint64\+\_\+t \mbox{\hyperlink{classImageTexture_aa8b7b039e3c5beb5017f9e890db518f1}{rng\+Seed}}
+\item 
+std\+::mt19937\+\_\+64 \mbox{\hyperlink{classImageTexture_a553cbec46cb60c98ff0ea4865ef48153}{rng}}
+\item 
+png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \mbox{\hyperlink{classImageTexture_a17868825a58005d8667793362a235d9a}{output\+Img}}
+\item 
+const int \mbox{\hyperlink{classImageTexture_a9dafef836db47169a19c2cb250fcdc4d}{img\+Width}}
+\item 
+const int \mbox{\hyperlink{classImageTexture_a38179afbf4440ad6fb880e856be8204c}{img\+Height}}
+\item 
+std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188}{Pixel\+Status\+Enum}} $>$ $>$ \mbox{\hyperlink{classImageTexture_aa0c4332dc760aab71d8fdb4201f8fb51}{pixel\+Color\+Status}}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classImageTexture_a52c5945a2e69b862edc7b881c9bf0689}{in\+Subgraph}}
+\item 
+std\+::vector$<$ std\+::vector$<$ std\+::array$<$ long double, 4 $>$ $>$ $>$ \mbox{\hyperlink{classImageTexture_aa27bfdd0c5639b675f32a0430629a6ad}{edges\+Costs}}
+\item 
+std\+::vector$<$ std\+::vector$<$ long double $>$ $>$ \mbox{\hyperlink{classImageTexture_a870beb1b271b75cebe9dd6757c8c838c}{dist}}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classImageTexture_a03f2b76f73ccc5a8789da32d2a38be32}{vis}}
+\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{classImageTexture_aac60f0bc5b650580d12d4e94d902e4ed}{parent}}
+\item 
+std\+::vector$<$ std\+::vector$<$ std\+::array$<$ bool, 4 $>$ $>$ $>$ \mbox{\hyperlink{classImageTexture_ada7fc9ed92c5127ba5fb3ea5cf3c12ea}{valid\+Edge}}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classImageTexture_a9f20cb208bc0cc8dded0c905f66125f7}{isT}}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classImageTexture_a79f3fbf5e3bf4e2742539eaa5f41b592}{isS}}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classImageTexture_a1b2ec959da198b32ac035398ce07f5e6}{inS}}
+\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{classImageTexture_a8cdbc685a164864e6e623a7ea723136b}{in\+St\+Path}}
+\item 
+std\+::array$<$ std\+::vector$<$ std\+::vector$<$ std\+::array$<$ int, 4 $>$ $>$ $>$, 2 $>$ \mbox{\hyperlink{classImageTexture_a709deedad25b76f1d30f181ecfd67420}{edge\+To}}
+\item 
+std\+::array$<$ std\+::vector$<$ std\+::vector$<$ long double $>$ $>$, 2 $>$ \mbox{\hyperlink{classImageTexture_a6e07f012417a3336938729a58aa571cc}{dist\+Case2}}
+\item 
+std\+::array$<$ std\+::vector$<$ std\+::vector$<$ int $>$ $>$, 2 $>$ \mbox{\hyperlink{classImageTexture_ae93cc229b922c8e446636a02f3647015}{vis\+Case2}}
+\item 
+std\+::array$<$ std\+::vector$<$ std\+::vector$<$ int $>$ $>$, 2 $>$ \mbox{\hyperlink{classImageTexture_abfc4c3fa3d28dd7164d7aff2728c4d09}{seen\+Case2}}
+\item 
+std\+::array$<$ std\+::vector$<$ std\+::vector$<$ int $>$ $>$, 2 $>$ \mbox{\hyperlink{classImageTexture_a66643636d7bd4d9102067789bbed234b}{parent\+Case2}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr long double \mbox{\hyperlink{classImageTexture_a100747a1207ee26cc20f2811ffabf59f}{infty\+Cost}} = 10000000
+\item 
+static constexpr std\+::array$<$ std\+::pair$<$ int, int $>$, 4 $>$ \mbox{\hyperlink{classImageTexture_a45fdc478480d21c9951414765d02ea8e}{directions}}
+\item 
+static constexpr std\+::array$<$ std\+::pair$<$ int, int $>$, 4 $>$ \mbox{\hyperlink{classImageTexture_a108241ccd5910577ea4cc81165a85b0f}{primal\+To\+Dual}}
+\item 
+static constexpr std\+::array$<$ std\+::pair$<$ int, int $>$, 4 $>$ \mbox{\hyperlink{classImageTexture_a40bc98074e97c0b36dfe76b7fb618764}{dual\+To\+Primal}}
+\item 
+static constexpr std\+::array$<$ int, 4 $>$ \mbox{\hyperlink{classImageTexture_acd306c99d66f429b765334b5e57d00b3}{edges\+To\+Original\+Graph}} = \{\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}}\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classImageTexture_a45e33657083d691e2ea022b32f10923a}\label{classImageTexture_a45e33657083d691e2ea022b32f10923a} 
+\index{ImageTexture@{ImageTexture}!edgeType@{edgeType}}
+\index{edgeType@{edgeType}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{edgeType}{edgeType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923a}{Image\+Texture\+::edge\+Type}}\hspace{0.3cm}{\ttfamily [private]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{originalGraph@{originalGraph}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!originalGraph@{originalGraph}}}\Hypertarget{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}\label{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a} 
+original\+Graph&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{copyGraph@{copyGraph}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!copyGraph@{copyGraph}}}\Hypertarget{classImageTexture_a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365}\label{classImageTexture_a45e33657083d691e2ea022b32f10923aa6266b44af459505c46fcd0f5a1698365} 
+copy\+Graph&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{invalid@{invalid}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!invalid@{invalid}}}\Hypertarget{classImageTexture_a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6}\label{classImageTexture_a45e33657083d691e2ea022b32f10923aa843c49a8ccb6f13c2a60499667a331d6} 
+invalid&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{classImageTexture_a6baa39a71179dd0211a23c308d450188}\label{classImageTexture_a6baa39a71179dd0211a23c308d450188} 
+\index{ImageTexture@{ImageTexture}!PixelStatusEnum@{PixelStatusEnum}}
+\index{PixelStatusEnum@{PixelStatusEnum}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{PixelStatusEnum}{PixelStatusEnum}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188}{Image\+Texture\+::\+Pixel\+Status\+Enum}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Enum of the status of each pixel on the output image. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{colored@{colored}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!colored@{colored}}}\Hypertarget{classImageTexture_a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1}\label{classImageTexture_a6baa39a71179dd0211a23c308d450188afa7a7ed0292daea4771c2b79683403d1} 
+colored&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{intersection@{intersection}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!intersection@{intersection}}}\Hypertarget{classImageTexture_a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3}\label{classImageTexture_a6baa39a71179dd0211a23c308d450188ae2d7458137af52d003f41ff89ce8a1e3} 
+intersection&at least one pixel from a patch has been copied in this pixel \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{newcolor@{newcolor}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!newcolor@{newcolor}}}\Hypertarget{classImageTexture_a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e}\label{classImageTexture_a6baa39a71179dd0211a23c308d450188a13e2c361945b7018d65ea88a9faadc9e} 
+newcolor&this pixel is in the intersection from the already updated pixels and a pixel of the new rectangle \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{notcolored@{notcolored}!ImageTexture@{ImageTexture}}\index{ImageTexture@{ImageTexture}!notcolored@{notcolored}}}\Hypertarget{classImageTexture_a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894}\label{classImageTexture_a6baa39a71179dd0211a23c308d450188aae097ab667a36368dfaa3da01ee7f894} 
+notcolored&this pixel should be changed to a pixel from the new patch \\
+\hline
+
+\end{DoxyEnumFields}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -105,6 +297,173 @@ Time Complexity\+: O(width {$\times$} height {$\times$} log\textsuperscript{2}(w
 {\em file\+\_\+name} & file name of the png image from which the patch will be copied \\
 \hline
 \end{DoxyParams}
+\Hypertarget{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a}\label{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a} 
+\index{ImageTexture@{ImageTexture}!blendingCase1@{blendingCase1}}
+\index{blendingCase1@{blendingCase1}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{blendingCase1()}{blendingCase1()}}
+{\footnotesize\ttfamily void Image\+Texture\+::blending\+Case1 (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a907394ffa0169b6d08eb23d7a82ecdca}\label{classImageTexture_a907394ffa0169b6d08eb23d7a82ecdca} 
+\index{ImageTexture@{ImageTexture}!blendingCase2@{blendingCase2}}
+\index{blendingCase2@{blendingCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{blendingCase2()}{blendingCase2()}}
+{\footnotesize\ttfamily void Image\+Texture\+::blending\+Case2 (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a65ca46c6dcefe98783136d153ee13ec3}\label{classImageTexture_a65ca46c6dcefe98783136d153ee13ec3} 
+\index{ImageTexture@{ImageTexture}!calcCost@{calcCost}}
+\index{calcCost@{calcCost}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{calcCost()}{calcCost()}}
+{\footnotesize\ttfamily template$<$typename Pixel $>$ \\
+long double Image\+Texture\+::calc\+Cost (\begin{DoxyParamCaption}\item[{const Pixel \&}]{as,  }\item[{const Pixel \&}]{bs,  }\item[{const Pixel \&}]{at,  }\item[{const Pixel \&}]{bt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a8878c56adea95f10b5e80ada2186d23c}\label{classImageTexture_a8878c56adea95f10b5e80ada2186d23c} 
+\index{ImageTexture@{ImageTexture}!copyFirstPatch@{copyFirstPatch}}
+\index{copyFirstPatch@{copyFirstPatch}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{copyFirstPatch()}{copyFirstPatch()}}
+{\footnotesize\ttfamily void Image\+Texture\+::copy\+First\+Patch (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a7c217e29124976de33f0a7a54be001ff}\label{classImageTexture_a7c217e29124976de33f0a7a54be001ff} 
+\index{ImageTexture@{ImageTexture}!copyPixelsNewColor@{copyPixelsNewColor}}
+\index{copyPixelsNewColor@{copyPixelsNewColor}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{copyPixelsNewColor()}{copyPixelsNewColor()}}
+{\footnotesize\ttfamily void Image\+Texture\+::copy\+Pixels\+New\+Color (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img,  }\item[{bool}]{case2 = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a7703fc86776a6a1d763ff9a3dbc04559}\label{classImageTexture_a7703fc86776a6a1d763ff9a3dbc04559} 
+\index{ImageTexture@{ImageTexture}!dualBorder@{dualBorder}}
+\index{dualBorder@{dualBorder}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{dualBorder()}{dualBorder()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ Image\+Texture\+::dual\+Border (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a58b47cbdac82da44d907f56fda600542}\label{classImageTexture_a58b47cbdac82da44d907f56fda600542} 
+\index{ImageTexture@{ImageTexture}!findIntersections@{findIntersections}}
+\index{findIntersections@{findIntersections}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{findIntersections()}{findIntersections()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} $>$ Image\+Texture\+::find\+Intersections (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a5860e1f67a5e0eaa50fda888b7eaba01}\label{classImageTexture_a5860e1f67a5e0eaa50fda888b7eaba01} 
+\index{ImageTexture@{ImageTexture}!findMinFCycle@{findMinFCycle}}
+\index{findMinFCycle@{findMinFCycle}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{findMinFCycle()}{findMinFCycle()}}
+{\footnotesize\ttfamily std\+::pair$<$ long double, std\+::vector$<$ std\+::array$<$ int, 3 $>$ $>$ $>$ Image\+Texture\+::find\+Min\+FCycle (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{F,  }\item[{int}]{visited }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a5a9fcf1a6731bb01139c832927a3d9f7}\label{classImageTexture_a5a9fcf1a6731bb01139c832927a3d9f7} 
+\index{ImageTexture@{ImageTexture}!findSCase2@{findSCase2}}
+\index{findSCase2@{findSCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{findSCase2()}{findSCase2()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ Image\+Texture\+::find\+SCase2 (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ae3a2d44a6cbe21931cfda8a486606e2b}\label{classImageTexture_ae3a2d44a6cbe21931cfda8a486606e2b} 
+\index{ImageTexture@{ImageTexture}!findSTInIntersectionCase1@{findSTInIntersectionCase1}}
+\index{findSTInIntersectionCase1@{findSTInIntersectionCase1}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{findSTInIntersectionCase1()}{findSTInIntersectionCase1()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$ $>$ Image\+Texture\+::find\+STIn\+Intersection\+Case1 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} \&}]{inter,  }\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_abe1ce2ecc5ef8a8beb4bab0e7ecead3f}\label{classImageTexture_abe1ce2ecc5ef8a8beb4bab0e7ecead3f} 
+\index{ImageTexture@{ImageTexture}!findSTPath@{findSTPath}}
+\index{findSTPath@{findSTPath}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{findSTPath()}{findSTPath()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ Image\+Texture\+::find\+STPath (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&}]{S,  }\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&}]{T }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_aa628663103eb39a8b573836e1bd81064}\label{classImageTexture_aa628663103eb39a8b573836e1bd81064} 
+\index{ImageTexture@{ImageTexture}!inImgBorder@{inImgBorder}}
+\index{inImgBorder@{inImgBorder}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{inImgBorder()}{inImgBorder()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::in\+Img\+Border (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{j,  }\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a4509e9ec35bb9695cfbca1254c596ff4}\label{classImageTexture_a4509e9ec35bb9695cfbca1254c596ff4} 
+\index{ImageTexture@{ImageTexture}!insideDual@{insideDual}}
+\index{insideDual@{insideDual}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{insideDual()}{insideDual()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::inside\+Dual (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{j }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a8c80eebcf700ade05cc61821de5aee50}\label{classImageTexture_a8c80eebcf700ade05cc61821de5aee50} 
+\index{ImageTexture@{ImageTexture}!insideImg@{insideImg}}
+\index{insideImg@{insideImg}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{insideImg()}{insideImg()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::inside\+Img (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{j,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a186a6fb3f8c88200f7475f75afe499ff}\label{classImageTexture_a186a6fb3f8c88200f7475f75afe499ff} 
+\index{ImageTexture@{ImageTexture}!insidePrimal@{insidePrimal}}
+\index{insidePrimal@{insidePrimal}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{insidePrimal()}{insidePrimal()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::inside\+Primal (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{j }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a010d3427b09b785012b6c442c4fb125d}\label{classImageTexture_a010d3427b09b785012b6c442c4fb125d} 
+\index{ImageTexture@{ImageTexture}!isFirstPatch@{isFirstPatch}}
+\index{isFirstPatch@{isFirstPatch}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{isFirstPatch()}{isFirstPatch()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::is\+First\+Patch (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+tests if the input image has any intersection with existing patches 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height\+Offset} & height position of the upper left corner of the input image on the output image \\
+\hline
+{\em width\+Offset} & width position of the upper left corner of the input image on the output image \\
+\hline
+{\em input\+Img} & png\+::image object from which the patch will be copied\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\Hypertarget{classImageTexture_a61468b4a7819036b21abba0961d91cb7}\label{classImageTexture_a61468b4a7819036b21abba0961d91cb7} 
+\index{ImageTexture@{ImageTexture}!markIntersectionCellsInDual@{markIntersectionCellsInDual}}
+\index{markIntersectionCellsInDual@{markIntersectionCellsInDual}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{markIntersectionCellsInDual()}{markIntersectionCellsInDual()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ Image\+Texture\+::mark\+Intersection\+Cells\+In\+Dual (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} \&}]{inter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ac99813db63a775e932032ba5d855a052}\label{classImageTexture_ac99813db63a775e932032ba5d855a052} 
+\index{ImageTexture@{ImageTexture}!markIntersectionEdgeCostsInDual@{markIntersectionEdgeCostsInDual}}
+\index{markIntersectionEdgeCostsInDual@{markIntersectionEdgeCostsInDual}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{markIntersectionEdgeCostsInDual()}{markIntersectionEdgeCostsInDual()}}
+{\footnotesize\ttfamily void Image\+Texture\+::mark\+Intersection\+Edge\+Costs\+In\+Dual (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img,  }\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&}]{in\+Dual }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ae5026158ecb1487b5bc6fb17ad621d0d}\label{classImageTexture_ae5026158ecb1487b5bc6fb17ad621d0d} 
+\index{ImageTexture@{ImageTexture}!markLeftOfMinCut@{markLeftOfMinCut}}
+\index{markLeftOfMinCut@{markLeftOfMinCut}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{markLeftOfMinCut()}{markLeftOfMinCut()}}
+{\footnotesize\ttfamily void Image\+Texture\+::mark\+Left\+Of\+Min\+Cut (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&}]{cut }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ae6f8bcbe4355d68f3d2a7b2ad7c562d5}\label{classImageTexture_ae6f8bcbe4355d68f3d2a7b2ad7c562d5} 
+\index{ImageTexture@{ImageTexture}!markMinABCut@{markMinABCut}}
+\index{markMinABCut@{markMinABCut}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{markMinABCut()}{markMinABCut()}}
+{\footnotesize\ttfamily void Image\+Texture\+::mark\+Min\+ABCut (\begin{DoxyParamCaption}\item[{std\+::pair$<$ int, int $>$}]{S,  }\item[{std\+::pair$<$ int, int $>$}]{T,  }\item[{const \mbox{\hyperlink{classImageTexture_1_1Intersection}{Image\+Texture\+::\+Intersection}} \&}]{inter,  }\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a}\label{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a} 
+\index{ImageTexture@{ImageTexture}!matching@{matching}}
+\index{matching@{matching}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{matching()}{matching()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ Image\+Texture\+::matching (\begin{DoxyParamCaption}\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+chooses matching position randomly 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+Img} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::pair$<$int, int$>$ 
+\end{DoxyReturn}
+\Hypertarget{classImageTexture_a941bed619845ae07dfa4cd5a9a3af9d7}\label{classImageTexture_a941bed619845ae07dfa4cd5a9a3af9d7} 
+\index{ImageTexture@{ImageTexture}!minCutCycle@{minCutCycle}}
+\index{minCutCycle@{minCutCycle}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{minCutCycle()}{minCutCycle()}}
+{\footnotesize\ttfamily std\+::pair$<$ long double, std\+::vector$<$ std\+::array$<$ int, 3 $>$ $>$ $>$ Image\+Texture\+::min\+Cut\+Cycle (\begin{DoxyParamCaption}\item[{int}]{left,  }\item[{int}]{right,  }\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \&}]{st\+Path,  }\item[{int \&}]{visited }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ade769e7e90cf1da43b71bce09184d4ea}\label{classImageTexture_ade769e7e90cf1da43b71bce09184d4ea} 
+\index{ImageTexture@{ImageTexture}!nextDir@{nextDir}}
+\index{nextDir@{nextDir}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{nextDir()}{nextDir()}}
+{\footnotesize\ttfamily int Image\+Texture\+::next\+Dir (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
 \Hypertarget{classImageTexture_a825bb0be4bafd0d11c35559785475217}\label{classImageTexture_a825bb0be4bafd0d11c35559785475217} 
 \index{ImageTexture@{ImageTexture}!patchFitting@{patchFitting}}
 \index{patchFitting@{patchFitting}!ImageTexture@{ImageTexture}}
@@ -177,6 +536,18 @@ Time Complexity\+: O(width {$\times$} height {$\times$} log\textsuperscript{2}(w
 {\em file\+\_\+name} & file name of the png image from which the patch will be copied \\
 \hline
 \end{DoxyParams}
+\Hypertarget{classImageTexture_a19e42424d98c9e6347c61b90016fe084}\label{classImageTexture_a19e42424d98c9e6347c61b90016fe084} 
+\index{ImageTexture@{ImageTexture}!pow2@{pow2}}
+\index{pow2@{pow2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{pow2()}{pow2()}}
+{\footnotesize\ttfamily long double Image\+Texture\+::pow2 (\begin{DoxyParamCaption}\item[{long double}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_afbf45ac431d4cf3f8ce49d74ec3873ab}\label{classImageTexture_afbf45ac431d4cf3f8ce49d74ec3873ab} 
+\index{ImageTexture@{ImageTexture}!prevDir@{prevDir}}
+\index{prevDir@{prevDir}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{prevDir()}{prevDir()}}
+{\footnotesize\ttfamily int Image\+Texture\+::prev\+Dir (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
 \Hypertarget{classImageTexture_a019036d96f5e6c6d7cd09f969fa70f35}\label{classImageTexture_a019036d96f5e6c6d7cd09f969fa70f35} 
 \index{ImageTexture@{ImageTexture}!render@{render}}
 \index{render@{render}!ImageTexture@{ImageTexture}}
@@ -194,6 +565,207 @@ Time Complexity\+: linear on the number of pixels of the output image
 {\em file\+\_\+name} & file name of the png image on which the texture will be rendered \\
 \hline
 \end{DoxyParams}
+\Hypertarget{classImageTexture_a74af23f961b1d9ecca7bb5a34036c5f2}\label{classImageTexture_a74af23f961b1d9ecca7bb5a34036c5f2} 
+\index{ImageTexture@{ImageTexture}!revDir@{revDir}}
+\index{revDir@{revDir}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{revDir()}{revDir()}}
+{\footnotesize\ttfamily int Image\+Texture\+::rev\+Dir (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6}\label{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6} 
+\index{ImageTexture@{ImageTexture}!stPlanarGraph@{stPlanarGraph}}
+\index{stPlanarGraph@{stPlanarGraph}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{stPlanarGraph()}{stPlanarGraph()}}
+{\footnotesize\ttfamily bool Image\+Texture\+::st\+Planar\+Graph (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classImageTexture_a45fdc478480d21c9951414765d02ea8e}\label{classImageTexture_a45fdc478480d21c9951414765d02ea8e} 
+\index{ImageTexture@{ImageTexture}!directions@{directions}}
+\index{directions@{directions}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{directions}{directions}}
+{\footnotesize\ttfamily constexpr std\+::array$<$std\+::pair$<$int, int$>$, 4$>$ Image\+Texture\+::directions\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{-\/1,\ 0\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,-\/1\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 1,\ 0\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,\ 1\}\ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \}\}}
+
+\end{DoxyCode}
+\Hypertarget{classImageTexture_a870beb1b271b75cebe9dd6757c8c838c}\label{classImageTexture_a870beb1b271b75cebe9dd6757c8c838c} 
+\index{ImageTexture@{ImageTexture}!dist@{dist}}
+\index{dist@{dist}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{dist}{dist}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$long double$>$ $>$ Image\+Texture\+::dist\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a6e07f012417a3336938729a58aa571cc}\label{classImageTexture_a6e07f012417a3336938729a58aa571cc} 
+\index{ImageTexture@{ImageTexture}!distCase2@{distCase2}}
+\index{distCase2@{distCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{distCase2}{distCase2}}
+{\footnotesize\ttfamily std\+::array$<$std\+::vector$<$std\+::vector$<$long double$>$ $>$, 2$>$ Image\+Texture\+::dist\+Case2\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a40bc98074e97c0b36dfe76b7fb618764}\label{classImageTexture_a40bc98074e97c0b36dfe76b7fb618764} 
+\index{ImageTexture@{ImageTexture}!dualToPrimal@{dualToPrimal}}
+\index{dualToPrimal@{dualToPrimal}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{dualToPrimal}{dualToPrimal}}
+{\footnotesize\ttfamily constexpr std\+::array$<$std\+::pair$<$int, int$>$, 4$>$ Image\+Texture\+::dual\+To\+Primal\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{-\/1,-\/1\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,-\/1\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,\ 0\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{-\/1,\ 0\}\ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \}\}}
+
+\end{DoxyCode}
+\Hypertarget{classImageTexture_aa27bfdd0c5639b675f32a0430629a6ad}\label{classImageTexture_aa27bfdd0c5639b675f32a0430629a6ad} 
+\index{ImageTexture@{ImageTexture}!edgesCosts@{edgesCosts}}
+\index{edgesCosts@{edgesCosts}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{edgesCosts}{edgesCosts}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$std\+::array$<$long double, 4$>$ $>$ $>$ Image\+Texture\+::edges\+Costs\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_acd306c99d66f429b765334b5e57d00b3}\label{classImageTexture_acd306c99d66f429b765334b5e57d00b3} 
+\index{ImageTexture@{ImageTexture}!edgesToOriginalGraph@{edgesToOriginalGraph}}
+\index{edgesToOriginalGraph@{edgesToOriginalGraph}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{edgesToOriginalGraph}{edgesToOriginalGraph}}
+{\footnotesize\ttfamily constexpr std\+::array$<$int, 4$>$ Image\+Texture\+::edges\+To\+Original\+Graph = \{\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}},\mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923aadc98872bda2f933a014b99a92d541a8a}{edge\+Type\+::original\+Graph}}\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a709deedad25b76f1d30f181ecfd67420}\label{classImageTexture_a709deedad25b76f1d30f181ecfd67420} 
+\index{ImageTexture@{ImageTexture}!edgeTo@{edgeTo}}
+\index{edgeTo@{edgeTo}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{edgeTo}{edgeTo}}
+{\footnotesize\ttfamily std\+::array$<$std\+::vector$<$std\+::vector$<$std\+::array$<$int, 4$>$ $>$ $>$,2$>$ Image\+Texture\+::edge\+To\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a38179afbf4440ad6fb880e856be8204c}\label{classImageTexture_a38179afbf4440ad6fb880e856be8204c} 
+\index{ImageTexture@{ImageTexture}!imgHeight@{imgHeight}}
+\index{imgHeight@{imgHeight}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{imgHeight}{imgHeight}}
+{\footnotesize\ttfamily const int Image\+Texture\+::img\+Height\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a9dafef836db47169a19c2cb250fcdc4d}\label{classImageTexture_a9dafef836db47169a19c2cb250fcdc4d} 
+\index{ImageTexture@{ImageTexture}!imgWidth@{imgWidth}}
+\index{imgWidth@{imgWidth}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{imgWidth}{imgWidth}}
+{\footnotesize\ttfamily const int Image\+Texture\+::img\+Width\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a100747a1207ee26cc20f2811ffabf59f}\label{classImageTexture_a100747a1207ee26cc20f2811ffabf59f} 
+\index{ImageTexture@{ImageTexture}!inftyCost@{inftyCost}}
+\index{inftyCost@{inftyCost}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{inftyCost}{inftyCost}}
+{\footnotesize\ttfamily constexpr long double Image\+Texture\+::infty\+Cost = 10000000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a1b2ec959da198b32ac035398ce07f5e6}\label{classImageTexture_a1b2ec959da198b32ac035398ce07f5e6} 
+\index{ImageTexture@{ImageTexture}!inS@{inS}}
+\index{inS@{inS}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{inS}{inS}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Image\+Texture\+::inS\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a8cdbc685a164864e6e623a7ea723136b}\label{classImageTexture_a8cdbc685a164864e6e623a7ea723136b} 
+\index{ImageTexture@{ImageTexture}!inStPath@{inStPath}}
+\index{inStPath@{inStPath}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{inStPath}{inStPath}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ Image\+Texture\+::in\+St\+Path\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a52c5945a2e69b862edc7b881c9bf0689}\label{classImageTexture_a52c5945a2e69b862edc7b881c9bf0689} 
+\index{ImageTexture@{ImageTexture}!inSubgraph@{inSubgraph}}
+\index{inSubgraph@{inSubgraph}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{inSubgraph}{inSubgraph}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Image\+Texture\+::in\+Subgraph\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a79f3fbf5e3bf4e2742539eaa5f41b592}\label{classImageTexture_a79f3fbf5e3bf4e2742539eaa5f41b592} 
+\index{ImageTexture@{ImageTexture}!isS@{isS}}
+\index{isS@{isS}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{isS}{isS}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Image\+Texture\+::isS\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a9f20cb208bc0cc8dded0c905f66125f7}\label{classImageTexture_a9f20cb208bc0cc8dded0c905f66125f7} 
+\index{ImageTexture@{ImageTexture}!isT@{isT}}
+\index{isT@{isT}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{isT}{isT}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Image\+Texture\+::isT\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a17868825a58005d8667793362a235d9a}\label{classImageTexture_a17868825a58005d8667793362a235d9a} 
+\index{ImageTexture@{ImageTexture}!outputImg@{outputImg}}
+\index{outputImg@{outputImg}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{outputImg}{outputImg}}
+{\footnotesize\ttfamily png\+::image$<$png\+::rgb\+\_\+pixel$>$ Image\+Texture\+::output\+Img\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_aac60f0bc5b650580d12d4e94d902e4ed}\label{classImageTexture_aac60f0bc5b650580d12d4e94d902e4ed} 
+\index{ImageTexture@{ImageTexture}!parent@{parent}}
+\index{parent@{parent}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ Image\+Texture\+::parent\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a66643636d7bd4d9102067789bbed234b}\label{classImageTexture_a66643636d7bd4d9102067789bbed234b} 
+\index{ImageTexture@{ImageTexture}!parentCase2@{parentCase2}}
+\index{parentCase2@{parentCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{parentCase2}{parentCase2}}
+{\footnotesize\ttfamily std\+::array$<$std\+::vector$<$std\+::vector$<$int$>$ $>$, 2$>$ Image\+Texture\+::parent\+Case2\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_aa0c4332dc760aab71d8fdb4201f8fb51}\label{classImageTexture_aa0c4332dc760aab71d8fdb4201f8fb51} 
+\index{ImageTexture@{ImageTexture}!pixelColorStatus@{pixelColorStatus}}
+\index{pixelColorStatus@{pixelColorStatus}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{pixelColorStatus}{pixelColorStatus}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classImageTexture_a6baa39a71179dd0211a23c308d450188}{Pixel\+Status\+Enum}}$>$ $>$ Image\+Texture\+::pixel\+Color\+Status\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a108241ccd5910577ea4cc81165a85b0f}\label{classImageTexture_a108241ccd5910577ea4cc81165a85b0f} 
+\index{ImageTexture@{ImageTexture}!primalToDual@{primalToDual}}
+\index{primalToDual@{primalToDual}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{primalToDual}{primalToDual}}
+{\footnotesize\ttfamily constexpr std\+::array$<$std\+::pair$<$int, int$>$, 4$>$ Image\+Texture\+::primal\+To\+Dual\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,\ 0\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 1,\ 0\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 1,\ 1\},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ 0,\ 1\}\ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \}\}}
+
+\end{DoxyCode}
+\Hypertarget{classImageTexture_a553cbec46cb60c98ff0ea4865ef48153}\label{classImageTexture_a553cbec46cb60c98ff0ea4865ef48153} 
+\index{ImageTexture@{ImageTexture}!rng@{rng}}
+\index{rng@{rng}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{rng}{rng}}
+{\footnotesize\ttfamily std\+::mt19937\+\_\+64 Image\+Texture\+::rng\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_aa8b7b039e3c5beb5017f9e890db518f1}\label{classImageTexture_aa8b7b039e3c5beb5017f9e890db518f1} 
+\index{ImageTexture@{ImageTexture}!rngSeed@{rngSeed}}
+\index{rngSeed@{rngSeed}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{rngSeed}{rngSeed}}
+{\footnotesize\ttfamily const uint64\+\_\+t Image\+Texture\+::rng\+Seed\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_abfc4c3fa3d28dd7164d7aff2728c4d09}\label{classImageTexture_abfc4c3fa3d28dd7164d7aff2728c4d09} 
+\index{ImageTexture@{ImageTexture}!seenCase2@{seenCase2}}
+\index{seenCase2@{seenCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{seenCase2}{seenCase2}}
+{\footnotesize\ttfamily std\+::array$<$std\+::vector$<$std\+::vector$<$int$>$ $>$, 2$>$ Image\+Texture\+::seen\+Case2\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ada7fc9ed92c5127ba5fb3ea5cf3c12ea}\label{classImageTexture_ada7fc9ed92c5127ba5fb3ea5cf3c12ea} 
+\index{ImageTexture@{ImageTexture}!validEdge@{validEdge}}
+\index{validEdge@{validEdge}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{validEdge}{validEdge}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$std\+::array$<$bool, 4$>$ $>$ $>$ Image\+Texture\+::valid\+Edge\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_a03f2b76f73ccc5a8789da32d2a38be32}\label{classImageTexture_a03f2b76f73ccc5a8789da32d2a38be32} 
+\index{ImageTexture@{ImageTexture}!vis@{vis}}
+\index{vis@{vis}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{vis}{vis}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Image\+Texture\+::vis\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classImageTexture_ae93cc229b922c8e446636a02f3647015}\label{classImageTexture_ae93cc229b922c8e446636a02f3647015} 
+\index{ImageTexture@{ImageTexture}!visCase2@{visCase2}}
+\index{visCase2@{visCase2}!ImageTexture@{ImageTexture}}
+\doxysubsubsection{\texorpdfstring{visCase2}{visCase2}}
+{\footnotesize\ttfamily std\+::array$<$std\+::vector$<$std\+::vector$<$int$>$ $>$, 2$>$ Image\+Texture\+::vis\+Case2\hspace{0.3cm}{\ttfamily [private]}}
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
