@@ -50,7 +50,7 @@ enum \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923a}{edge\
 std\+::pair$<$ int, int $>$ \mbox{\hyperlink{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a}{matching}} (const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
 \begin{DoxyCompactList}\small\item\em chooses matching position randomly \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classImageTexture_a010d3427b09b785012b6c442c4fb125d}{is\+First\+Patch}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
-\begin{DoxyCompactList}\small\item\em tests if the input image has any intersection with existing patches \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em tests if the input image has any intersection with existing patches (org) \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6}{st\+Planar\+Graph}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
 \item 
 void \mbox{\hyperlink{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a}{blending\+Case1}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
@@ -396,7 +396,9 @@ long double Image\+Texture\+::calc\+Cost (\begin{DoxyParamCaption}\item[{const P
 
 
 
-tests if the input image has any intersection with existing patches 
+tests if the input image has any intersection with existing patches (org) 
+
+tests if the input image has any intersection with existing patches (visual)
 
 
 \begin{DoxyParams}{Parameters}
