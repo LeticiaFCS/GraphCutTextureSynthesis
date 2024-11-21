@@ -179,15 +179,16 @@ std::pair<int, int> ImageTexture::matching(const png::image<png::rgb_pixel> &inp
 }
 
 /**
- * @brief tests if the input image has any intersection with existing patches (visual)
+ * @brief tests if the input image has any intersection with existing patches
  * 
  * @param heightOffset height position of the upper left corner of the input image on the output image
  * @param widthOffset width position of the upper left corner of the input image on the output image
  * @param inputImg png::image object from which the patch will be copied 
  * 
+ * Time complexity: linear on the number of pixels of the input image
+ * 
  * @return bool
  */
-
 bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
@@ -199,6 +200,17 @@ bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::im
         }
     return true;    
 }
+/**
+ * @brief copies the full input image on the output image in this position
+ * 
+ * @param heightOffset height position of the upper left corner of the input image on the output image
+ * @param widthOffset width position of the upper left corner of the input image on the output image
+ * @param inputImg png::image object that will be copied
+ *  
+ * Time complexity: linear on the number of pixels of the input image
+ * 
+ * @return void
+ */
 void ImageTexture::copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     ////std::cout<<"Copy First Patch"<<std::endl;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
