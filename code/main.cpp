@@ -8,13 +8,13 @@ int main(int argc, char *argv[]){
     // "../input/areia_da_praia.png" as the input image
     for(int i = 0; i < 500; i++){
         if(i % 4 == 0){
-            texture.patchFittingIteration("../input/cafezinho_grande.png");
+            texture.patchFittingIteration("../input_images/cafezinho_grande.png");
         } else if(i % 4 == 1){
-            texture.patchFittingIteration("../input/cafezinho_grande90.png");
+            texture.patchFittingIteration("../input_images/cafezinho_grande90.png");
         } else if(i % 4 == 2){
-            texture.patchFittingIteration("../input/cafezinho_grande180.png");
+            texture.patchFittingIteration("../input_images/cafezinho_grande180.png");
         } else if(i % 4 == 3){
-            texture.patchFittingIteration("../input/cafezinho_grande270.png");
+            texture.patchFittingIteration("../input_images/cafezinho_grande270.png");
         } 
     }
 
