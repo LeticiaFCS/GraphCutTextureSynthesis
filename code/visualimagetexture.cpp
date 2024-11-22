@@ -221,6 +221,17 @@ void ImageTexture::copyFirstPatch(int heightOffset, int widthOffset, const png::
         }  
     copyPixelsNewColor(heightOffset, widthOffset, inputImg);
 }
+/**
+ * @brief tests if the 
+ * 
+ * @param heightOffset height position of the upper left corner of the input image on the output image
+ * @param widthOffset width position of the upper left corner of the input image on the output image
+ * @param inputImg png::image object that will be copied
+ *  
+ * Time complexity: linear on the number of pixels of the input image
+ * 
+ * @return void
+ */
 bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     {//upper edge
         int upperEdgeHeight = std::max(0, heightOffset);
