@@ -242,7 +242,7 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
         }
     }
     return false;
-}
+} 
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
     ////std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
