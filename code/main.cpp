@@ -2,20 +2,15 @@
 
 int main(int argc, char *argv[]){
     // creates the image texture with dimensions 500x500
-    ImageTexture texture(600, 600);
+    ImageTexture texture(640, 427);
 
     // runs 500 iterations of the patch fitting using
     // "../input/areia_da_praia.png" as the input image
-    for(int i = 0; i < 500; i++){
-        if(i % 4 == 0){
-            texture.patchFittingIteration("../input_images/cafezinho_grande.png");
-        } else if(i % 4 == 1){
-            texture.patchFittingIteration("../input_images/cafezinho_grande90.png");
-        } else if(i % 4 == 2){
-            texture.patchFittingIteration("../input_images/cafezinho_grande180.png");
-        } else if(i % 4 == 3){
-            texture.patchFittingIteration("../input_images/cafezinho_grande270.png");
-        } 
+    for(int i = 0; i < 300; i++){
+        if(i%2 == 0)
+            texture.patchFittingIteration("../input_images/jeans_input0.png");
+        else
+            texture.patchFittingIteration("../input_images/jeans_input1.png");
     }
 
     // renders the texture to the file "../output_images/output.png"

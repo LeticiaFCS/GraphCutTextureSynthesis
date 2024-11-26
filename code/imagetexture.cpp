@@ -21,7 +21,7 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
     outputImg(_img), 
     imgWidth(_img.get_width()),
     imgHeight(_img.get_height()),
-    pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)),
+    pixelColorStatus(_img.get_height(), std::vector<PixelStatusEnum>(_img.get_width(), PixelStatusEnum::notcolored)),
     inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
     dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
@@ -60,7 +60,7 @@ ImageTexture::ImageTexture(int width, int height)
     outputImg(width, height), 
     imgWidth(width),
     imgHeight(height), 
-    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)),
+    pixelColorStatus(height, std::vector<PixelStatusEnum>(width, PixelStatusEnum::notcolored)),
     inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
     dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
@@ -109,7 +109,6 @@ void ImageTexture::patchFitting(const std::string &file_name, int CntIterations)
 }
 void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &inputImg){
     const auto [heightOffset, widthOffset] = matching(inputImg);
-    std::cout<<heightOffset<<" "<<widthOffset<<"\n";
     if(isFirstPatch(heightOffset, widthOffset, inputImg)){
         copyFirstPatch(heightOffset, widthOffset, inputImg);
     }else
@@ -142,7 +141,7 @@ void ImageTexture::blending(int heightOffset, int widthOffset, const std::string
     } catch(...){
         return;
     }
-    blending(heightOffset, widthOffset, file_name);
+    blending(heightOffset, widthOffset, input_file);
 }
 
 /*
@@ -197,7 +196,6 @@ bool ImageTexture::isFirstPatch(int heightOffset, int widthOffset, const png::im
  * @return void
  */
 void ImageTexture::copyFirstPatch(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    ////std::cout<<"Copy First Patch"<<std::endl;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -215,7 +213,6 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[upperEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        ////std::cout<<"upper edge is covered "<<upperEdgeHeight<<std::endl;
     }
     {//left edge
         int leftEdgeWidth = std::max(0, widthOffset);
@@ -225,7 +222,6 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[i + heightOffset][leftEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        ////std::cout<<"left edge is covered "<<leftEdgeWidth<<std::endl;
     }
     {//lower edge
         int lowerEdgeHeight = std::min<int>(heightOffset + inputImg.get_height() - 1 , this->imgHeight - 1);
@@ -235,7 +231,6 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[lowerEdgeHeight][j + widthOffset] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        ////std::cout<<"lower edge is covered "<<lowerEdgeHeight<<std::endl;
     }
     {//right edge
         int rightEdgeWidth = std::min<int>(widthOffset + inputImg.get_width() - 1, this->imgWidth - 1);
@@ -245,12 +240,10 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
             if(this->pixelColorStatus[i + heightOffset][rightEdgeWidth] == this->PixelStatusEnum::notcolored)
                 return true;
         }
-        ////std::cout<<"right edge is covered "<<rightEdgeWidth<<std::endl;
     }
     return false;
 }
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    //std::cout<<"Case 1"<<std::endl;
     std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
     ////std::cout<<"numer of intersections "<<intersections.size()<<std::endl;
     for(auto &inter : intersections){

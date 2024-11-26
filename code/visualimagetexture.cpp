@@ -21,7 +21,7 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
     outputImg(_img), 
     imgWidth(_img.get_width()),
     imgHeight(_img.get_height()),
-    pixelColorStatus(_img.get_width(), std::vector<PixelStatusEnum>(_img.get_height(), PixelStatusEnum::notcolored)),
+    pixelColorStatus(_img.get_height(), std::vector<PixelStatusEnum>(_img.get_width(), PixelStatusEnum::notcolored)),
     inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
     dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
@@ -69,7 +69,7 @@ ImageTexture::ImageTexture(int width, int height)
     outputImg(width, height), 
     imgWidth(width),
     imgHeight(height), 
-    pixelColorStatus(width, std::vector<PixelStatusEnum>(height, PixelStatusEnum::notcolored)),
+    pixelColorStatus(height, std::vector<PixelStatusEnum>(width, PixelStatusEnum::notcolored)),
     inSubgraph(imgHeight + 1, std::vector<bool>(imgWidth + 1)),
     edgesCosts(imgHeight + 1, std::vector<std::array<long double, 4>>(imgWidth + 1)),    
     dist(imgHeight + 1, std::vector<long double>(imgWidth + 1)),
@@ -119,7 +119,7 @@ void ImageTexture::patchFitting(const std::string &file_name, int CntIterations)
 }
 void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &inputImg){
     const auto [heightOffset, widthOffset] = matching(inputImg);
-    //std::cout<<heightOffset<<" "<<widthOffset<<"\n";
+    std::cout<<"Matching "<<heightOffset<<" "<<widthOffset<<"\n";
     if(isFirstPatch(heightOffset, widthOffset, inputImg)){
         //std::cerr<<"First patch"<<std::endl;
         copyFirstPatch(heightOffset, widthOffset, inputImg);
@@ -157,7 +157,7 @@ void ImageTexture::blending(int heightOffset, int widthOffset, const std::string
         //std::cout<<"Invalid name for input file"<<std::endl;
         return;
     }
-    blending(heightOffset, widthOffset, file_name);
+    blending(heightOffset, widthOffset, input_file);
 }
 
 /*
@@ -661,8 +661,8 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             }
         }
     //std::cout<<"NEW COLOR "<<cnt<<std::endl;
-    //render("../output/output.png"); //debug descomentar!!!
-    //usleep(800000);
+    render("../output_images/output.png"); //debug descomentar!!!
+    usleep(800000);
     
     int countNewPixels = 0;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
@@ -675,6 +675,8 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 countNewPixels++;
             }
         }
+    render("../output_images/output.png"); //debug descomentar!!!
+    usleep(800000);
     //std::cout<<countNewPixels<<" new pixels "<<std::endl;
     //std::cerr<<countNewPixels<<" new pixels "<<std::endl;
 }
