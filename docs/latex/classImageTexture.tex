@@ -50,15 +50,15 @@ enum \mbox{\hyperlink{classImageTexture_a45e33657083d691e2ea022b32f10923a}{edge\
 std\+::pair$<$ int, int $>$ \mbox{\hyperlink{classImageTexture_a8dbcb4bef8041132e4a6a9c8169f2e4a}{matching}} (const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
 \begin{DoxyCompactList}\small\item\em chooses matching position randomly \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classImageTexture_a010d3427b09b785012b6c442c4fb125d}{is\+First\+Patch}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
-\begin{DoxyCompactList}\small\item\em tests if the input image has any intersection with existing patches (org) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em tests if the input image has any intersection with existing patches \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classImageTexture_aea4d4843bd70efffedd8d19e2063f7a6}{st\+Planar\+Graph}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
-\item 
+\begin{DoxyCompactList}\small\item\em tests if the \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classImageTexture_af07a431bd6ab81cdba45ab32ba82f03a}{blending\+Case1}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
 \item 
 void \mbox{\hyperlink{classImageTexture_a907394ffa0169b6d08eb23d7a82ecdca}{blending\+Case2}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
 \item 
 void \mbox{\hyperlink{classImageTexture_a8878c56adea95f10b5e80ada2186d23c}{copy\+First\+Patch}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
-\item 
+\begin{DoxyCompactList}\small\item\em copies the full input image on the output image in this position \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classImageTexture_a7c217e29124976de33f0a7a54be001ff}{copy\+Pixels\+New\+Color}} (int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img, bool case2=false)
 \item 
 bool \mbox{\hyperlink{classImageTexture_aa628663103eb39a8b573836e1bd81064}{in\+Img\+Border}} (int i, int j, int height\+Offset, int width\+Offset, const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&input\+Img)
@@ -322,6 +322,24 @@ long double Image\+Texture\+::calc\+Cost (\begin{DoxyParamCaption}\item[{const P
 \doxysubsubsection{\texorpdfstring{copyFirstPatch()}{copyFirstPatch()}}
 {\footnotesize\ttfamily void Image\+Texture\+::copy\+First\+Patch (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+copies the full input image on the output image in this position 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height\+Offset} & height position of the upper left corner of the input image on the output image \\
+\hline
+{\em width\+Offset} & width position of the upper left corner of the input image on the output image \\
+\hline
+{\em input\+Img} & png\+::image object that will be copied\\
+\hline
+\end{DoxyParams}
+Time complexity\+: linear on the number of pixels of the input image
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \Hypertarget{classImageTexture_a7c217e29124976de33f0a7a54be001ff}\label{classImageTexture_a7c217e29124976de33f0a7a54be001ff} 
 \index{ImageTexture@{ImageTexture}!copyPixelsNewColor@{copyPixelsNewColor}}
 \index{copyPixelsNewColor@{copyPixelsNewColor}!ImageTexture@{ImageTexture}}
@@ -396,9 +414,7 @@ long double Image\+Texture\+::calc\+Cost (\begin{DoxyParamCaption}\item[{const P
 
 
 
-tests if the input image has any intersection with existing patches (org) 
-
-tests if the input image has any intersection with existing patches (visual)
+tests if the input image has any intersection with existing patches 
 
 
 \begin{DoxyParams}{Parameters}
@@ -409,6 +425,8 @@ tests if the input image has any intersection with existing patches (visual)
 {\em input\+Img} & png\+::image object from which the patch will be copied\\
 \hline
 \end{DoxyParams}
+Time complexity\+: linear on the number of pixels of the input image
+
 \begin{DoxyReturn}{Returns}
 bool 
 \end{DoxyReturn}
@@ -579,6 +597,24 @@ Time Complexity\+: linear on the number of pixels of the output image
 \doxysubsubsection{\texorpdfstring{stPlanarGraph()}{stPlanarGraph()}}
 {\footnotesize\ttfamily bool Image\+Texture\+::st\+Planar\+Graph (\begin{DoxyParamCaption}\item[{int}]{height\+Offset,  }\item[{int}]{width\+Offset,  }\item[{const png\+::image$<$ png\+::rgb\+\_\+pixel $>$ \&}]{input\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+tests if the 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height\+Offset} & height position of the upper left corner of the input image on the output image \\
+\hline
+{\em width\+Offset} & width position of the upper left corner of the input image on the output image \\
+\hline
+{\em input\+Img} & png\+::image object that will be copied\\
+\hline
+\end{DoxyParams}
+Time complexity\+: linear on the number of pixels of the input image
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 
 
 \doxysubsection{Member Data Documentation}

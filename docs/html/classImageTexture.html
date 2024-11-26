@@ -141,15 +141,17 @@ Private Member Functions</h2></td></tr>
 <tr class="memdesc:a8dbcb4bef8041132e4a6a9c8169f2e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">chooses matching position randomly  <br /></td></tr>
 <tr class="separator:a8dbcb4bef8041132e4a6a9c8169f2e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a010d3427b09b785012b6c442c4fb125d" id="r_a010d3427b09b785012b6c442c4fb125d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a010d3427b09b785012b6c442c4fb125d">isFirstPatch</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
-<tr class="memdesc:a010d3427b09b785012b6c442c4fb125d"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if the input image has any intersection with existing patches (org)  <br /></td></tr>
+<tr class="memdesc:a010d3427b09b785012b6c442c4fb125d"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if the input image has any intersection with existing patches  <br /></td></tr>
 <tr class="separator:a010d3427b09b785012b6c442c4fb125d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea4d4843bd70efffedd8d19e2063f7a6" id="r_aea4d4843bd70efffedd8d19e2063f7a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#aea4d4843bd70efffedd8d19e2063f7a6">stPlanarGraph</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="memdesc:aea4d4843bd70efffedd8d19e2063f7a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if the  <br /></td></tr>
 <tr class="separator:aea4d4843bd70efffedd8d19e2063f7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af07a431bd6ab81cdba45ab32ba82f03a" id="r_af07a431bd6ab81cdba45ab32ba82f03a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#af07a431bd6ab81cdba45ab32ba82f03a">blendingCase1</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
 <tr class="separator:af07a431bd6ab81cdba45ab32ba82f03a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a907394ffa0169b6d08eb23d7a82ecdca" id="r_a907394ffa0169b6d08eb23d7a82ecdca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a907394ffa0169b6d08eb23d7a82ecdca">blendingCase2</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
 <tr class="separator:a907394ffa0169b6d08eb23d7a82ecdca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8878c56adea95f10b5e80ada2186d23c" id="r_a8878c56adea95f10b5e80ada2186d23c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a8878c56adea95f10b5e80ada2186d23c">copyFirstPatch</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg)</td></tr>
+<tr class="memdesc:a8878c56adea95f10b5e80ada2186d23c"><td class="mdescLeft">&#160;</td><td class="mdescRight">copies the full input image on the output image in this position  <br /></td></tr>
 <tr class="separator:a8878c56adea95f10b5e80ada2186d23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c217e29124976de33f0a7a54be001ff" id="r_a7c217e29124976de33f0a7a54be001ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classImageTexture.html#a7c217e29124976de33f0a7a54be001ff">copyPixelsNewColor</a> (int heightOffset, int widthOffset, const png::image&lt; png::rgb_pixel &gt; &amp;inputImg, bool case2=false)</td></tr>
 <tr class="separator:a7c217e29124976de33f0a7a54be001ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -647,6 +649,18 @@ template&lt;typename Pixel &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>copies the full input image on the output image in this position </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">heightOffset</td><td>height position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">widthOffset</td><td>width position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">inputImg</td><td>png::image object that will be copied</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Time complexity: linear on the number of pixels of the input image</p>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -1152,8 +1166,7 @@ template&lt;typename Pixel &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>tests if the input image has any intersection with existing patches (org) </p>
-<p>tests if the input image has any intersection with existing patches (visual)</p>
+<p>tests if the input image has any intersection with existing patches </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">heightOffset</td><td>height position of the upper left corner of the input image on the output image </td></tr>
@@ -1162,6 +1175,7 @@ template&lt;typename Pixel &gt; </div>
   </table>
   </dd>
 </dl>
+<p>Time complexity: linear on the number of pixels of the input image</p>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
 </div>
@@ -1709,6 +1723,18 @@ template&lt;typename Pixel &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>tests if the </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">heightOffset</td><td>height position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">widthOffset</td><td>width position of the upper left corner of the input image on the output image </td></tr>
+    <tr><td class="paramname">inputImg</td><td>png::image object that will be copied</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Time complexity: linear on the number of pixels of the input image</p>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>

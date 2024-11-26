@@ -1,0 +1,19 @@
+\doxysection{/home/leticiafcs/tcc/\+Graph\+Cut\+Texture\+Synthesis/code/copa.cpp File Reference}
+\hypertarget{copa_8cpp}{}\label{copa_8cpp}\index{/home/leticiafcs/tcc/GraphCutTextureSynthesis/code/copa.cpp@{/home/leticiafcs/tcc/GraphCutTextureSynthesis/code/copa.cpp}}
+{\ttfamily \#include "{}imagetexture.\+hpp"{}}\newline
+Include dependency graph for copa.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{copa_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{copa_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{copa_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{copa.cpp@{copa.cpp}!main@{main}}
+\index{main@{main}!copa.cpp@{copa.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
