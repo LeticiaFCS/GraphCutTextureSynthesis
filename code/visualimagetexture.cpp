@@ -257,6 +257,17 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
     }
     return false;
 }
+/**
+ * @brief finds the cut in the case 1
+ * 
+ * @param heightOffset height position of the upper left corner of the input image on the output image
+ * @param widthOffset width position of the upper left corner of the input image on the output image
+ * @param inputImg png::image object from which the patch will be copied 
+ * 
+ * Time complexity: O(p log p), p is the number of pixels on the intersection
+ * 
+ * @return bool
+ */
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
     for(auto &inter : intersections){
