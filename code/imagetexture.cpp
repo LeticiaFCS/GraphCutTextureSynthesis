@@ -10,6 +10,7 @@
  */
 
 #include "imagetexture.hpp"
+#define M_ASSERT(msg, expr) assert(( (void)(msg), (expr) ))
 
 /*
 Constructors
@@ -125,8 +126,8 @@ void ImageTexture::patchFittingIteration(const std::string &file_name){
     patchFittingIteration(input_file);
 }
 void ImageTexture::blending(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
-    assert(("the new rectangle can't be all outside the output image",-(int) inputImg.get_height() + 1 <= heightOffset && heightOffset <= imgHeight-1));
-    assert(("the new rectangle can't be all outside the output image",-(int) inputImg.get_width() + 1 <= widthOffset && widthOffset <= imgWidth-1));
+    M_ASSERT("the new rectangle can't be all outside the output image",-(int) inputImg.get_height() + 1 <= heightOffset && heightOffset <= imgHeight-1);
+    M_ASSERT("the new rectangle can't be all outside the output image",-(int) inputImg.get_width() + 1 <= widthOffset && widthOffset <= imgWidth-1);
     if(this->stPlanarGraph(heightOffset, widthOffset, inputImg)){
         this->blendingCase1(heightOffset, widthOffset, inputImg);
     }
@@ -256,14 +257,14 @@ void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::i
             for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
                 if(a < 0 || b < 0)
                     continue;
-                assert(("All pixels should be colored", pixelColorStatus[a][b] == PixelStatusEnum::colored));
+                M_ASSERT("All pixels should be colored", pixelColorStatus[a][b] == PixelStatusEnum::colored);
             }
     }
 }
 void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     /*find intersection*/
     auto intersections = findIntersections(heightOffset, widthOffset, inputImg);
-    assert(intersections.size() == 1);
+    M_ASSERT("", intersections.size() == 1);
     Intersection inter = intersections[0];
     
     /*mark cells in dual of intersection and mark edges costs*/
@@ -286,7 +287,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     // exit by right - original graph
     // enter by left - copy graph
     /*mark ST Path*/{
-        assert(("tsPath lenght should be at least 2", int(tsPath.size()) >= 2));
+        M_ASSERT("tsPath lenght should be at least 2", int(tsPath.size()) >= 2);
         for(auto [x, y] : S)
             inS[x][y] = true;
         for(int i = 0; i < (int) tsPath.size(); i++){
@@ -575,9 +576,9 @@ std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInInter
         }
     }
     
-    assert(("findSTInIntersectionCase1 should always find S", (S) != (std::pair<int, int>{-1,-1})));
-    assert(("findSTInIntersectionCase1 should always find T", (T) != (std::pair<int, int>{-1,-1})));
-    assert(("findSTInIntersectionCase1 should find different S and T", (S) != (T)));
+    M_ASSERT("findSTInIntersectionCase1 should always find S", (S) != (std::pair<int, int>{-1,-1}));
+    M_ASSERT("findSTInIntersectionCase1 should always find T", (T) != (std::pair<int, int>{-1,-1}));
+    M_ASSERT("findSTInIntersectionCase1 should find different S and T", (S) != (T));
     return {S, T};
 }
 std::vector<ImageTexture::Intersection> ImageTexture::findIntersections(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
@@ -620,7 +621,7 @@ void ImageTexture::markMinABCut(std::pair<int, int> S, std::pair<int, int> T, co
     auto tsPath = findSTPath({S}, {T});
     
     /*mark edges on the path*/
-    assert(("T should always be visited, intersection is connected", (vis[T.first][T.second])));
+    M_ASSERT("T should always be visited, intersection is connected", (vis[T.first][T.second]));
     
     /*mark ST path*/{
         int lastD = -1;
@@ -701,12 +702,12 @@ void ImageTexture::markIntersectionEdgeCostsInDual(int heightOffset, int widthOf
 std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::pair<int,int>> &S, const std::vector<std::pair<int,int>> &T){
     for(auto [h, w] : T){
         isT[h][w] = true;
-        assert(("T should be in subgraph", inSubgraph[h][w]));
+        M_ASSERT("T should be in subgraph", inSubgraph[h][w]);
     }
     using qtype = std::tuple<long double, int, int>;
     std::priority_queue<qtype, std::vector<qtype>, std::greater<qtype>> Q;
     for(auto [h, w] : S){
-        assert(("S should be in subgraph", inSubgraph[h][w]));
+        M_ASSERT("S should be in subgraph", inSubgraph[h][w]);
         isS[h][w] = true;
         parent[h][w] = -2;
         dist[h][w] = 0;
@@ -755,7 +756,7 @@ std::vector<std::pair<int,int>> ImageTexture::findSTPath(const std::vector<std::
                 break;
         }
     }
-    assert(("path is empty!", !path.empty()));
+    M_ASSERT("path is empty!", !path.empty());
     int curI, curJ;
     std::tie(curI, curJ) = path[0];
     while(parent[curI][curJ] != -2){
@@ -991,14 +992,14 @@ std::pair<long double, std::vector<std::array<int,3>>> ImageTexture::findMinFCyc
             }
         }
     }
-    assert(("path is empty!", !path.empty()));
+    M_ASSERT("path is empty!", !path.empty());
     
     int curG = T[0], curI, curJ;
     std::tie(curG, curI, curJ) = std::tuple_cat(path[0]);
     while(parentCase2[curG][curI][curJ] != -2){
         int d = parentCase2[curG][curI][curJ]/10;
         curG = parentCase2[curG][curI][curJ]%10;
-        assert(("direction must be valid!", 0 <= d && d < int(directions.size())));
+        M_ASSERT("direction must be valid!", 0 <= d && d < int(directions.size()));
         std::tie(curI, curJ) = std::make_tuple(curI + directions[d].first, curJ + directions[d].second);
         path.push_back({curG, curI, curJ});
     }
