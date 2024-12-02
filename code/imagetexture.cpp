@@ -520,7 +520,6 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             }
         }
     
-    int countNewPixels = 0;
     for(int i = 0, a = i + heightOffset; i < (int) inputImg.get_height() && a < this->imgHeight; i++, a++)
         for(int j = 0, b = j + widthOffset; j < (int) inputImg.get_width() && b < this->imgWidth; j++, b++){
             if(a < 0 || b < 0)
@@ -528,7 +527,6 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
             if(pixelColorStatus[a][b] == PixelStatusEnum::newcolor){
                 outputImg[a][b] = inputImg[i][j];
                 pixelColorStatus[a][b] = PixelStatusEnum::colored;
-                countNewPixels++;
             }
         }
 }
