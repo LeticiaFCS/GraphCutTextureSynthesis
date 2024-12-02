@@ -1,6 +1,6 @@
 #include "imagetexture.hpp"
 
-int main(int argc, char *argv[]){
+int main(){
     // creates the image texture with dimensions 500x500
     ImageTexture texture(640, 427);
 

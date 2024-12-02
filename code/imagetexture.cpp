@@ -247,7 +247,7 @@ bool ImageTexture::stPlanarGraph(int heightOffset, int widthOffset, const png::i
 void ImageTexture::blendingCase1(int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
     std::vector<Intersection> intersections = findIntersections(heightOffset, widthOffset, inputImg);
     for(auto &inter : intersections){
-        auto [S, T] = findSTInIntersectionCase1(inter, heightOffset, widthOffset, inputImg);
+        auto [S, T] = findSTInIntersectionCase1(inter);
         markMinABCut(S, T, inter, heightOffset, widthOffset, inputImg);
     }
     copyPixelsNewColor(heightOffset, widthOffset, inputImg);
@@ -369,7 +369,7 @@ void ImageTexture::blendingCase2(int heightOffset, int widthOffset, const png::i
     std::pair<long double, std::vector<std::array<int,3>>> minCut;
     { //min cut 
         int visited = 0;   
-        minCut = minCutCycle(0, tsPath.size(), tsPath, visited);
+        minCut = minCutCycle(0, (int) tsPath.size(), tsPath, visited);
         
         /*mark left and right of min cut*/
         markLeftOfMinCut(tsPath);
@@ -546,7 +546,7 @@ bool ImageTexture::insideImg(int i, int j, const png::image<png::rgb_pixel> &img
 }
 // Auxiliar class
 ImageTexture::Intersection::Intersection(const std::vector<std::pair<int,int>> &pixels) : interPixels(pixels){};
-std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersectionCase1(ImageTexture::Intersection &inter, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
+std::pair<std::pair<int, int>, std::pair<int, int> > ImageTexture::findSTInIntersectionCase1(ImageTexture::Intersection &inter){
     std::pair<int, int> S = {-1,-1}, T = {-1,-1};
     for(const auto &[i, j] : inter.interPixels){
         for(int d = 0; d < (int) directions.size(); d++){
