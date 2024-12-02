@@ -55,14 +55,6 @@ ImageTexture::ImageTexture(const png::image<png::rgb_pixel> & _img)
 }
 ImageTexture::ImageTexture(int width, int height) 
     :  
-    //rngSeed(7847891524704), //https://www.geogebra.org/calculator/xafaqxnx
-    //rngSeed(10698447507461),  //https://www.geogebra.org/calculator/fhtqafpt
-    //rngSeed(49102102093506),  // https://www.geogebra.org/calculator/kesrjeex //too small
-    //rngSeed(23796671245129),  //path empty
-    //rngSeed(31740571079601),  //path empty - solved
-    //rngSeed(39937168697097),
-    //rngSeed(31808842946432),//https://www.geogebra.org/calculator/yzfmsufp
-    //rngSeed(1377732719224),
     rngSeed(std::chrono::steady_clock::now().time_since_epoch().count()),
     rng(rngSeed),
     outputImg(width, height), 
@@ -119,7 +111,6 @@ void ImageTexture::patchFittingIteration(const png::image<png::rgb_pixel> &input
     const auto [heightOffset, widthOffset] = matching(inputImg);
     std::cout<<"Matching "<<heightOffset<<" "<<widthOffset<<"\n";
     if(isFirstPatch(heightOffset, widthOffset, inputImg)){
-        //std::cerr<<"First patch"<<std::endl;
         copyFirstPatch(heightOffset, widthOffset, inputImg);
     }else
         blending(heightOffset, widthOffset, inputImg);
@@ -555,7 +546,7 @@ void ImageTexture::copyPixelsNewColor(int heightOffset, int widthOffset, const p
                 countNewPixels++;
             }
         }
-    render("../output_images/output.png"); //debug descomentar!!!
+    render("../output_images/output.png");
     usleep(800000);
 }
 bool ImageTexture::inImgBorder(int i, int j, int heightOffset, int widthOffset, const png::image<png::rgb_pixel> &inputImg){
